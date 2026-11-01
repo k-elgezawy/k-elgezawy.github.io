@@ -8,8 +8,8 @@
     "source": "https://www.linkedin.com/feed/update/urn:li:activity:7398072017096257537/",
     "category": "development",
     "cover": "assets/covers/01.png",
-    "excerpt": "الصفحات البطيئة، وشروط الصلاحيات المتكررة، وكود PL/SQL المتوزع في أماكن كثيرة، من أكثر المشاكل اللي بتصعّب صيانة تطبيقات APEX. دي نفس المحاور اللي اتكلمت عنها في البوست الأصلي، لكن",
-    "excerptEn": "A slow page, scattered permission checks, and a growing pile of anonymous PL/SQL blocks can make an APEX application difficult to maintain. These were the three problems I highligh",
+    "excerpt": "الصفحات البطيئة، وشروط الصلاحيات المتكررة، وكود PL/SQL المتوزع في أماكن كثيرة، من أكثر المشاكل اللي بتصعّب صيانة تطبيقات APEX. دي نفس المحاور اللي اتكلمت عنها في البوست الأصلي، لكن…",
+    "excerptEn": "A slow page, scattered permission checks, and a growing pile of anonymous PL/SQL blocks can make an APEX application difficult to maintain. These were the three problems I…",
     "minutes": 2,
     "aiCover": true
   },
@@ -23,7 +23,7 @@
     "category": "development",
     "cover": "assets/covers/02.png",
     "excerpt": "الفحص الصحي لتطبيق APEX لازم يجاوب على أربع أسئلة: هل الوظائف شغالة صح؟ هل الأداء مقبول؟ هل الصلاحيات مطبقة؟ وهل فيه معلومات كفاية لتشخيص الأخطاء؟",
-    "excerptEn": "An APEX health check should answer four questions: is the application behaving correctly, performing acceptably, enforcing access rules, and producing enough evidence to investigat",
+    "excerptEn": "An APEX health check should answer four questions: is the application behaving correctly, performing acceptably, enforcing access rules, and producing enough evidence to…",
     "minutes": 2,
     "aiCover": true
   },
@@ -37,7 +37,7 @@
     "category": "security",
     "cover": "assets/covers/03.png",
     "excerpt": "تكرار :APP_USER في كل Form ممكن يتنسي. في الجداول اللي التطبيق مسؤول عنها، تقدر تستخدم Default على مستوى العمود لتسجيل المستخدم اللي أنشأ السجل:",
-    "excerptEn": "Repeating :APP_USER in every form is easy to forget. For application-owned tables, a database column default can provide a consistent starting point for recording who created a row",
+    "excerptEn": "Repeating :APP_USER in every form is easy to forget. For application-owned tables, a database column default can provide a consistent starting point for recording who created a…",
     "minutes": 2,
     "aiCover": true
   },
@@ -51,7 +51,7 @@
     "category": "ux",
     "cover": "assets/covers/04.png",
     "excerpt": "المستخدم ممكن يفضل يكتب في Form عدة دقائق من غير أي Request للسيرفر. هو شايف نفسه شغال، لكن السيرفر ممكن يعتبر الجلسة غير نشطة.",
-    "excerptEn": "A user can spend several minutes typing into a form without sending a request to the server. From the user's perspective, they are working. From the server's perspective, the sessi",
+    "excerptEn": "A user can spend several minutes typing into a form without sending a request to the server. From the user's perspective, they are working. From the server's perspective, the…",
     "minutes": 2,
     "aiCover": true
   },
@@ -93,7 +93,7 @@
     "category": "development",
     "cover": "assets/covers/07.png",
     "excerpt": "تطبيق APEX محتاج أكتر من صفحات وتقارير. مع نموه، الفريق يحتاج يراجع التغييرات ويفهم الاعتماديات ويكرر النشر ويشخّص المشاكل.",
-    "excerptEn": "An APEX application needs more than pages and reports. As it grows, the team also needs a way to review changes, understand dependencies, reproduce releases, and investigate proble",
+    "excerptEn": "An APEX application needs more than pages and reports. As it grows, the team also needs a way to review changes, understand dependencies, reproduce releases, and investigate…",
     "minutes": 2,
     "aiCover": true
   },
@@ -134,8 +134,8 @@
     "source": "https://www.linkedin.com/feed/update/urn:li:activity:7399163614294798336/",
     "category": "ux",
     "cover": "assets/covers/10.png",
-    "excerpt": "رسائل ORA-01400 وORA-00001 مفهومة للمطور، لكنها غالبًا لا توضح للمستخدم يعمل إيه. Error Handling Function في APEX تقدر تحول الأخطاء المعروفة لرسائل مفيدة، مع الاحتفاظ بتفاصيل التشخ",
-    "excerptEn": "ORA-01400 and ORA-00001 are meaningful to a developer, but they rarely tell an end user what to do next. An APEX error-handling function can translate known failures into useful me",
+    "excerpt": "رسائل ORA-01400 وORA-00001 مفهومة للمطور، لكنها غالبًا لا توضح للمستخدم يعمل إيه. Error Handling Function في APEX تقدر تحول الأخطاء المعروفة لرسائل مفيدة، مع الاحتفاظ بتفاصيل…",
+    "excerptEn": "ORA-01400 and ORA-00001 are meaningful to a developer, but they rarely tell an end user what to do next. An APEX error-handling function can translate known failures into useful…",
     "minutes": 2,
     "aiCover": true
   },
@@ -149,7 +149,7 @@
     "category": "data",
     "cover": "assets/covers/11.png",
     "excerpt": "أحيانًا تحتاج تراجع Tables أو Packages أو تشغل SQL من غير التنقل بين صفحات التطبيق. SQL Developer Web أحد الخيارات المتاحة من خلال ORDS.",
-    "excerptEn": "Sometimes you want to inspect tables, run SQL, or review packages without navigating through application pages. SQL Developer Web is one option provided through Oracle REST Data Se",
+    "excerptEn": "Sometimes you want to inspect tables, run SQL, or review packages without navigating through application pages. SQL Developer Web is one option provided through Oracle REST Data…",
     "minutes": 2,
     "aiCover": true
   },
@@ -191,7 +191,7 @@
     "category": "development",
     "cover": "assets/covers/07.png",
     "excerpt": "أنا كريم الجيزاوي، خريج هندسة، واخترت أتعمق في Oracle APEX وSQL وPL/SQL. اللي جذبني للمجال هو تحويل إجراءات العمل اليومية لخدمات رقمية مفيدة وسهلة الاستخدام.",
-    "excerptEn": "I am Karim El Gezawy, an engineering graduate who chose to develop a deeper focus on Oracle APEX, SQL, and PL/SQL. What drew me to this work was the opportunity to turn everyday bu",
+    "excerptEn": "I am Karim El Gezawy, an engineering graduate who chose to develop a deeper focus on Oracle APEX, SQL, and PL/SQL. What drew me to this work was the opportunity to turn everyday…",
     "minutes": 2,
     "aiCover": true
   },
@@ -233,7 +233,7 @@
     "category": "development",
     "cover": "assets/covers/05.png",
     "excerpt": "إعلان من الأرشيف: المقال يحافظ على فكرة بوست سابق لإطلاق كورس على LinkedIn. ليس إعلانًا عن كورس يبدأ اليوم، ولا فتحًا لتسجيل جديد.",
-    "excerptEn": "Archived announcement: this article preserves the purpose of an earlier LinkedIn course kickoff post. It is not an announcement of a course starting today, and it does not open a n",
+    "excerptEn": "Archived announcement: this article preserves the purpose of an earlier LinkedIn course kickoff post. It is not an announcement of a course starting today, and it does not open a…",
     "minutes": 2,
     "aiCover": true
   },
@@ -246,8 +246,8 @@
     "source": "https://www.linkedin.com/feed/update/urn:li:activity:7400564363641896961/",
     "category": "data",
     "cover": "assets/covers/06.png",
-    "excerpt": "QUALIFY بتسهل التعبير عن مهمة متكررة في التقارير: فلترة الصفوف بعد حساب Analytic Function. الخاصية موثقة في Oracle AI Database 26ai؛ تأكد من دعمها في إصدار قاعدة البيانات اللي تطبي",
-    "excerptEn": "QUALIFY makes a familiar reporting task easier to express: filtering rows after an analytic function has been evaluated. Oracle AI Database 26ai documents this clause; verify suppo",
+    "excerpt": "QUALIFY بتسهل التعبير عن مهمة متكررة في التقارير: فلترة الصفوف بعد حساب Analytic Function. الخاصية موثقة في Oracle AI Database 26ai؛ تأكد من دعمها في إصدار قاعدة البيانات اللي…",
+    "excerptEn": "QUALIFY makes a familiar reporting task easier to express: filtering rows after an analytic function has been evaluated. Oracle AI Database 26ai documents this clause; verify…",
     "minutes": 3,
     "aiCover": true
   },
@@ -260,8 +260,8 @@
     "source": "https://www.linkedin.com/feed/update/urn:li:activity:7436728231484919808/",
     "category": "ux",
     "cover": "assets/covers/09.png",
-    "excerpt": "أحيانًا الفورم يحتاج إدخال وقت فقط بطريقة واضحة. Flatpickr تقدر توفر التفاعل ده داخل صفحة APEX لما سلوكها يناسب التطبيق. وكل الشكر للمهندس أحمد شريف — Ahmed Sherif، اللي ذكرت فضله ",
-    "excerptEn": "Sometimes a form needs a clear time-only input. Flatpickr can provide that interaction in an APEX page when its behavior suits the application. Thanks to Ahmed Sherif, whose contri",
+    "excerpt": "أحيانًا الفورم يحتاج إدخال وقت فقط بطريقة واضحة. Flatpickr تقدر توفر التفاعل ده داخل صفحة APEX لما سلوكها يناسب التطبيق. وكل الشكر للمهندس أحمد شريف — Ahmed Sherif، اللي ذكرت فضله…",
+    "excerptEn": "Sometimes a form needs a clear time-only input. Flatpickr can provide that interaction in an APEX page when its behavior suits the application. Thanks to Ahmed Sherif, whose…",
     "minutes": 2,
     "aiCover": true
   },
@@ -274,8 +274,8 @@
     "source": "https://www.linkedin.com/feed/update/urn:li:activity:7432091662673362944/",
     "category": "development",
     "cover": "assets/covers/08.png",
-    "excerpt": "في نموذج مصروفات يحتوي على بنود تنقل متكررة، Alpine.js تقدر تدير تعديل الصفوف، وAPEX تتولى المعالجة على السيرفر. المثال الأصلي استخدم Modal Dialog وStatic Content Region وP10_LINES",
-    "excerptEn": "For an expense form with repeated travel lines, Alpine.js can manage row editing while APEX handles server processing. My original example used a modal dialog, a static-content reg",
+    "excerpt": "في نموذج مصروفات يحتوي على بنود تنقل متكررة، Alpine.js تقدر تدير تعديل الصفوف، وAPEX تتولى المعالجة على السيرفر. المثال الأصلي استخدم Modal Dialog وStatic Content Region…",
+    "excerptEn": "For an expense form with repeated travel lines, Alpine.js can manage row editing while APEX handles server processing. My original example used a modal dialog, a static-content…",
     "minutes": 2,
     "aiCover": true
   },
@@ -331,7 +331,7 @@
     "category": "data",
     "cover": "assets/covers/11.png",
     "excerpt": "فتح كل صفحة يدويًا طريقة بطيئة للإجابة عن «العنصر ده مستخدم فين؟». APEX Dictionary Views بتعرض Metadata التطبيق، وتقدر تستعلم عنها للجرد والمراجعة والتوثيق.",
-    "excerptEn": "Opening every page is a slow way to answer “where is this item used?” APEX dictionary views expose application metadata that you can query for inventories, reviews, and documentati",
+    "excerptEn": "Opening every page is a slow way to answer “where is this item used?” APEX dictionary views expose application metadata that you can query for inventories, reviews, and…",
     "minutes": 2,
     "aiCover": true
   },
@@ -345,7 +345,7 @@
     "category": "development",
     "cover": "assets/covers/01.png",
     "excerpt": "لما أبدأ نظام APEX، أفضل أفهم العملية التجارية قبل توليد الفورمز. بناء واجهة جيدة بيكون أسهل لما ملكية البيانات والحالات والقواعد تكون واضحة.",
-    "excerptEn": "When starting an APEX system, I prefer to understand the business operation before generating forms. A good interface becomes much easier to build when ownership, states, and rules",
+    "excerptEn": "When starting an APEX system, I prefer to understand the business operation before generating forms. A good interface becomes much easier to build when ownership, states, and rules…",
     "minutes": 2,
     "aiCover": true
   },
@@ -387,7 +387,7 @@
     "category": "ux",
     "cover": "assets/covers/09.png",
     "excerpt": "القائمة الجانبية اللي تفضل مفتوحة بعد التنقل ممكن تضايق المستخدم على الموبايل. ابدأ بإعادة المشكلة على إصدار الـTheme المستخدم فعلًا، وراجع سلوك التنقل المدمج.",
-    "excerptEn": "A side menu that stays open after navigation can make a small screen frustrating. Start by reproducing the behavior in the application's actual theme version and checking its built",
+    "excerptEn": "A side menu that stays open after navigation can make a small screen frustrating. Start by reproducing the behavior in the application's actual theme version and checking its…",
     "minutes": 2,
     "aiCover": true
   },
@@ -401,7 +401,7 @@
     "category": "development",
     "cover": "assets/covers/08.png",
     "excerpt": "زر داخل صف Interactive Grid يقدر يجيب بيانات مرتبطة من غير تحديث الصفحة كلها. المهم توضيح هوية السجل والصلاحيات وطريقة الحفظ.",
-    "excerptEn": "An Interactive Grid row action can retrieve related information without refreshing the entire page. The important part is keeping record identity, authorization, and persistence cl",
+    "excerptEn": "An Interactive Grid row action can retrieve related information without refreshing the entire page. The important part is keeping record identity, authorization, and persistence…",
     "minutes": 2,
     "aiCover": true
   },
@@ -429,7 +429,7 @@
     "category": "development",
     "cover": "assets/covers/etch.svg",
     "excerpt": "فرق العمل تحتاج أحيانًا نفس البيانات في فاتورة Word أو ملف Excel شهري أو عرض PowerPoint. بناء كل تصميم داخل الكود يجعل تغييرات الشكل البسيطة محتاجة تدخل من المطور.",
-    "excerptEn": "Teams often need the same document in different formats: invoices, monthly workbooks, or project update decks. A common approach is to build each document with code. That can make ",
+    "excerptEn": "Teams often need the same document in different formats: invoices, monthly workbooks, or project update decks. A common approach is to build each document with code. That can make…",
     "minutes": 3,
     "aiCover": false
   },
@@ -442,8 +442,8 @@
     "source": "https://karimelgezawy.hashnode.dev/oracle-apex-cve-2026-101521-a-practical-patch-review",
     "category": "security",
     "cover": "assets/covers/security.svg",
-    "excerpt": "تتضمن نشرة التحديثات الأمنية من Oracle لشهر أكتوبر 2026 الثغرة **CVE-2026-101521** في Oracle APEX، بدرجة **9.8** وفق CVSS 3.1. توضح Oracle إمكانية استغلالها عن بُعد عبر HTTPS دون م",
-    "excerptEn": "Oracle's October 2026 Critical Patch Update lists **CVE-2026-101521** in Oracle APEX with a CVSS 3.1 score of **9.8**. Oracle describes it as remotely exploitable over HTTPS withou",
+    "excerpt": "تتضمن نشرة التحديثات الأمنية من Oracle لشهر أكتوبر 2026 الثغرة CVE-2026-101521 في Oracle APEX، بدرجة 9.8 وفق CVSS 3.1. توضح Oracle إمكانية استغلالها عن بُعد عبر HTTPS دون مصادقة…",
+    "excerptEn": "Oracle's October 2026 Critical Patch Update lists CVE-2026-101521 in Oracle APEX with a CVSS 3.1 score of 9.8. Oracle describes it as remotely exploitable over HTTPS without…",
     "minutes": 3,
     "aiCover": false
   }
