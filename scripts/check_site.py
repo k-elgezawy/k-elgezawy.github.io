@@ -37,6 +37,10 @@ for a in articles:
         if expected not in text:errors.append(f'Missing {expected} in {a["slug"]}')
     for lang in ('ar','en'):
         if len((ROOT/'content/articles'/f'{a["slug"]}.{lang}.md').read_text(encoding='utf-8').split())<70:errors.append(f'Incomplete translation: {a["slug"]} {lang}')
+    en=(ROOT/'content/articles'/f'{a["slug"]}.en.md').read_text(encoding='utf-8')
+    ar=(ROOT/'content/articles'/f'{a["slug"]}.ar.md').read_text(encoding='utf-8')
+    if len(re.findall(r'^```\w',en,re.M)) != len(re.findall(r'^```\w',ar,re.M)):
+        errors.append(f'Code examples missing from translation: {a["slug"]}')
 if errors:
     print('\n'.join(errors));sys.exit(1)
 print(f'PASS: {len(articles)} complete bilingual articles, {len(list(OUT.rglob("*.html")))} HTML pages; local links, assets, IDs, source links and public URL checks passed.')

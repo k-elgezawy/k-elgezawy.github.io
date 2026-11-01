@@ -2,7 +2,19 @@ Ajax Callback مفيد لما تحتاج نتيجة محددة من السيرف
 
 ### حدد شكل الطلب والرد
 
-المتصفح يرسل رقم الطلب، والـCallback يتحقق من القيمة وصلاحية الوصول للسجل، ويحسب النتيجة ويرجع JSON. بعدها المتصفح يحدث الجزء المطلوب. الكود في النسخة الإنجليزية مثال لطلب GET_ORDER_TOTAL وتحديث P15_TOTAL، بشرط وجود الـItems والـCallback واستجابة JSON مطابقة.
+المتصفح يرسل رقم الطلب، والـCallback يتحقق من القيمة وصلاحية الوصول للسجل، ويحسب النتيجة ويرجع JSON. بعدها المتصفح يحدث الجزء المطلوب. ده مثال لطلب GET_ORDER_TOTAL وتحديث P15_TOTAL، بشرط وجود الـItems والـCallback واستجابة JSON مطابقة.
+
+```javascript
+apex.server.process(
+  'GET_ORDER_TOTAL',
+  { x01: apex.item('P15_ORDER_ID').getValue() },
+  { dataType: 'json' }
+).done(function (data) {
+  apex.item('P15_TOTAL').setValue(data.total);
+}).fail(function () {
+  apex.message.alert('تعذر تحميل الإجمالي. حاول مرة أخرى.');
+});
+```
 
 استخدم APEX_JSON لتكوين الرد بدل تركيب JSON يدويًا بالنصوص.
 

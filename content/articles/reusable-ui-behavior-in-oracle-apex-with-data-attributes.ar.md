@@ -1,6 +1,22 @@
 Custom HTML Attributes طريقة مفيدة لتحديد العناصر اللي هتشترك في سلوك واحد. الـAttribute بيوصف المطلوب، وJavaScript هو اللي بينفذ السلوك.
 
-مثلًا، تقدر تضيف data-auto-upper="Y" لعنصر نصي، وتستخدم Event Listener عام يتعرف على العناصر دي ويحول قيمتها إلى حروف كبيرة عند التغيير. المثال الإنجليزي يوضح الفكرة على HTMLInputElement.
+مثلًا، تقدر تضيف العلامة دي لعنصر نصي:
+
+```html
+data-auto-upper="Y"
+```
+
+وتستخدم Event Listener عام يتعرف على العناصر دي ويحول قيمتها إلى حروف كبيرة عند التغيير:
+
+```javascript
+document.addEventListener('change', function (event) {
+  const input = event.target;
+  if (input instanceof HTMLInputElement &&
+      input.matches('[data-auto-upper="Y"]')) {
+    input.value = input.value.toUpperCase();
+  }
+});
+```
 
 راجع الـHTML الناتج من نوع الـItem المستخدم؛ لازم الـAttribute يوصل للعنصر اللي الكود بيستهدفه. ما تفترضش إن كل Plugin أو Item مركب له نفس بنية الـDOM.
 
