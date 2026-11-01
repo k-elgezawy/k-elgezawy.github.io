@@ -1,10 +1,780 @@
 [
-  {"id":"yunni","category":"health","name":"Yunni","label":{"ar":"عيادات الليزر والسبا","en":"Laser & spa operations"},"summary":{"ar":"نظام متكامل بنيته من البداية للنهاية، يجمع تشغيل العيادة والإدارة المالية والموارد البشرية في تجربة واحدة.","en":"An end-to-end system I built for a laser and spa clinic, bringing clinic operations, finance, and HR into one experience."},"audience":{"ar":"موظفو العيادة، الأطباء، المتخصصون والممرضون","en":"Clinic staff, doctors, specialists, and nurses"},"challenge":{"ar":"الجمع بين احتياجات فرق العيادة المختلفة وبين العمل المالي وشؤون العاملين داخل نظام متكامل.","en":"Bringing the needs of different clinic teams together with financial operations and people administration."},"solution":{"ar":"بناء النظام كاملًا وربط وظائف التشغيل بالمالي وHR، مع واجهات تخدم طبيعة عمل كل فريق.","en":"Building the complete system and connecting operational, financial, and HR functions through interfaces for each team."},"role":{"ar":"تصميم وبناء النظام من البداية للنهاية","en":"End-to-end system design and development"},"outcome":{"ar":"منظومة واحدة تغطي التشغيل والإدارة المالية والموارد البشرية، بدل التعامل مع كل مجال كجزيرة منفصلة.","en":"One system covering clinic operations, finance, and HR as connected parts of the business."},"tags":["Oracle APEX","PL/SQL","Finance","HR"],"visual":"clinic"},
-  {"id":"truelase","category":"health","name":"TrueLase","label":{"ar":"إدارة العيادات والليزر","en":"Clinic & laser management"},"summary":{"ar":"ربط رحلة الموعد بالخدمات والفواتير، مع العمل على علاقة الخدمات بالمستهلكات والمخزون.","en":"Connecting appointments to services and billing, alongside service-to-inventory consumption workflows."},"audience":{"ar":"فرق العمل داخل العيادة","en":"Clinic operations teams"},"challenge":{"ar":"تنسيق بيانات المواعيد وتفاصيل الخدمات والفواتير، وتوضيح الفرق بين تكلفة المستهلكات وسعر الخدمة للمريض.","en":"Coordinating appointments, service details, and billing while distinguishing consumable costs from the patient's service price."},"solution":{"ar":"العمل على إدارة المواعيد وتفاصيل الخدمات وحساب الفواتير، وتعريف ربط الخدمة بالأصناف والكميات المستخدمة.","en":"Developing appointment and service-detail workflows, invoice calculations, and mappings between services, inventory items, and quantities."},"role":{"ar":"تطوير وظائف النظام ومنطق الخدمات والفواتير وربط المخزون","en":"Application development across services, billing, and inventory integration"},"outcome":{"ar":"مسار أوضح يربط الموعد بالخدمة والفاتورة واحتياجاتها من المستهلكات، مع فصل مسؤولية كل جزء.","en":"A clearer relationship between appointments, services, invoices, and consumable requirements, with explicit responsibilities."},"tags":["Oracle APEX","Appointments","Billing","Inventory"],"visual":"service"},
-  {"id":"family-tree","category":"community","name":{"ar":"شجرة العائلة","en":"Family Tree"},"label":{"ar":"شجرة عائلة وسير شخصية","en":"Family tree & life stories"},"summary":{"ar":"شجرة عائلة تفاعلية: تختار أي فرد لتقرأ قصة حياته وشهاداته وأبنائه وإنجازاته.","en":"An interactive family tree where each member opens a life story, qualifications, children, and achievements."},"audience":{"ar":"أفراد العائلة والمهتمون بتوثيق تاريخها","en":"Families documenting their shared history"},"challenge":{"ar":"عرض العلاقات بين أفراد العائلة مع الحفاظ على القصة الإنسانية والتفاصيل الخاصة بكل شخص.","en":"Showing family relationships while preserving the human story and details behind each person."},"solution":{"ar":"إضافة شجرة العائلة وربط أفرادها بملفات شخصية تجمع قصة الحياة والشهادات والأبناء والإنجازات.","en":"Connecting a family tree to individual profiles containing biographies, certificates, children, and achievements."},"role":{"ar":"العمل على تطبيق شجرة العائلة وملفات أفرادها","en":"Development of the family-tree and member-profile application"},"outcome":{"ar":"استكشاف تاريخ العائلة عبر العلاقات والقصص، والوصول من الشجرة إلى سيرة الشخص مباشرة.","en":"A way to explore family history through both relationships and stories, moving directly from a tree member to a biography."},"tags":["Family tree","Profiles","Storytelling"],"visual":"family"},
-  {"id":"employee-portal","category":"enterprise","name":{"ar":"بوابة الموظفين","en":"Employee Portal"},"label":{"ar":"الخدمات الذاتية وطلبات HR","en":"Self-service & HR requests"},"summary":{"ar":"تجربة موحدة لطلبات الموظفين: إجازات وأذونات ومأموريات وعمل إضافي، مع حالات الطلب ومسارات الموافقة.","en":"A unified employee-request experience for leave, permissions, missions, and overtime, including request status and approvals."},"audience":{"ar":"الموظفون، المديرون وفرق الموارد البشرية","en":"Employees, managers, and HR teams"},"challenge":{"ar":"وضوح نوع الطلب وحالته والجهة المراجعة، والتعامل الصحيح مع التوجيه والإلغاء وتفاصيل الحضور.","en":"Making request types, status, and reviewers clear while handling routing, cancellation, and attendance details."},"solution":{"ar":"العمل على نماذج الطلبات، صفحات المتابعة، عرض أيام الشهر، وتحسين التنقل وربط الطلب بالموافقات المناسبة.","en":"Developing request forms, tracking pages, monthly attendance views, navigation, and appropriate approval routing."},"role":{"ar":"تطوير وتحسين صفحات البوابة ومنطق الإجراءات","en":"Portal development and workflow improvements"},"outcome":{"ar":"إجراءات أوضح للموظف، ومتابعة أكثر تنظيمًا للطلبات والموافقات داخل البوابة.","en":"Clearer employee interactions and more structured request and approval tracking."},"tags":["Oracle APEX","HR","Self-service","Workflows"],"visual":"portal"},
-  {"id":"hr-forms","category":"enterprise","name":"HR Forms","label":{"ar":"نماذج وإجراءات الموارد البشرية","en":"Human resources forms"},"summary":{"ar":"نماذج أعمال ضمن منظومة الموارد البشرية، تركز على إدخال البيانات والتحقق منها وربطها بالإجراء المناسب.","en":"Business forms within an HR application ecosystem, focused on data capture, validation, and the relevant process."},"audience":{"ar":"الموارد البشرية والموظفون","en":"HR teams and employees"},"challenge":{"ar":"تقديم نماذج مفهومة ومتسقة مع قواعد العمل والصلاحيات.","en":"Providing understandable forms consistent with business rules and access rights."},"solution":{"ar":"العمل على Forms وReports ومنطق PL/SQL وإجراءات التحقق والإتاحة.","en":"Working with forms, reports, PL/SQL logic, validations, and access rules."},"role":{"ar":"تطوير نماذج وتطبيقات أعمال","en":"Business-application and form development"},"outcome":{"ar":"واجهة منظمة لإجراءات الموارد البشرية وبياناتها.","en":"An organized interface for HR processes and information."},"tags":["Forms","Validation","PL/SQL","HR"],"visual":"form"},
-  {"id":"approvals","category":"enterprise","name":{"ar":"الموافقات واللجان","en":"Approvals & Committees"},"label":{"ar":"تنظيم القرارات ومسارات المراجعة","en":"Review & decision workflows"},"summary":{"ar":"العمل على إدارة الطلبات والمراجعين والصلاحيات، مع عرض أوضح للحالات والقرارات ومسؤولية كل مرحلة.","en":"Working on requests, reviewers, and authorization, with clearer status, decisions, and ownership at each step."},"audience":{"ar":"مقدمو الطلبات والمراجعون وأعضاء اللجان","en":"Requesters, reviewers, and committee members"},"challenge":{"ar":"تعدد مراحل الاعتماد واختلاف أدوار المشاركين والحاجة إلى فهم حالة الطلب.","en":"Multiple approval stages, different participant roles, and the need to understand a request's current state."},"solution":{"ar":"تطوير إجراءات ومتابعة الطلبات وتحسين عرض الحالات وأدوار المراجعة وإلغاء الطلبات.","en":"Developing request-processing and tracking flows, status presentation, reviewer roles, and cancellation handling."},"role":{"ar":"تطوير Workflows وتحسين تجربة متابعة القرارات","en":"Workflow development and decision-tracking UX"},"outcome":{"ar":"تسلسل أكثر وضوحًا للمراجعة والقرارات ومسؤولية الإجراء التالي.","en":"Clearer review sequences, decisions, and responsibility for the next action."},"tags":["Workflows","Tasks","Authorization","PL/SQL"],"visual":"workflow"},
-  {"id":"finance-reports","category":"enterprise","name":{"ar":"الطلبات المالية والتقارير","en":"Financial Requests & Reporting"},"label":{"ar":"إجراءات مالية وعرض البيانات","en":"Financial operations & data"},"summary":{"ar":"خبرة في تطبيقات الطلبات المالية والتقارير، مع الاهتمام بصحة البيانات وقابلية قراءة النتائج وتصديرها.","en":"Experience with financial-request applications and reporting, with attention to data correctness, readable results, and exports."},"audience":{"ar":"فرق الأعمال والإدارة المالية","en":"Business and finance teams"},"challenge":{"ar":"ربط نماذج الطلبات بالتقارير، وإنتاج مخرجات مناسبة للاستخدام خارج الشاشة.","en":"Connecting request forms to reports and producing output that works beyond the screen."},"solution":{"ar":"العمل على SQL وPL/SQL والتقارير والتصدير، ومراجعة طريقة عرض المعلومات.","en":"Working with SQL, PL/SQL, reporting, exports, and information presentation."},"role":{"ar":"تطوير تطبيقات أعمال وتقارير","en":"Business application and reporting development"},"outcome":{"ar":"تقارير ونماذج تخدم إجراءات العمل اليومية بوضوح.","en":"Forms and reports that support everyday business processes clearly."},"tags":["SQL","Reports","Finance","Excel"],"visual":"report"},
-  {"id":"suppliers-access","category":"enterprise","name":{"ar":"الموردون والصلاحيات","en":"Suppliers & Access Control"},"label":{"ar":"الموردون والمقاولون وأدوار المستخدمين","en":"Supplier workflows & user roles"},"summary":{"ar":"العمل على تطبيقات الموردين والمقاولين وربط وظائفها بإتاحة الصفحات وأدوار المستخدمين.","en":"Working on supplier and contractor applications, connecting their functions to page access and user roles."},"audience":{"ar":"فرق الموردين والمقاولين ومديرو الأنظمة","en":"Supplier, contractor, and administration teams"},"challenge":{"ar":"تقديم وظائف مناسبة لكل دور مع وضوح الوصول والتنقل.","en":"Providing the right functions for each role with understandable access and navigation."},"solution":{"ar":"تنظيم صلاحيات الأدوار وإتاحة الصفحات والتنقل داخل التطبيق.","en":"Organizing role permissions, page authorization, and in-app navigation."},"role":{"ar":"تطوير التطبيقات ومنطق الصلاحيات","en":"Application and authorization-logic development"},"outcome":{"ar":"وصول أنسب للوظائف وفق دور المستخدم.","en":"Function access aligned with the user's role."},"tags":["Authorization","Roles","Oracle APEX"],"visual":"access"}
+  {
+    "id": "employee-portal",
+    "category": "enterprise",
+    "name": {
+      "ar": "البوابة المؤسسية للموظفين",
+      "en": "Employee Services Portal"
+    },
+    "label": {
+      "ar": "نقطة وصول موحّدة لخدمات الموظفين",
+      "en": "Unified employee self-service"
+    },
+    "summary": {
+      "ar": "بوابة تجمع خدمات الموظف وطلباته في مكان واحد؛ من الإجازات والأذونات والمأموريات والعمل الإضافي، إلى متابعة الحضور والموافقات والوصول إلى تطبيقات المؤسسة.",
+      "en": "A single entry point for employee services: leave, permissions, business missions, overtime, attendance, approvals, and access to enterprise applications."
+    },
+    "audience": {
+      "ar": "الموظفون، المديرون وفرق الموارد البشرية",
+      "en": "Employees, managers, and HR teams"
+    },
+    "challenge": {
+      "ar": "وضوح نوع الطلب وحالته والجهة المراجعة، والتعامل الصحيح مع التوجيه والإلغاء وتفاصيل الحضور.",
+      "en": "Making request types, status, and reviewers clear while handling routing, cancellation, and attendance details."
+    },
+    "solution": {
+      "ar": "نماذج خدمات ذاتية مرتبطة بمسارات الموافقة، وصفحات لمتابعة حالة الطلب والجهة المسؤولة عنه، وعرض تفصيلي للحضور وأيام الشهر، مع تنقّل منظّم إلى خدمات المؤسسة.",
+      "en": "Self-service forms connected to approval workflows, request-status and ownership views, detailed monthly attendance, and structured navigation to enterprise services."
+    },
+    "role": {
+      "ar": "تطوير وتحسين صفحات البوابة ومنطق الإجراءات",
+      "en": "Portal development and workflow improvements"
+    },
+    "outcome": {
+      "ar": "تمكين الموظف من تقديم طلباته ومتابعتها، ومساعدة المدير والموارد البشرية على مراجعتها من خلال إجراءات واضحة بدل تشتت المتابعة بين قنوات متعددة.",
+      "en": "Employees can submit and follow up on requests, while managers and HR review them through a clear process rather than scattered follow-up channels."
+    },
+    "tags": [
+      "Oracle APEX",
+      "HR",
+      "Self-service",
+      "Workflows"
+    ],
+    "visual": "portal",
+    "capabilities": [
+      {
+        "ar": "تقديم الإجازات والأذونات والمأموريات والعمل الإضافي",
+        "en": "Submit leave, permissions, missions, and overtime"
+      },
+      {
+        "ar": "متابعة حالة الطلب ومسار اعتماده",
+        "en": "Track request status and approval routing"
+      },
+      {
+        "ar": "عرض الحضور والموقف اليومي خلال الشهر",
+        "en": "Review attendance and daily monthly status"
+      },
+      {
+        "ar": "الوصول إلى خدمات المؤسسة حسب صلاحية المستخدم",
+        "en": "Access enterprise services according to user permissions"
+      }
+    ]
+  },
+  {
+    "id": "medical-services",
+    "category": "health",
+    "name": {
+      "ar": "نظام إدارة الخدمات الطبية",
+      "en": "Medical Services Management"
+    },
+    "label": {
+      "ar": "طلبات طبية ومراجعة واعتماد",
+      "en": "Medical requests, review & approval"
+    },
+    "summary": {
+      "ar": "نظام لتنظيم طلبات الجوابات الطبية والروشتات ومتابعة مراجعتها واعتمادها، مع وضوح حالة كل طلب والجهة المسؤولة عن الإجراء التالي.",
+      "en": "A system for medical letters and prescription requests, organizing review and approval while making request status and the next responsible reviewer clear."
+    },
+    "audience": {
+      "ar": "الموظفون والفريق الطبي والمراجعون المعتمدون",
+      "en": "Employees, medical teams, and authorized reviewers"
+    },
+    "challenge": {
+      "ar": "تنسيق الطلبات بين الموظف والفريق الطبي، ومنع ضياع مسؤولية المراجعة أو استمرار ظهور الطلب بعد اتخاذ القرار.",
+      "en": "Coordinating requests between employees and medical teams, with clear review ownership and accurate status after decisions."
+    },
+    "solution": {
+      "ar": "واجهات لتقديم الطلبات وعرض تفاصيلها، وقائمة للطلبات المعلقة المسندة إلى كل مراجع، وتنظيم الاعتمادات والصلاحيات وربط متابعة الطلب بالبوابة.",
+      "en": "Request submission and detail views, a pending-work queue assigned to each reviewer, approval and access management, and request tracking connected to the employee portal."
+    },
+    "role": {
+      "ar": "تطوير وتحسين شاشات الطلبات الطبية ومنطق الموافقات ومتابعة المهام",
+      "en": "Development and improvement of medical-request screens, approval logic, and review queues"
+    },
+    "outcome": {
+      "ar": "مسار إداري أوضح للخدمة الطبية: يعرف الموظف حالة طلبه، ويصل المراجع إلى الطلبات المسندة إليه لاتخاذ الإجراء المناسب.",
+      "en": "A clearer administrative path for medical services: employees can follow request status, and reviewers can find and act on their assigned requests."
+    },
+    "capabilities": [
+      {
+        "ar": "إدارة طلبات الجوابات الطبية والروشتات",
+        "en": "Manage medical-letter and prescription requests"
+      },
+      {
+        "ar": "مراجعة التفاصيل واتخاذ قرارات الاعتماد",
+        "en": "Review request details and approval decisions"
+      },
+      {
+        "ar": "عرض الطلبات المعلقة لكل مراجع",
+        "en": "Show each reviewer their pending requests"
+      },
+      {
+        "ar": "ضبط إتاحة الشاشات وربط المتابعة بالبوابة",
+        "en": "Control screen access and connect tracking to the portal"
+      }
+    ],
+    "tags": [
+      "Oracle APEX",
+      "Medical Services",
+      "Approvals",
+      "Authorization"
+    ],
+    "visual": "medical"
+  },
+  {
+    "id": "inventory",
+    "category": "enterprise",
+    "name": {
+      "ar": "نظام إدارة المخزون",
+      "en": "Inventory Management"
+    },
+    "label": {
+      "ar": "الأصناف والحركات والأرصدة",
+      "en": "Items, stock movements & balances"
+    },
+    "summary": {
+      "ar": "تطبيق لإدارة بيانات الأصناف ومتابعة حركة المخزون وأرصدته، مع تنظيم صلاحيات المستخدمين لتقديم صورة واضحة عن المواد المتاحة واستخدامها.",
+      "en": "An application for item records, stock movements, and balances, with role-based access that supports a clear view of available materials and their use."
+    },
+    "audience": {
+      "ar": "مسؤولو المخازن وفرق التشغيل والإدارة",
+      "en": "Storekeepers, operations teams, and administrators"
+    },
+    "challenge": {
+      "ar": "الحاجة إلى تنظيم بيانات الأصناف وحركاتها، وإتاحة الوظائف المناسبة لكل مستخدم مع حماية الوصول إلى النظام.",
+      "en": "Organizing item and movement records while making the right functions available to each user and protecting application access."
+    },
+    "solution": {
+      "ar": "واجهات للأصناف والحركات وتقارير الأرصدة، مع إدارة للمستخدمين والأدوار وتحسين إجراءات الدخول والتحقق الإضافي من الهوية.",
+      "en": "Item and movement interfaces, balance reporting, user and role administration, and improvements to sign-in and additional identity verification."
+    },
+    "role": {
+      "ar": "العمل على تطوير تطبيق المخزون وتحسين إدارة المستخدمين والصلاحيات وتجربة الدخول",
+      "en": "Inventory-application development and improvements to user administration, permissions, and sign-in"
+    },
+    "outcome": {
+      "ar": "معلومات أكثر تنظيمًا لمتابعة المواد وحركتها، ووصول إلى الوظائف يتناسب مع مسؤوليات المستخدم.",
+      "en": "More structured information for tracking materials and movements, with function access aligned to user responsibilities."
+    },
+    "capabilities": [
+      {
+        "ar": "تنظيم بيانات الأصناف والمواد",
+        "en": "Organize item and material records"
+      },
+      {
+        "ar": "متابعة حركات المخزون والأرصدة",
+        "en": "Track stock movements and balances"
+      },
+      {
+        "ar": "عرض تقارير لدعم متابعة المخازن",
+        "en": "Provide reports for inventory follow-up"
+      },
+      {
+        "ar": "إدارة المستخدمين والصلاحيات والتحقق الإضافي للدخول",
+        "en": "Manage users, permissions, and additional sign-in verification"
+      }
+    ],
+    "tags": [
+      "Oracle APEX",
+      "Inventory",
+      "Reporting",
+      "Access Control"
+    ],
+    "visual": "inventory"
+  },
+  {
+    "id": "task-management",
+    "category": "enterprise",
+    "name": {
+      "ar": "نظام إدارة المهام",
+      "en": "Task Management System"
+    },
+    "label": {
+      "ar": "تنظيم العمل والمسؤوليات",
+      "en": "Work planning & accountability"
+    },
+    "summary": {
+      "ar": "نظام لتنظيم المهام وتوزيع المسؤوليات ومتابعة التنفيذ؛ يوضح ما المطلوب، ومن المسؤول عنه، وموعد إنجازه، والحالة الحالية للعمل.",
+      "en": "A system for organizing tasks, assigning responsibility, and tracking execution: what needs doing, who owns it, when it is due, and its current status."
+    },
+    "audience": {
+      "ar": "فرق العمل والمشرفون ومديرو الفرق",
+      "en": "Team members, supervisors, and team managers"
+    },
+    "challenge": {
+      "ar": "صعوبة متابعة العمل عندما تتوزع التكليفات والتحديثات بين الرسائل والمناقشات دون سجل موحّد.",
+      "en": "Keeping track of work when assignments and updates are scattered across messages and discussions without a shared record."
+    },
+    "solution": {
+      "ar": "تسجيل المهام وإسنادها للمسؤولين، وتنظيم الأولويات والمواعيد، وتحديث حالات التنفيذ وعرض الأعمال المفتوحة والمنجزة.",
+      "en": "Task recording and assignment, priorities and due dates, status updates, and views of open and completed work."
+    },
+    "role": {
+      "ar": "العمل على تطوير واجهات إدارة المهام ومنطق المتابعة والتقارير",
+      "en": "Development of task-management interfaces, follow-up logic, and reports"
+    },
+    "outcome": {
+      "ar": "وضوح ملكية كل مهمة وحالتها، ومتابعة الأعمال المعلقة لدعم التنسيق بين أفراد الفريق.",
+      "en": "Clear task ownership and status, with visibility of outstanding work to support team coordination."
+    },
+    "capabilities": [
+      {
+        "ar": "إنشاء المهام وإسنادها إلى المسؤولين",
+        "en": "Create tasks and assign owners"
+      },
+      {
+        "ar": "تحديد الأولويات ومواعيد التنفيذ",
+        "en": "Set priorities and due dates"
+      },
+      {
+        "ar": "تحديث الحالات ومتابعة التقدم",
+        "en": "Update status and follow progress"
+      },
+      {
+        "ar": "عرض الأعمال المفتوحة والمنجزة",
+        "en": "Review open and completed work"
+      }
+    ],
+    "tags": [
+      "Oracle APEX",
+      "Tasks",
+      "Team Coordination",
+      "Reports"
+    ],
+    "visual": "tasks"
+  },
+  {
+    "id": "public-relations",
+    "category": "enterprise",
+    "name": {
+      "ar": "نظام خدمات العلاقات العامة",
+      "en": "Public Relations Services"
+    },
+    "label": {
+      "ar": "طلبات وخدمات إدارية منظّمة",
+      "en": "Structured administrative services"
+    },
+    "summary": {
+      "ar": "تطبيق لتنظيم طلبات خدمات العلاقات العامة، بما يشمل التنقلات والمأموريات، وربط الطلبات بمراحل المراجعة والمتابعة بدل التعامل معها كنماذج منفصلة.",
+      "en": "An application organizing public-relations service requests, including transport and business missions, and connecting them to review and follow-up stages."
+    },
+    "audience": {
+      "ar": "الموظفون وفرق العلاقات العامة والجهات المراجعة",
+      "en": "Employees, public-relations teams, and reviewers"
+    },
+    "challenge": {
+      "ar": "تعدد أنواع الطلبات وتفاصيلها، والحاجة إلى توجيهها للجهة المناسبة ومتابعة الموقف دون غموض.",
+      "en": "Different request types and details that need to reach the right team and remain easy to track."
+    },
+    "solution": {
+      "ar": "نماذج لتسجيل الخدمة وتفاصيلها، وقواعد للتحقق من البيانات، ومتابعة لحالة الطلب ومراحل المراجعة والتقارير الخاصة بالخدمات.",
+      "en": "Forms for service requests and their details, data validation, request-status tracking, review stages, and service reports."
+    },
+    "role": {
+      "ar": "تطوير وتحسين نماذج خدمات العلاقات العامة والتحقق من البيانات ومسارات المتابعة",
+      "en": "Development and improvement of public-relations forms, data validation, and follow-up flows"
+    },
+    "outcome": {
+      "ar": "طلبات أكثر وضوحًا للموظف وللفريق المنفذ، مع سجل منظّم يسهل الرجوع إليه ومتابعته.",
+      "en": "Clearer requests for employees and service teams, supported by organized records for reference and follow-up."
+    },
+    "capabilities": [
+      {
+        "ar": "تقديم طلبات الخدمات الإدارية والعلاقات العامة",
+        "en": "Submit administrative and public-relations service requests"
+      },
+      {
+        "ar": "تنظيم تفاصيل التنقلات والمأموريات",
+        "en": "Organize transport and business-mission details"
+      },
+      {
+        "ar": "التحقق من البيانات ومتابعة المراجعة",
+        "en": "Validate information and follow the review process"
+      },
+      {
+        "ar": "عرض الحالات والتقارير الخاصة بالخدمات",
+        "en": "View service status and reports"
+      }
+    ],
+    "tags": [
+      "Oracle APEX",
+      "Service Requests",
+      "Validation",
+      "Workflows"
+    ],
+    "visual": "relations"
+  },
+  {
+    "id": "trips",
+    "category": "enterprise",
+    "name": {
+      "ar": "نظام إدارة الرحلات والمصايف",
+      "en": "Trips & Holiday Programs"
+    },
+    "label": {
+      "ar": "رغبات العاملين والأفواج وقوائم الانتظار",
+      "en": "Employee preferences, groups & waiting lists"
+    },
+    "summary": {
+      "ar": "نظام لإدارة برامج الرحلات والمصايف؛ ينظم رغبات العاملين وطلبات المشاركة والأفواج وقوائم الانتظار، ويعرض موقف كل طلب حسب الرحلة والموسم.",
+      "en": "A system for trips and holiday programs, organizing employee preferences, applications, departure groups, waiting lists, and request status by trip and season."
+    },
+    "audience": {
+      "ar": "العاملون وفرق تنظيم الرحلات والخدمات الاجتماعية",
+      "en": "Employees, trip organizers, and social-services teams"
+    },
+    "challenge": {
+      "ar": "تنظيم الرغبات والمشاركة عبر رحلات وأفواج ومواسم متعددة، مع متابعة الطلبات غير المكتملة أو المنتظرة أو المرفوضة.",
+      "en": "Organizing preferences and participation across trips, groups, and seasons while tracking incomplete, waiting, or rejected applications."
+    },
+    "solution": {
+      "ar": "شاشات لرغبات العاملين وقوائم الانتظار، وتقارير مرتبطة بالرحلة وتواريخ الأفواج، وفلاتر للموسم والحالة، مع واجهة عربية وعناوين واضحة.",
+      "en": "Employee-preference and waiting-list screens, reports linked to trips and departure dates, season and status filters, and clear Arabic interfaces."
+    },
+    "role": {
+      "ar": "تطوير وتحسين واجهات الرحلات والفلاتر والتقارير وتجربة الاستخدام العربية",
+      "en": "Development and improvement of trip interfaces, filters, reports, and Arabic usability"
+    },
+    "outcome": {
+      "ar": "رؤية منظمة لموقف المشاركة وطلبات العاملين، ومتابعة أدق لكل رحلة وفوج خلال موسم العمل.",
+      "en": "An organized view of participation and employee applications, supporting follow-up for each trip and departure group."
+    },
+    "capabilities": [
+      {
+        "ar": "تسجيل رغبات العاملين وطلبات المشاركة",
+        "en": "Record employee preferences and participation requests"
+      },
+      {
+        "ar": "تنظيم الرحلات والأفواج ومواعيدها",
+        "en": "Organize trips, departure groups, and dates"
+      },
+      {
+        "ar": "متابعة قوائم الانتظار وحالات الطلبات",
+        "en": "Track waiting lists and application status"
+      },
+      {
+        "ar": "تقارير وفلاتر حسب الرحلة والموسم",
+        "en": "Use reports and filters by trip and season"
+      }
+    ],
+    "tags": [
+      "Oracle APEX",
+      "Trips",
+      "Waiting Lists",
+      "Arabic UX"
+    ],
+    "visual": "trips"
+  },
+  {
+    "id": "appraisals",
+    "category": "enterprise",
+    "name": {
+      "ar": "نظام تقييم أداء العاملين",
+      "en": "Employee Performance Appraisals"
+    },
+    "label": {
+      "ar": "تنظيم التقييم والمراجعة والنتائج",
+      "en": "Assessment, review & results"
+    },
+    "summary": {
+      "ar": "نظام لتنظيم تقييم أداء العاملين من خلال نماذج ومعايير واضحة، مع متابعة استكمال التقييم ومراجعته وتجميع نتائجه في صورة قابلة للتحليل.",
+      "en": "A system for employee appraisals using structured forms and criteria, with completion tracking, review, and consolidated results for analysis."
+    },
+    "audience": {
+      "ar": "العاملون والمديرون وفرق الموارد البشرية",
+      "en": "Employees, managers, and HR teams"
+    },
+    "challenge": {
+      "ar": "الحاجة إلى توحيد تسجيل التقييمات ومتابعة استكمالها والرجوع إلى النتائج دون تشتتها في ملفات متفرقة.",
+      "en": "Consistent assessment records, completion follow-up, and accessible results rather than separate files."
+    },
+    "solution": {
+      "ar": "واجهات لإدخال التقييم وفق المعايير المحددة، ومراجعة النتائج، وعرض حالة الاستكمال والتقارير مع مراعاة صلاحيات الاطلاع.",
+      "en": "Interfaces for assessments against defined criteria, result review, completion status, and reporting with appropriate viewing permissions."
+    },
+    "role": {
+      "ar": "العمل على تطوير نماذج التقييم وواجهات المراجعة والتقارير",
+      "en": "Development of appraisal forms, review interfaces, and reporting"
+    },
+    "outcome": {
+      "ar": "تقييمات موثقة وقابلة للمتابعة، تساعد المدير والموارد البشرية على مراجعة الأداء والاحتياجات التطويرية.",
+      "en": "Documented, traceable appraisals that help managers and HR review performance and development needs."
+    },
+    "capabilities": [
+      {
+        "ar": "إدخال تقييمات العاملين وفق معايير محددة",
+        "en": "Record employee assessments against defined criteria"
+      },
+      {
+        "ar": "مراجعة التقييمات ومتابعة الاستكمال",
+        "en": "Review appraisals and track completion"
+      },
+      {
+        "ar": "تنظيم صلاحيات الاطلاع على النتائج",
+        "en": "Control access to appraisal results"
+      },
+      {
+        "ar": "تجميع النتائج في تقارير إدارية",
+        "en": "Consolidate results into management reports"
+      }
+    ],
+    "tags": [
+      "Oracle APEX",
+      "HR",
+      "Performance",
+      "Reporting"
+    ],
+    "visual": "appraisals"
+  },
+  {
+    "id": "managers-dashboard",
+    "category": "enterprise",
+    "name": {
+      "ar": "لوحة متابعة المديرين",
+      "en": "Managers Dashboard"
+    },
+    "label": {
+      "ar": "رؤية إدارية لفرق العمل",
+      "en": "Management visibility across teams"
+    },
+    "summary": {
+      "ar": "لوحة تجمع بيانات فرق العمل ومؤشرات المتابعة والطلبات في عرض إداري واضح، لمساعدة المدير على فهم الموقف والوصول إلى التفاصيل التي تحتاج إجراءً.",
+      "en": "A dashboard bringing team information, follow-up indicators, and requests into a clear management view, helping managers understand status and find items requiring action."
+    },
+    "audience": {
+      "ar": "المديرون والمشرفون والإدارة",
+      "en": "Managers, supervisors, and management teams"
+    },
+    "challenge": {
+      "ar": "توزع البيانات والتقارير بين شاشات متعددة، وصعوبة تكوين صورة موحدة عن موقف الفريق والطلبات المرتبطة به.",
+      "en": "Information and reports spread across different screens, making it difficult to get a consolidated view of the team and its requests."
+    },
+    "solution": {
+      "ar": "عرض موحّد لبيانات المتابعة والتقارير، مع فلاتر تنظّم الوصول إلى المعلومات وتحديد ما يحتاج مراجعة وفق صلاحيات المدير.",
+      "en": "A consolidated view of operational information and reports, with filters for focused access and items requiring review within the manager’s permissions."
+    },
+    "role": {
+      "ar": "تطوير واجهات العرض والاستعلامات والتقارير وتجربة المتابعة الإدارية",
+      "en": "Development of dashboard interfaces, queries, reports, and management follow-up UX"
+    },
+    "outcome": {
+      "ar": "معلومات أسهل قراءةً ومقارنةً، تدعم متابعة الفريق وتحديد أولويات المراجعة والعمل.",
+      "en": "Information that is easier to read and compare, supporting team oversight and prioritization of follow-up work."
+    },
+    "capabilities": [
+      {
+        "ar": "عرض بيانات فرق العمل في واجهة موحّدة",
+        "en": "Bring team information into one view"
+      },
+      {
+        "ar": "متابعة مؤشرات العمل وحالات الطلبات",
+        "en": "Monitor operational indicators and request status"
+      },
+      {
+        "ar": "تصفية المعلومات للوصول إلى التفاصيل المطلوبة",
+        "en": "Filter information to find relevant details"
+      },
+      {
+        "ar": "تقارير تساعد على المتابعة واتخاذ القرار",
+        "en": "Use reports to support follow-up and decisions"
+      }
+    ],
+    "tags": [
+      "Oracle APEX",
+      "Dashboards",
+      "SQL",
+      "Management Reports"
+    ],
+    "visual": "dashboard"
+  },
+  {
+    "id": "hr-forms",
+    "category": "enterprise",
+    "name": "HR Forms",
+    "label": {
+      "ar": "نماذج وإجراءات الموارد البشرية",
+      "en": "Human resources forms"
+    },
+    "summary": {
+      "ar": "نماذج أعمال ضمن منظومة الموارد البشرية، تركز على إدخال البيانات والتحقق منها وربطها بالإجراء المناسب.",
+      "en": "Business forms within an HR application ecosystem, focused on data capture, validation, and the relevant process."
+    },
+    "audience": {
+      "ar": "الموارد البشرية والموظفون",
+      "en": "HR teams and employees"
+    },
+    "challenge": {
+      "ar": "تقديم نماذج مفهومة ومتسقة مع قواعد العمل والصلاحيات.",
+      "en": "Providing understandable forms consistent with business rules and access rights."
+    },
+    "solution": {
+      "ar": "العمل على Forms وReports ومنطق PL/SQL وإجراءات التحقق والإتاحة.",
+      "en": "Working with forms, reports, PL/SQL logic, validations, and access rules."
+    },
+    "role": {
+      "ar": "تطوير نماذج وتطبيقات أعمال",
+      "en": "Business-application and form development"
+    },
+    "outcome": {
+      "ar": "واجهة منظمة لإجراءات الموارد البشرية وبياناتها.",
+      "en": "An organized interface for HR processes and information."
+    },
+    "tags": [
+      "Forms",
+      "Validation",
+      "PL/SQL",
+      "HR"
+    ],
+    "visual": "form"
+  },
+  {
+    "id": "approvals",
+    "category": "enterprise",
+    "name": {
+      "ar": "الموافقات واللجان",
+      "en": "Approvals & Committees"
+    },
+    "label": {
+      "ar": "تنظيم القرارات ومسارات المراجعة",
+      "en": "Review & decision workflows"
+    },
+    "summary": {
+      "ar": "العمل على إدارة الطلبات والمراجعين والصلاحيات، مع عرض أوضح للحالات والقرارات ومسؤولية كل مرحلة.",
+      "en": "Working on requests, reviewers, and authorization, with clearer status, decisions, and ownership at each step."
+    },
+    "audience": {
+      "ar": "مقدمو الطلبات والمراجعون وأعضاء اللجان",
+      "en": "Requesters, reviewers, and committee members"
+    },
+    "challenge": {
+      "ar": "تعدد مراحل الاعتماد واختلاف أدوار المشاركين والحاجة إلى فهم حالة الطلب.",
+      "en": "Multiple approval stages, different participant roles, and the need to understand a request's current state."
+    },
+    "solution": {
+      "ar": "تطوير إجراءات ومتابعة الطلبات وتحسين عرض الحالات وأدوار المراجعة وإلغاء الطلبات.",
+      "en": "Developing request-processing and tracking flows, status presentation, reviewer roles, and cancellation handling."
+    },
+    "role": {
+      "ar": "تطوير Workflows وتحسين تجربة متابعة القرارات",
+      "en": "Workflow development and decision-tracking UX"
+    },
+    "outcome": {
+      "ar": "تسلسل أكثر وضوحًا للمراجعة والقرارات ومسؤولية الإجراء التالي.",
+      "en": "Clearer review sequences, decisions, and responsibility for the next action."
+    },
+    "tags": [
+      "Workflows",
+      "Tasks",
+      "Authorization",
+      "PL/SQL"
+    ],
+    "visual": "workflow"
+  },
+  {
+    "id": "finance-reports",
+    "category": "enterprise",
+    "name": {
+      "ar": "الطلبات المالية والتقارير",
+      "en": "Financial Requests & Reporting"
+    },
+    "label": {
+      "ar": "إجراءات مالية وعرض البيانات",
+      "en": "Financial operations & data"
+    },
+    "summary": {
+      "ar": "خبرة في تطبيقات الطلبات المالية والتقارير، مع الاهتمام بصحة البيانات وقابلية قراءة النتائج وتصديرها.",
+      "en": "Experience with financial-request applications and reporting, with attention to data correctness, readable results, and exports."
+    },
+    "audience": {
+      "ar": "فرق الأعمال والإدارة المالية",
+      "en": "Business and finance teams"
+    },
+    "challenge": {
+      "ar": "ربط نماذج الطلبات بالتقارير، وإنتاج مخرجات مناسبة للاستخدام خارج الشاشة.",
+      "en": "Connecting request forms to reports and producing output that works beyond the screen."
+    },
+    "solution": {
+      "ar": "العمل على SQL وPL/SQL والتقارير والتصدير، ومراجعة طريقة عرض المعلومات.",
+      "en": "Working with SQL, PL/SQL, reporting, exports, and information presentation."
+    },
+    "role": {
+      "ar": "تطوير تطبيقات أعمال وتقارير",
+      "en": "Business application and reporting development"
+    },
+    "outcome": {
+      "ar": "تقارير ونماذج تخدم إجراءات العمل اليومية بوضوح.",
+      "en": "Forms and reports that support everyday business processes clearly."
+    },
+    "tags": [
+      "SQL",
+      "Reports",
+      "Finance",
+      "Excel"
+    ],
+    "visual": "report"
+  },
+  {
+    "id": "suppliers-access",
+    "category": "enterprise",
+    "name": {
+      "ar": "الموردون والصلاحيات",
+      "en": "Suppliers & Access Control"
+    },
+    "label": {
+      "ar": "الموردون والمقاولون وأدوار المستخدمين",
+      "en": "Supplier workflows & user roles"
+    },
+    "summary": {
+      "ar": "العمل على تطبيقات الموردين والمقاولين وربط وظائفها بإتاحة الصفحات وأدوار المستخدمين.",
+      "en": "Working on supplier and contractor applications, connecting their functions to page access and user roles."
+    },
+    "audience": {
+      "ar": "فرق الموردين والمقاولين ومديرو الأنظمة",
+      "en": "Supplier, contractor, and administration teams"
+    },
+    "challenge": {
+      "ar": "تقديم وظائف مناسبة لكل دور مع وضوح الوصول والتنقل.",
+      "en": "Providing the right functions for each role with understandable access and navigation."
+    },
+    "solution": {
+      "ar": "تنظيم صلاحيات الأدوار وإتاحة الصفحات والتنقل داخل التطبيق.",
+      "en": "Organizing role permissions, page authorization, and in-app navigation."
+    },
+    "role": {
+      "ar": "تطوير التطبيقات ومنطق الصلاحيات",
+      "en": "Application and authorization-logic development"
+    },
+    "outcome": {
+      "ar": "وصول أنسب للوظائف وفق دور المستخدم.",
+      "en": "Function access aligned with the user's role."
+    },
+    "tags": [
+      "Authorization",
+      "Roles",
+      "Oracle APEX"
+    ],
+    "visual": "access"
+  },
+  {
+    "id": "family-tree",
+    "category": "community",
+    "name": {
+      "ar": "شجرة العائلة",
+      "en": "Family Tree"
+    },
+    "label": {
+      "ar": "شجرة عائلة وسير شخصية",
+      "en": "Family tree & life stories"
+    },
+    "summary": {
+      "ar": "شجرة عائلة تفاعلية: تختار أي فرد لتقرأ قصة حياته وشهاداته وأبنائه وإنجازاته.",
+      "en": "An interactive family tree where each member opens a life story, qualifications, children, and achievements."
+    },
+    "audience": {
+      "ar": "أفراد العائلة والمهتمون بتوثيق تاريخها",
+      "en": "Families documenting their shared history"
+    },
+    "challenge": {
+      "ar": "عرض العلاقات بين أفراد العائلة مع الحفاظ على القصة الإنسانية والتفاصيل الخاصة بكل شخص.",
+      "en": "Showing family relationships while preserving the human story and details behind each person."
+    },
+    "solution": {
+      "ar": "إضافة شجرة العائلة وربط أفرادها بملفات شخصية تجمع قصة الحياة والشهادات والأبناء والإنجازات.",
+      "en": "Connecting a family tree to individual profiles containing biographies, certificates, children, and achievements."
+    },
+    "role": {
+      "ar": "العمل على تطبيق شجرة العائلة وملفات أفرادها",
+      "en": "Development of the family-tree and member-profile application"
+    },
+    "outcome": {
+      "ar": "استكشاف تاريخ العائلة عبر العلاقات والقصص، والوصول من الشجرة إلى سيرة الشخص مباشرة.",
+      "en": "A way to explore family history through both relationships and stories, moving directly from a tree member to a biography."
+    },
+    "tags": [
+      "Family tree",
+      "Profiles",
+      "Storytelling"
+    ],
+    "visual": "family"
+  },
+  {
+    "id": "yunni",
+    "category": "health",
+    "name": "Yunni",
+    "label": {
+      "ar": "عيادات الليزر والسبا",
+      "en": "Laser & spa operations"
+    },
+    "summary": {
+      "ar": "نظام متكامل بنيته من البداية للنهاية، يجمع تشغيل العيادة والإدارة المالية والموارد البشرية في تجربة واحدة.",
+      "en": "An end-to-end system I built for a laser and spa clinic, bringing clinic operations, finance, and HR into one experience."
+    },
+    "audience": {
+      "ar": "موظفو العيادة، الأطباء، المتخصصون والممرضون",
+      "en": "Clinic staff, doctors, specialists, and nurses"
+    },
+    "challenge": {
+      "ar": "الجمع بين احتياجات فرق العيادة المختلفة وبين العمل المالي وشؤون العاملين داخل نظام متكامل.",
+      "en": "Bringing the needs of different clinic teams together with financial operations and people administration."
+    },
+    "solution": {
+      "ar": "بناء النظام كاملًا وربط وظائف التشغيل بالمالي وHR، مع واجهات تخدم طبيعة عمل كل فريق.",
+      "en": "Building the complete system and connecting operational, financial, and HR functions through interfaces for each team."
+    },
+    "role": {
+      "ar": "تصميم وبناء النظام من البداية للنهاية",
+      "en": "End-to-end system design and development"
+    },
+    "outcome": {
+      "ar": "منظومة واحدة تغطي التشغيل والإدارة المالية والموارد البشرية، بدل التعامل مع كل مجال كجزيرة منفصلة.",
+      "en": "One system covering clinic operations, finance, and HR as connected parts of the business."
+    },
+    "tags": [
+      "Oracle APEX",
+      "PL/SQL",
+      "Finance",
+      "HR"
+    ],
+    "visual": "clinic"
+  },
+  {
+    "id": "truelase",
+    "category": "health",
+    "name": "TrueLase",
+    "label": {
+      "ar": "إدارة العيادات والليزر",
+      "en": "Clinic & laser management"
+    },
+    "summary": {
+      "ar": "ربط رحلة الموعد بالخدمات والفواتير، مع العمل على علاقة الخدمات بالمستهلكات والمخزون.",
+      "en": "Connecting appointments to services and billing, alongside service-to-inventory consumption workflows."
+    },
+    "audience": {
+      "ar": "فرق العمل داخل العيادة",
+      "en": "Clinic operations teams"
+    },
+    "challenge": {
+      "ar": "تنسيق بيانات المواعيد وتفاصيل الخدمات والفواتير، وتوضيح الفرق بين تكلفة المستهلكات وسعر الخدمة للمريض.",
+      "en": "Coordinating appointments, service details, and billing while distinguishing consumable costs from the patient's service price."
+    },
+    "solution": {
+      "ar": "العمل على إدارة المواعيد وتفاصيل الخدمات وحساب الفواتير، وتعريف ربط الخدمة بالأصناف والكميات المستخدمة.",
+      "en": "Developing appointment and service-detail workflows, invoice calculations, and mappings between services, inventory items, and quantities."
+    },
+    "role": {
+      "ar": "تطوير وظائف النظام ومنطق الخدمات والفواتير وربط المخزون",
+      "en": "Application development across services, billing, and inventory integration"
+    },
+    "outcome": {
+      "ar": "مسار أوضح يربط الموعد بالخدمة والفاتورة واحتياجاتها من المستهلكات، مع فصل مسؤولية كل جزء.",
+      "en": "A clearer relationship between appointments, services, invoices, and consumable requirements, with explicit responsibilities."
+    },
+    "tags": [
+      "Oracle APEX",
+      "Appointments",
+      "Billing",
+      "Inventory"
+    ],
+    "visual": "service"
+  }
 ]

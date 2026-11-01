@@ -6,10 +6,17 @@ Arabic-first, English-enabled professional portfolio, project case studies, cert
 
 ## Site content
 
+- Employee Services Portal: self-service requests, attendance, approvals and enterprise-service access.
+- Medical Services: medical letters, prescriptions, review queues and approval tracking.
+- Inventory: items, movements, balances, reporting and user access.
+- Task Management: assignments, priorities, due dates and progress.
+- Public Relations: administrative service requests, transport and missions.
+- Trips & Holiday Programs: preferences, departure groups, waiting lists and seasonal reporting.
+- Employee Appraisals: assessment forms, reviews, completion and results.
+- Managers Dashboard: team information, operational indicators and management reporting.
+- HR forms, approvals, committees, financial reporting, suppliers and the family-tree application.
 - Yunni: end-to-end laser/spa clinic operations, finance and HR.
 - TrueLase: appointments, services, billing and inventory integration.
-- Family-tree and individual life-story application.
-- Employee portals, HR forms, approvals, committees, reporting and role-based access.
 - Verified Oracle APEX Cloud Certified Developer Professional credential.
 - Bilingual technical articles with original-source canonical links.
 
