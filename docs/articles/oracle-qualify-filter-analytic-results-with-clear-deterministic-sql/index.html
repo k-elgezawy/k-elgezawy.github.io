@@ -1,0 +1,73 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="Oracle QUALIFY: تصفية نتائج التحليل بوضوح | كريم الجيزاوي" data-title-en="Oracle QUALIFY: Filter Analytic Results with Clear, Deterministic SQL | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Oracle QUALIFY: تصفية نتائج التحليل بوضوح | كريم الجيزاوي</title><meta name="description" content="QUALIFY بتسهل التعبير عن مهمة متكررة في التقارير: فلترة الصفوف بعد حساب Analytic Function. الخاصية موثقة في Oracle AI Database 26ai؛ تأكد من دعمها في إصدار قاعدة البيانات اللي تطبي"><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="Oracle QUALIFY: تصفية نتائج التحليل بوضوح | كريم الجيزاوي"><meta property="og:description" content="QUALIFY بتسهل التعبير عن مهمة متكررة في التقارير: فلترة الصفوف بعد حساب Analytic Function. الخاصية موثقة في Oracle AI Database 26ai؛ تأكد من دعمها في إصدار قاعدة البيانات اللي تطبي"><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/06.png"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/oracle-qualify-filter-analytic-results-with-clear-deterministic-sql"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/oracle-qualify-filter-analytic-results-with-clear-deterministic-sql"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Oracle QUALIFY: Filter Analytic Results with Clear, Deterministic SQL", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/oracle-qualify-filter-analytic-results-with-clear-deterministic-sql", "image": "https://k-elgezawy.github.io/assets/covers/06.png"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="Oracle QUALIFY: تصفية نتائج التحليل بوضوح" data-en="Oracle QUALIFY: Filter Analytic Results with Clear, Deterministic SQL">Oracle QUALIFY: تصفية نتائج التحليل بوضوح</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="3 دقائق قراءة" data-en="3 min read">3 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/06.png" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/oracle-qualify-filter-analytic-results-with-clear-deterministic-sql" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>QUALIFY makes a familiar reporting task easier to express: filtering rows after an analytic function has been evaluated. Oracle AI Database 26ai documents this clause; verify support in the database release your APEX application actually uses.</p>
+
+<h3>One employee per department</h3>
+
+<p>Assume EMPNO is unique. This example picks the highest non-null salary in each department, breaking salary ties by employee number:</p>
+
+<pre><code>select empno, deptno, sal,
+       row_number() over (
+         partition by deptno
+         order by sal desc nulls last, empno
+       ) as rn
+from emp
+qualify rn = 1;
+</code></pre>
+
+<p>The tie-breaker matters. Without a deterministic ordering, equal salaries can produce an arbitrary winner. If every salary in a department is null, this query still selects one employee. If the requirement is to return all tied highest salaries, choose a ranking strategy that preserves ties instead. <a href="https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/ROW_NUMBER.html">Oracle: ROW_NUMBER</a>.</p>
+
+<h3>Keep the compatible alternative</h3>
+
+<p>On a database without QUALIFY, put the analytic calculation in an inner query:</p>
+
+<pre><code>select empno, deptno, sal, rn
+from (
+  select empno, deptno, sal,
+         row_number() over (
+           partition by deptno
+           order by sal desc nulls last, empno
+         ) as rn
+  from emp
+)
+where rn = 1;
+</code></pre>
+
+<p>QUALIFY is evaluated after analytic calculations; WHERE filters their input rows. Neither query promises a final display order without an outer ORDER BY. <a href="https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SELECT.html">Oracle: SELECT and QUALIFY</a>.</p>
+
+<p><em>Editorial correction: the original post broadly attributed support to “23ai” and claimed faster execution. This revision uses the verified 26ai documentation. Shorter SQL is not evidence of a faster execution plan.</em></p>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>QUALIFY بتسهل التعبير عن مهمة متكررة في التقارير: فلترة الصفوف بعد حساب Analytic Function. الخاصية موثقة في Oracle AI Database 26ai؛ تأكد من دعمها في إصدار قاعدة البيانات اللي تطبيق APEX عندك بيستخدمه فعليًا.</p>
+
+<h3>موظف واحد لكل قسم</h3>
+
+<p>نفترض إن EMPNO فريد. المثال بيختار أعلى راتب غير فارغ في كل قسم، ويحسم تساوي الرواتب برقم الموظف:</p>
+
+<pre><code>select empno, deptno, sal,
+       row_number() over (
+         partition by deptno
+         order by sal desc nulls last, empno
+       ) as rn
+from emp
+qualify rn = 1;
+</code></pre>
+
+<p>حسم التعادل مهم؛ من غير ترتيب حتمي، تساوي الرواتب ممكن ينتج اختيارًا غير محدد. لو كل الرواتب في قسم فارغة، الاستعلام يظل يختار موظفًا واحدًا. ولو المطلوب كل الموظفين المتعادلين في أعلى راتب، اختار طريقة ترتيب تحتفظ بالتعادل. <a href="https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/ROW_NUMBER.html">توثيق ROW_NUMBER</a>.</p>
+
+<h3>احتفظ بالبديل المتوافق</h3>
+
+<p>لو الإصدار لا يدعم QUALIFY، ضع الحساب في استعلام داخلي:</p>
+
+<pre><code>select empno, deptno, sal, rn
+from (
+  select empno, deptno, sal,
+         row_number() over (
+           partition by deptno
+           order by sal desc nulls last, empno
+         ) as rn
+  from emp
+)
+where rn = 1;
+</code></pre>
+
+<p>QUALIFY تُقيّم بعد الحسابات التحليلية، بينما WHERE بتفلتر الصفوف الداخلة للحساب. ولا واحد من الاستعلامين يضمن ترتيب العرض النهائي بدون ORDER BY خارجي. <a href="https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/SELECT.html">توثيق SELECT وQUALIFY</a>.</p>
+
+<p><em>تصحيح تحريري: البوست الأصلي نسب الدعم بشكل عام إلى “23ai” وادعى سرعة أعلى. النسخة دي تعتمد على توثيق 26ai المتحقق منه. قِصر الاستعلام لا يثبت إن خطة تنفيذه أسرع.</em></p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/oracle-qualify-filter-analytic-results-with-clear-deterministic-sql" target="_blank" rel="noopener noreferrer">Oracle QUALIFY: Filter Analytic Results with Clear, Deterministic SQL</a><p><a class="" href="https://www.linkedin.com/feed/update/urn:li:activity:7400564363641896961/" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p><p class="" data-ar="صورة الغلاف مولدة بالذكاء الاصطناعي." data-en="Cover illustration generated with AI.">صورة الغلاف مولدة بالذكاء الاصطناعي.</p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>

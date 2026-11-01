@@ -1,0 +1,55 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="إنشاء Word وExcel وPowerPoint من Node.js باستخدام ETCH | كريم الجيزاوي" data-title-en="Generate Word, Excel, and PowerPoint Documents from Node.js with ETCH | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>إنشاء Word وExcel وPowerPoint من Node.js باستخدام ETCH | كريم الجيزاوي</title><meta name="description" content="فرق العمل تحتاج أحيانًا نفس البيانات في فاتورة Word أو ملف Excel شهري أو عرض PowerPoint. بناء كل تصميم داخل الكود يجعل تغييرات الشكل البسيطة محتاجة تدخل من المطور."><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="إنشاء Word وExcel وPowerPoint من Node.js باستخدام ETCH | كريم الجيزاوي"><meta property="og:description" content="فرق العمل تحتاج أحيانًا نفس البيانات في فاتورة Word أو ملف Excel شهري أو عرض PowerPoint. بناء كل تصميم داخل الكود يجعل تغييرات الشكل البسيطة محتاجة تدخل من المطور."><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/etch.svg"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/generate-word-excel-and-powerpoint-documents-from-node-js-with-etch"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/generate-word-excel-and-powerpoint-documents-from-node-js-with-etch"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Generate Word, Excel, and PowerPoint Documents from Node.js with ETCH", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/generate-word-excel-and-powerpoint-documents-from-node-js-with-etch", "image": "https://k-elgezawy.github.io/assets/covers/etch.svg"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="إنشاء Word وExcel وPowerPoint من Node.js باستخدام ETCH" data-en="Generate Word, Excel, and PowerPoint Documents from Node.js with ETCH">إنشاء Word وExcel وPowerPoint من Node.js باستخدام ETCH</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="3 دقائق قراءة" data-en="3 min read">3 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/etch.svg" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/generate-word-excel-and-powerpoint-documents-from-node-js-with-etch" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>Teams often need the same document in different formats: invoices, monthly workbooks, or project update decks. A common approach is to build each document with code. That can make even small layout changes require a developer.</p>
+
+<p>ETCH takes a template-first approach. You design a regular Office document, add placeholders where data should appear, then send the template and a JavaScript object to ETCH from Node.js. The template controls the layout; the data supplies the content.</p>
+
+<h2>Start with a Word template</h2>
+
+<p>Imagine an invoice template with placeholders such as <code>{{customer.name}}</code>, <code>{{invoiceNumber}}</code>, and <code>{{total}}</code>. Your Node.js code passes the invoice data to ETCH, which returns a completed Word document. A loop such as <code>{{#each items}}</code> can repeat a table row for every line item.</p>
+
+<p>The same approach can place an image, QR code, or barcode in the finished file. If a designer wants to change the colors, spacing, or typography, they can edit the Word template while the data preparation code stays focused on the business logic.</p>
+
+<h2>Excel and PowerPoint templates</h2>
+
+<p>In Excel, a repeated row can become one row per region, product, or month. The source article also shows formulas and charts adjusting to the generated rows, and a sheet template being copied once for each region.</p>
+
+<p>In PowerPoint, a slide loop can generate a slide for each project, with project details, milestones, and chart data filled from the input. This can help keep recurring reports consistent while the underlying data changes.</p>
+
+<h2>A simple Node.js workflow</h2>
+
+<p>The article's example uses the <code>@get-etch/etch-client</code> package. At a high level, the program reads a JSON file, creates an ETCH client, processes a template with the data, then saves the resulting document. ETCH also supports PDF output and batch rendering for multiple records.</p>
+
+<p>Before starting, the article lists Node.js 22 or later, an ETCH account, a package token for installing the client, and an API key for requests. Keep these credentials in environment variables and follow the current ETCH setup guide for your package manager.</p>
+
+<h2>When this approach fits</h2>
+
+<p>Template-based generation is useful when many documents share a stable design but contain different data. Examples include invoices, sales summaries, certificates, and project updates. It is less useful when every document is a one-off with a completely different layout.</p>
+
+<p>The key design choice is separating content from presentation: let application code prepare trustworthy data, and let the Office template define how that data should look.</p>
+
+<p>Read the <a href="https://get-etch.hashnode.dev/generate-word-excel-and-powerpoint-documents-from-node-js-using-etch">ETCH article and examples</a>.</p>
+
+<h1>NodeJS #JavaScript #DocumentAutomation #Office</h1>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>فرق العمل تحتاج أحيانًا نفس البيانات في فاتورة Word أو ملف Excel شهري أو عرض PowerPoint. بناء كل تصميم داخل الكود يجعل تغييرات الشكل البسيطة محتاجة تدخل من المطور.</p>
+
+<h2>القالب يحدد الشكل، والبيانات تحدد المحتوى</h2>
+
+<p>ETCH تعتمد على قوالب Office عادية. تجهز المستند وتضع أماكن للبيانات، ثم ترسل القالب وكائن JavaScript إلى الخدمة من Node.js. القالب مسؤول عن التصميم، والكود مسؤول عن تجهيز بيانات صحيحة.</p>
+
+<p>في قالب فاتورة مثلًا، يمكن استخدام <code>{{customer.name}}</code> و<code>{{invoiceNumber}}</code> و<code>{{total}}</code>. حلقة مثل <code>{{#each items}}</code> تكرر صفًا لكل بند. ويمكن للقالب إدراج صور أو QR Codes أو Barcodes. تغيير الألوان والمسافات والخطوط يتم في ملف Word، مع بقاء تجهيز البيانات في الكود.</p>
+
+<h2>Excel وPowerPoint</h2>
+
+<p>في Excel يمكن تكرار صفوف بحسب المنتجات أو المناطق أو الشهور. المصدر يعرض كذلك تحديث الصيغ والرسوم البيانية مع الصفوف، وتكرار Sheet لكل منطقة. في PowerPoint يمكن تكرار شريحة لكل مشروع وتعبئة التفاصيل والمراحل وبيانات الرسم.</p>
+
+<h2>دورة العمل من Node.js</h2>
+
+<p>المثال يستخدم الحزمة <code>@get-etch/etch-client</code>: قراءة بيانات JSON، إنشاء العميل، معالجة القالب بالبيانات، ثم حفظ الملف. المصدر يذكر دعم PDF ومعالجة عدة سجلات دفعة واحدة.</p>
+
+<p>متطلبات المقال الأصلي تشمل Node.js 22 أو أحدث، وحساب ETCH، وPackage Token لتثبيت العميل، وAPI Key للطلبات. احفظ بيانات الاعتماد في متغيرات البيئة، وراجع دليل ETCH الحالي عند التنفيذ.</p>
+
+<p>هذا الأسلوب مناسب للفواتير والتقارير والشهادات التي تتشارك تصميمًا ثابتًا وبيانات متغيرة. فائدته أقل عندما يكون لكل ملف تصميم مختلف تمامًا.</p>
+
+<p>الفكرة الأساسية: افصل تجهيز البيانات عن تصميم المستند.</p>
+
+<p><a href="https://get-etch.hashnode.dev/generate-word-excel-and-powerpoint-documents-from-node-js-using-etch">المقال الأصلي وأمثلة ETCH</a>.</p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/generate-word-excel-and-powerpoint-documents-from-node-js-with-etch" target="_blank" rel="noopener noreferrer">Generate Word, Excel, and PowerPoint Documents from Node.js with ETCH</a><p><a class="" href="https://karimelgezawy.hashnode.dev/generate-word-excel-and-powerpoint-documents-from-node-js-with-etch" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p><p class="" data-ar="رسم توضيحي للموضوع." data-en="Topic illustration.">رسم توضيحي للموضوع.</p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>
