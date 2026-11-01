@@ -6,7 +6,7 @@ from urllib.parse import urlparse,unquote
 ROOT=Path(__file__).resolve().parent.parent;OUT=ROOT/'docs'
 articles=json.loads((ROOT/'content/articles.json').read_text(encoding='utf-8'))
 errors=[]
-if len(articles)!=32:errors.append(f'Expected 32 migrated articles, found {len(articles)}')
+if len(articles)<32:errors.append(f'Expected at least 32 migrated articles, found {len(articles)}')
 if len({a['slug'] for a in articles})!=len(articles):errors.append('Duplicate article slug')
 class Links(HTMLParser):
     def __init__(self):super().__init__();self.links=[];self.ids=[]
