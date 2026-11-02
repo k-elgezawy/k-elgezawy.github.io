@@ -1,6 +1,6 @@
 # Karim El-Gezawy — Oracle APEX Portfolio
 
-Arabic-first, English-enabled professional portfolio, project case studies, certification, teaching resources, and 32 technical articles.
+Arabic-first, English-enabled professional portfolio, project case studies, certification, teaching resources, and a growing library of bilingual technical articles.
 
 **Live:** https://k-elgezawy.github.io/
 

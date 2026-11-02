@@ -446,5 +446,19 @@
     "excerptEn": "Oracle's October 2026 Critical Patch Update lists CVE-2026-101521 in Oracle APEX with a CVSS 3.1 score of 9.8. Oracle describes it as remotely exploitable over HTTPS without…",
     "minutes": 3,
     "aiCover": false
+  },
+  {
+    "id": 33,
+    "slug": "oracle-apex-compatibility-mode-review-before-you-switch",
+    "title": "Oracle APEX Compatibility Mode: Review Before You Switch",
+    "titleAr": "وضع التوافق في Oracle APEX: راجع قبل التغيير",
+    "canonical": "https://karimelgezawy.hashnode.dev/oracle-apex-compatibility-mode-review-before-you-switch",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7467911938401046548/",
+    "category": "development",
+    "cover": "assets/covers/compatibility-mode-2026-11-02.png",
+    "excerpt": "قائمة مراجعة واختبارات قبل تغيير وضع التوافق، مع توضيح الفرق بينه وبين إصدار APEX والثيم، وتحديث وضع Advisor في APEX 26.2.",
+    "excerptEn": "Review runtime behavior, preserve a baseline, and test user journeys before changing Compatibility Mode, with an APEX 26.2 Advisor update.",
+    "minutes": 5,
+    "aiCover": true
   }
 ]
