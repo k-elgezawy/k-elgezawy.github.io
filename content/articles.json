@@ -460,5 +460,19 @@
     "excerptEn": "Review runtime behavior, preserve a baseline, and test user journeys before changing Compatibility Mode, with an APEX 26.2 Advisor update.",
     "minutes": 5,
     "aiCover": true
+  },
+  {
+    "id": 34,
+    "slug": "oracle-apex-dynamic-actions-page-load-or-after-refresh",
+    "title": "Oracle APEX Dynamic Actions: Page Load or After Refresh?",
+    "titleAr": "متى تعمل Dynamic Actions في Oracle APEX؟",
+    "canonical": "https://karimelgezawy.hashnode.dev/oracle-apex-dynamic-actions-page-load-or-after-refresh",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7404399483813523457/",
+    "category": "development",
+    "cover": "assets/covers/dynamic-actions-2026-11-03.png",
+    "excerpt": "اختيار الحدث المناسب عند تحميل صفحة APEX أو تحديث تقرير.",
+    "excerptEn": "Choose the right event for the initial page load or a report refresh.",
+    "minutes": 4,
+    "aiCover": true
   }
 ]

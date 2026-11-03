@@ -1,0 +1,55 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="متى تعمل Dynamic Actions في Oracle APEX؟ | كريم الجيزاوي" data-title-en="Oracle APEX Dynamic Actions: Page Load or After Refresh? | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>متى تعمل Dynamic Actions في Oracle APEX؟ | كريم الجيزاوي</title><meta name="description" content="اختيار الحدث المناسب عند تحميل صفحة APEX أو تحديث تقرير."><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="متى تعمل Dynamic Actions في Oracle APEX؟ | كريم الجيزاوي"><meta property="og:description" content="اختيار الحدث المناسب عند تحميل صفحة APEX أو تحديث تقرير."><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/dynamic-actions-2026-11-03.png"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/oracle-apex-dynamic-actions-page-load-or-after-refresh"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/oracle-apex-dynamic-actions-page-load-or-after-refresh"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Oracle APEX Dynamic Actions: Page Load or After Refresh?", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/oracle-apex-dynamic-actions-page-load-or-after-refresh", "image": "https://k-elgezawy.github.io/assets/covers/dynamic-actions-2026-11-03.png"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="متى تعمل Dynamic Actions في Oracle APEX؟" data-en="Oracle APEX Dynamic Actions: Page Load or After Refresh?">متى تعمل Dynamic Actions في Oracle APEX؟</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="4 دقائق قراءة" data-en="4 min read">4 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/dynamic-actions-2026-11-03.png" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/oracle-apex-dynamic-actions-page-load-or-after-refresh" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>A report can be visible while a Dynamic Action is still waiting for the event it was configured to handle. Start debugging by identifying what should trigger the action: the initial page load, a refresh of a specific component, or the completion of an Ajax request.</p>
+
+<h2>Separate the server and browser timelines</h2>
+
+<p>During rendering, APEX builds the response using server-side processes, conditions, and region queries. In the browser, a Page Load Dynamic Action fires when the DOM is ready. If a task depends on APEX components that delay initialization, consult the documented <code>apexreadyend</code> event. A region refresh is a separate operation. After Refresh applies to components that emit the refresh event.</p>
+
+<h2>Example: count visible rows after a report refresh</h2>
+
+<p>In a development application, give a Classic Report the Static ID <code>orders_report</code>. Add a static element with ID <code>orders_row_count</code> outside the report. Define the following function in the page’s JavaScript declarations. Adjust the row selector for your report template.</p>
+
+<pre><code>function updateVisibleOrderCount() {
+  const report = document.getElementById("orders_report");
+  const label = document.getElementById("orders_row_count");
+  if (report &amp;&amp; label) {
+    const count = report.querySelectorAll("tbody tr").length;
+    label.textContent = String(count);
+  }
+}
+</code></pre>
+
+<p>Call <code>updateVisibleOrderCount();</code> from a Page Load Dynamic Action for the initial display. Call it again from an After Refresh Dynamic Action targeting the Classic Report for subsequent refreshes. This example counts rendered table rows, including any template rows that match the selector. Use a server-side count if the requirement is the total across all report pages.</p>
+
+<h2>Diagnose with two traces</h2>
+
+<p>Enable APEX Debug and inspect the server-side render or Ajax request. Then use browser developer tools to check whether the event fired, whether the selector matched, and whether an Ajax action returned an error. For a slow report, measure the region query and network request before changing the event configuration.</p>
+
+<p>Sources: <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/understanding-dynamic-actions.html">Oracle Dynamic Actions guide</a> and <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aexjs/apex.html">Oracle APEX JavaScript events</a>.</p>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>ممكن التقرير يظهر على الشاشة بينما الـ Dynamic Action لسه مستنية الحدث اللي اتضبطت عليه. ابدأ التشخيص بتحديد اللحظة المناسبة للتنفيذ: التحميل الأول للصفحة، تحديث مكوّن بعينه، أو اكتمال طلب Ajax.</p>
+
+<h2>افصل بين توقيت السيرفر والمتصفح</h2>
+
+<p>أثناء تجهيز الصفحة، يبني APEX الاستجابة باستخدام عمليات السيرفر والشروط واستعلامات المناطق. في المتصفح، يحدث Page Load لما يكون الـ DOM جاهز. لو المهمة تعتمد على مكونات APEX اللي بتتأخر في التهيئة، راجع حدث <code>apexreadyend</code> في التوثيق. تحديث منطقة عملية منفصلة. حدث After Refresh ينطبق على المكوّنات اللي بتطلق حدث التحديث.</p>
+
+<h2>مثال عملي لعد الصفوف الظاهرة بعد تحديث التقرير</h2>
+
+<p>في تطبيق تطوير، أعطِ الـ Classic Report معرّفًا ثابتًا <code>orders_report</code>. أضف عنصرًا ثابتًا بمعرّف <code>orders_row_count</code> خارج التقرير. عرّف الدالة التالية ضمن تعريفات JavaScript في الصفحة. اضبط محدد الصفوف على حسب قالب تقريرك.</p>
+
+<pre><code>function updateVisibleOrderCount() {
+  const report = document.getElementById("orders_report");
+  const label = document.getElementById("orders_row_count");
+  if (report &amp;&amp; label) {
+    const count = report.querySelectorAll("tbody tr").length;
+    label.textContent = String(count);
+  }
+}
+</code></pre>
+
+<p>استدعِ <code>updateVisibleOrderCount();</code> من Dynamic Action بحدث Page Load للعرض الأول. استدعِ الدالة مرة ثانية من Dynamic Action بحدث After Refresh يستهدف الـ Classic Report بعد كل تحديث لاحق. المثال يعد صفوف الجدول المرسومة، بما فيها أي صفوف من القالب تطابق المحدد. لو المطلوب إجمالي الصفوف عبر جميع صفحات التقرير، احسب العدد على السيرفر.</p>
+
+<h2>شخّص المشكلة بتتبّع التنفيذ على الجانبين</h2>
+
+<p>فعّل APEX Debug وراجع تنفيذ تجهيز الصفحة أو طلب Ajax على السيرفر. بعدها استخدم أدوات المطور في المتصفح للتأكد إن الحدث اتنفّذ، وإن المحدد طابق العنصر المطلوب، وإن طلب Ajax رجع بنجاح. لو التقرير بطيء، قِس زمن استعلام المنطقة وطلب الشبكة قبل تعديل إعداد الحدث.</p>
+
+<p><a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/understanding-dynamic-actions.html">دليل Dynamic Actions من Oracle</a> و<a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aexjs/apex.html">مرجع أحداث JavaScript في Oracle APEX</a>.</p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/oracle-apex-dynamic-actions-page-load-or-after-refresh" target="_blank" rel="noopener noreferrer">Oracle APEX Dynamic Actions: Page Load or After Refresh?</a><p><a class="" href="https://www.linkedin.com/feed/update/urn:li:activity:7404399483813523457/" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p><p class="" data-ar="صورة الغلاف مولدة بالذكاء الاصطناعي." data-en="Cover illustration generated with AI.">صورة الغلاف مولدة بالذكاء الاصطناعي.</p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>
