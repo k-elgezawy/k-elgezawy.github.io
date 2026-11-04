@@ -474,5 +474,19 @@
     "excerptEn": "Choose the right event for the initial page load or a report refresh.",
     "minutes": 4,
     "aiCover": true
+  },
+  {
+    "id": 35,
+    "slug": "color-oracle-apex-report-rows-with-sql-and-css",
+    "title": "Color Oracle APEX Report Rows with SQL and CSS",
+    "titleAr": "تلوين صفوف تقارير Oracle APEX باستخدام SQL وCSS",
+    "canonical": "https://karimelgezawy.hashnode.dev/color-oracle-apex-report-rows-with-sql-and-css",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7411647252894556160/",
+    "category": "development",
+    "cover": "assets/covers/row-coloring-2026-11-04.png",
+    "excerpt": "تلوين الصفوف حسب الحالة باستخدام علامات SQL وCSS مع حماية النصوص واختبار التحديثات.",
+    "excerptEn": "Style report rows with controlled SQL status markers, scoped CSS, readable labels, and refresh checks.",
+    "minutes": 4,
+    "aiCover": true
   }
 ]

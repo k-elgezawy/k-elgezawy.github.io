@@ -1,0 +1,97 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="تلوين صفوف تقارير Oracle APEX باستخدام SQL وCSS | كريم الجيزاوي" data-title-en="Color Oracle APEX Report Rows with SQL and CSS | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>تلوين صفوف تقارير Oracle APEX باستخدام SQL وCSS | كريم الجيزاوي</title><meta name="description" content="تلوين الصفوف حسب الحالة باستخدام علامات SQL وCSS مع حماية النصوص واختبار التحديثات."><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="تلوين صفوف تقارير Oracle APEX باستخدام SQL وCSS | كريم الجيزاوي"><meta property="og:description" content="تلوين الصفوف حسب الحالة باستخدام علامات SQL وCSS مع حماية النصوص واختبار التحديثات."><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/row-coloring-2026-11-04.png"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/color-oracle-apex-report-rows-with-sql-and-css"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/color-oracle-apex-report-rows-with-sql-and-css"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Color Oracle APEX Report Rows with SQL and CSS", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/color-oracle-apex-report-rows-with-sql-and-css", "image": "https://k-elgezawy.github.io/assets/covers/row-coloring-2026-11-04.png"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="تلوين صفوف تقارير Oracle APEX باستخدام SQL وCSS" data-en="Color Oracle APEX Report Rows with SQL and CSS">تلوين صفوف تقارير Oracle APEX باستخدام SQL وCSS</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="4 دقائق قراءة" data-en="4 min read">4 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/row-coloring-2026-11-04.png" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/color-oracle-apex-report-rows-with-sql-and-css" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>A status column can help readers scan an Oracle APEX Interactive Report quickly. My original LinkedIn example used a small HTML marker inside each row, then CSS to style the row containing that marker.</p>
+
+<h2>Return a controlled status marker</h2>
+
+<p>The following illustrative query assumes a table named <code>demo_records</code> with <code>record_id</code> and <code>status_code</code>. Replace those names with your application's query. The status mapping emits a fixed set of HTML strings.</p>
+
+<pre><code>select record_id,
+       case status_code
+         when 'VALID' then
+           '&lt;span class="row-paint" data-state="valid"&gt;Valid&lt;/span&gt;'
+         when 'EXPIRED' then
+           '&lt;span class="row-paint" data-state="expired"&gt;Expired&lt;/span&gt;'
+         else
+           '&lt;span class="row-paint" data-state="review"&gt;Review&lt;/span&gt;'
+       end as status_badge
+from demo_records
+</code></pre>
+
+<p>Set the computed <code>STATUS_BADGE</code> column to Plain Text and set Escape Special Characters to No so its generated markup can render. Keep ordinary data columns escaped. If you extend the expression to include user-entered text, escape that text for its output context before combining it with HTML. Oracle documents <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/controlling-output-escaping-in-substitution-strings.html">HTML and attribute escaping</a>.</p>
+
+<p>The visible words Valid, Expired, and Review give each row a readable status alongside its color.</p>
+
+<h2>Scope the CSS to one report</h2>
+
+<p>Give the report region the Static ID <code>record_status_report</code>. Add these rules to your application stylesheet or the page's Inline CSS.</p>
+
+<pre><code>#record_status_report tbody tr:has(.row-paint[data-state="valid"]) &gt; td {
+  background-color: #e4f5ea;
+  color: #123b24;
+}
+
+#record_status_report tbody tr:has(.row-paint[data-state="expired"]) &gt; td {
+  background-color: #fbe9e7;
+  color: #582018;
+}
+</code></pre>
+
+<p>The <code>:has()</code> selector matches a row containing the corresponding marker. Applying the background to its cells helps the color appear over cell backgrounds supplied by the report template. MDN explains <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:has">the selector and browser support</a>.</p>
+
+<p>The Review state keeps the report's normal styling. Adjust the palette for your theme and check contrast in every supported appearance.</p>
+
+<h2>Verify the complete report experience</h2>
+
+<p>Test the two colored states and the fallback state. Change filters, sort columns, move between report pages, and refresh the report. The selector will match newly rendered rows when the marker remains in their markup.</p>
+
+<p>Keep the status column in the report layouts that need this treatment. If users hide or exclude that column, verify whether the marker remains in the rendered DOM. Check keyboard focus, hover styling, small screens, and downloads as well. An export should communicate the status through readable values.</p>
+
+<p>This pattern connects a controlled status value to presentation. Keep the underlying business decision in the query or application logic, and use the visible label to explain the color.</p>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>عمود الحالة يساعد المستخدم يراجع صفوف Interactive Report في Oracle APEX بسرعة. المثال الأصلي على LinkedIn استخدم علامة HTML صغيرة داخل كل صف، وبعدها CSS لتنسيق الصف الذي يحتوي على العلامة.</p>
+
+<h2>أرجع علامة حالة بقيم محددة</h2>
+
+<p>الاستعلام التوضيحي التالي يفترض وجود جدول <code>demo_records</code> وعمودي <code>record_id</code> و<code>status_code</code>. استبدل الأسماء باستعلام تطبيقك. الربط بين الحالة والعرض يُنتج مجموعة ثابتة من نصوص HTML.</p>
+
+<pre><code>select record_id,
+       case status_code
+         when 'VALID' then
+           '&lt;span class="row-paint" data-state="valid"&gt;Valid&lt;/span&gt;'
+         when 'EXPIRED' then
+           '&lt;span class="row-paint" data-state="expired"&gt;Expired&lt;/span&gt;'
+         else
+           '&lt;span class="row-paint" data-state="review"&gt;Review&lt;/span&gt;'
+       end as status_badge
+from demo_records
+</code></pre>
+
+<p>اضبط العمود المحسوب <code>STATUS_BADGE</code> على Plain Text واجعل Escape Special Characters بقيمة No لعرض HTML الناتج. احتفظ بالـEscaping لأعمدة البيانات العادية. لو وسّعت التعبير وأضفت نصًا يدخله المستخدم، طبّق عليه الـEscaping المناسب لسياق العرض قبل دمجه مع HTML. توضح Oracle <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/controlling-output-escaping-in-substitution-strings.html">فلاتر حماية النصوص وخصائص HTML</a>.</p>
+
+<p>الكلمات الظاهرة Valid وExpired وReview توفر وصفًا مقروءًا للحالة بجانب اللون.</p>
+
+<h2>حدّد نطاق CSS لتقرير واحد</h2>
+
+<p>أعطِ منطقة التقرير Static ID بقيمة <code>record_status_report</code>. أضف القواعد التالية إلى ملف CSS الخاص بالتطبيق أو Inline CSS في الصفحة.</p>
+
+<pre><code>#record_status_report tbody tr:has(.row-paint[data-state="valid"]) &gt; td {
+  background-color: #e4f5ea;
+  color: #123b24;
+}
+
+#record_status_report tbody tr:has(.row-paint[data-state="expired"]) &gt; td {
+  background-color: #fbe9e7;
+  color: #582018;
+}
+</code></pre>
+
+<p>المحدد <code>:has()</code> يختار الصف الذي يحتوي على العلامة المطابقة. تطبيق الخلفية على خلايا الصف يساعد اللون يظهر فوق الخلفيات التي يضعها قالب التقرير على الخلايا. يشرح MDN <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:has">المحدد ودعم المتصفحات له</a>.</p>
+
+<p>حالة Review تحتفظ بتنسيق التقرير المعتاد. عدّل الألوان لتناسب الثيم، وراجع تباين النص في كل مظهر يدعمه التطبيق.</p>
+
+<h2>اختبر تجربة التقرير كاملة</h2>
+
+<p>اختبر الحالتين الملونتين والحالة الافتراضية. غيّر الفلاتر والترتيب، وتنقّل بين صفحات التقرير، ثم حدّثه. المحدد يطابق الصفوف التي تُرسم من جديد عندما تظل العلامة موجودة في HTML الخاص بها.</p>
+
+<p>احتفظ بعمود الحالة في تخطيطات التقرير التي تحتاج التنسيق. لو المستخدم أخفى العمود أو استبعده، افحص هل العلامة ما زالت موجودة في الـDOM الناتج. راجع تركيز الكيبورد وتنسيق مرور المؤشر والشاشات الصغيرة وتنزيل الملفات أيضًا. ملف التصدير يحتاج قيمًا مقروءة توضّح الحالة.</p>
+
+<p>الأسلوب يربط قيمة حالة محددة بطريقة عرضها. احتفظ بقرار العمل في الاستعلام أو منطق التطبيق، واستخدم النص الظاهر لتفسير اللون.</p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/color-oracle-apex-report-rows-with-sql-and-css" target="_blank" rel="noopener noreferrer">Color Oracle APEX Report Rows with SQL and CSS</a><p><a class="" href="https://www.linkedin.com/feed/update/urn:li:activity:7411647252894556160/" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p><p class="" data-ar="صورة الغلاف مولدة بالذكاء الاصطناعي." data-en="Cover illustration generated with AI.">صورة الغلاف مولدة بالذكاء الاصطناعي.</p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>
