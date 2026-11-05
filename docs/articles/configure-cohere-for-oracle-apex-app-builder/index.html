@@ -1,0 +1,73 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="إعداد Cohere للعمل مع Oracle APEX App Builder | كريم الجيزاوي" data-title-en="Configure Cohere for Oracle APEX App Builder | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>إعداد Cohere للعمل مع Oracle APEX App Builder | كريم الجيزاوي</title><meta name="description" content="إعداد خدمة Cohere داخل الـWorkspace، وفهم اختيارات App Builder وحماية بيانات الاتصال ومراجعة الإجابات."><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="إعداد Cohere للعمل مع Oracle APEX App Builder | كريم الجيزاوي"><meta property="og:description" content="إعداد خدمة Cohere داخل الـWorkspace، وفهم اختيارات App Builder وحماية بيانات الاتصال ومراجعة الإجابات."><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/cohere-2026-11-05.png"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/configure-cohere-for-oracle-apex-app-builder"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/configure-cohere-for-oracle-apex-app-builder"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Configure Cohere for Oracle APEX App Builder", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/configure-cohere-for-oracle-apex-app-builder", "image": "https://k-elgezawy.github.io/assets/covers/cohere-2026-11-05.png"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="إعداد Cohere للعمل مع Oracle APEX App Builder" data-en="Configure Cohere for Oracle APEX App Builder">إعداد Cohere للعمل مع Oracle APEX App Builder</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="4 دقائق قراءة" data-en="4 min read">4 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/cohere-2026-11-05.png" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/configure-cohere-for-oracle-apex-app-builder" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>My original LinkedIn walkthrough connected a Cohere service to Oracle APEX App Builder. The useful starting point is a workspace service definition: provider, endpoint, model, and credential are configured together before you ask the assistant to help with code.</p>
+
+<h2>Create the workspace service</h2>
+
+<p>In APEX 26.2, open <strong>App Builder → Workspace Utilities → All Workspace Utilities → Generative AI</strong>. Create a service, select <strong>Cohere</strong>, and give it a clear name and Static ID. Navigation labels can differ by APEX version. Oracle describes the <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/apxdc/configuring-generative-ai-service.html">configuration workflow</a>.</p>
+
+<p>This is an illustrative configuration record, not an import file or executable script:</p>
+
+<pre><code>Name: Cohere Development Assistant
+Static ID: COHERE_DEV_ASSISTANT
+AI Provider: Cohere
+Used by App Builder: On
+Default for New Apps: Off (enable if required)
+Base URL: https://api.cohere.ai/v2
+AI Model: command-r-08-2024
+Credential: a workspace Web Credential
+</code></pre>
+
+<p>The endpoint and model above come from my original example. Confirm that your installed APEX version supports the endpoint and that your provider account can access the chosen model. Check <a href="https://docs.cohere.com/docs/models">Cohere's current model catalog</a>; availability can vary by hosting platform.</p>
+
+<h2>Separate the two switches</h2>
+
+<p><strong>Used by App Builder</strong> enables the service for builder features. <strong>Default for New Apps</strong> chooses the default service for newly created applications. Decide each setting independently; they serve different purposes. See Oracle's <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/editing-a-generative-as-service.html">service attribute reference</a>.</p>
+
+<p>Select or create the Web Credential in APEX. Keep the API key out of JavaScript, screenshots, articles, and repositories. Oracle documents <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/creating-generative-ai-service-objects.html">credential storage and runtime controls</a>, including token and timeout settings.</p>
+
+<h2>Test with a small, reviewable request</h2>
+
+<p>Run <strong>Test Connection</strong> before saving. Then try a prompt using invented schema names:</p>
+
+<pre><code>Given demo_orders(order_id, customer_id, amount), write a read-only
+SQL query returning total amount by customer_id. Explain how SUM
+handles null amounts. Do not invent columns or execute the query.
+</code></pre>
+
+<p>Review the proposed SQL, assumptions, null handling, and access rules before using it. A successful connection proves connectivity; the generated answer still needs technical review. Use synthetic examples while evaluating the assistant, and choose deliberately which application information may be sent to the external provider.</p>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>الشرح الأصلي على LinkedIn كان عن ربط خدمة Cohere مع Oracle APEX App Builder. البداية العملية هي تعريف خدمة داخل الـWorkspace: تختار المزوّد والرابط والموديل وبيانات الاتصال، وبعدها تطلب من المساعد دعمك في كتابة الكود.</p>
+
+<h2>أنشئ خدمة داخل الـWorkspace</h2>
+
+<p>في APEX 26.2 افتح <strong>App Builder → Workspace Utilities → All Workspace Utilities → Generative AI</strong>. أنشئ خدمة، واختر <strong>Cohere</strong>، وحدّد اسمًا واضحًا وStatic ID. أسماء القوائم قد تختلف حسب إصدار APEX. توضح Oracle <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/apxdc/configuring-generative-ai-service.html">خطوات الإعداد</a>.</p>
+
+<p>المثال التالي لتوضيح الإعدادات، وليس ملف استيراد أو سكربت قابلًا للتنفيذ:</p>
+
+<pre><code>Name: Cohere Development Assistant
+Static ID: COHERE_DEV_ASSISTANT
+AI Provider: Cohere
+Used by App Builder: On
+Default for New Apps: Off (enable if required)
+Base URL: https://api.cohere.ai/v2
+AI Model: command-r-08-2024
+Credential: a workspace Web Credential
+</code></pre>
+
+<p>الرابط والموديل هنا من المثال الأصلي. تأكد أن إصدار APEX المثبّت يدعم الرابط، وأن حسابك عند المزوّد يتيح الموديل المطلوب. راجع <a href="https://docs.cohere.com/docs/models">قائمة موديلات Cohere الحالية</a>، لأن الإتاحة قد تختلف بين منصات الاستضافة.</p>
+
+<h2>افصل بين الاختيارين</h2>
+
+<p><strong>Used by App Builder</strong> يتيح الخدمة لخصائص بيئة التطوير. أما <strong>Default for New Apps</strong> فيختار الخدمة الافتراضية للتطبيقات الجديدة. قرّر كل إعداد بشكل مستقل لأن لكل واحد وظيفة مختلفة. راجع <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/editing-a-generative-as-service.html">مرجع خصائص الخدمة لدى Oracle</a>.</p>
+
+<p>اختر أو أنشئ Web Credential داخل APEX. احتفظ بمفتاح API بعيدًا عن JavaScript والصور والمقالات والمستودعات. توثّق Oracle <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/creating-generative-ai-service-objects.html">حفظ بيانات الاتصال وإعدادات التشغيل</a>، ومنها حدود التوكنز والمهلة الزمنية.</p>
+
+<h2>اختبر بطلب صغير يمكن مراجعته</h2>
+
+<p>شغّل <strong>Test Connection</strong> قبل الحفظ، ثم جرّب طلبًا بأسماء جداول افتراضية:</p>
+
+<pre><code>لدي جدول افتراضي demo_orders(order_id, customer_id, amount).
+اكتب استعلام SQL للقراءة فقط يعرض إجمالي amount لكل customer_id.
+اشرح تعامل SUM مع قيم amount الفارغة. لا تخترع أعمدة ولا تنفّذ الاستعلام.
+</code></pre>
+
+<p>راجع SQL المقترح وافتراضاته وتعامله مع القيم الفارغة وقواعد الوصول قبل استخدامه. نجاح الاتصال يثبت الوصول للخدمة، وتظل الإجابة المولّدة محتاجة مراجعة فنية. استخدم أمثلة افتراضية أثناء التقييم، وحدّد بوضوح معلومات التطبيق المسموح بإرسالها للمزوّد الخارجي.</p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/configure-cohere-for-oracle-apex-app-builder" target="_blank" rel="noopener noreferrer">Configure Cohere for Oracle APEX App Builder</a><p><a class="" href="https://www.linkedin.com/feed/update/urn:li:activity:7461524234314375168/" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p><p class="" data-ar="صورة الغلاف مولدة بالذكاء الاصطناعي." data-en="Cover illustration generated with AI.">صورة الغلاف مولدة بالذكاء الاصطناعي.</p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>

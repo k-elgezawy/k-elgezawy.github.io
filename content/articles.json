@@ -488,5 +488,19 @@
     "excerptEn": "Style report rows with controlled SQL status markers, scoped CSS, readable labels, and refresh checks.",
     "minutes": 4,
     "aiCover": true
+  },
+  {
+    "id": 36,
+    "slug": "configure-cohere-for-oracle-apex-app-builder",
+    "title": "Configure Cohere for Oracle APEX App Builder",
+    "titleAr": "إعداد Cohere للعمل مع Oracle APEX App Builder",
+    "canonical": "https://karimelgezawy.hashnode.dev/configure-cohere-for-oracle-apex-app-builder",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7461524234314375168/",
+    "category": "development",
+    "cover": "assets/covers/cohere-2026-11-05.png",
+    "excerpt": "إعداد خدمة Cohere داخل الـWorkspace، وفهم اختيارات App Builder وحماية بيانات الاتصال ومراجعة الإجابات.",
+    "excerptEn": "Configure a workspace AI service, distinguish builder integration from app defaults, and test with a reviewable prompt.",
+    "minutes": 4,
+    "aiCover": true
   }
 ]
