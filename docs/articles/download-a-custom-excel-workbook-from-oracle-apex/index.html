@@ -1,0 +1,107 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="تنزيل ملف Excel مخصص من Oracle APEX | كريم الجيزاوي" data-title-en="Download a Custom Excel Workbook from Oracle APEX | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>تنزيل ملف Excel مخصص من Oracle APEX | كريم الجيزاوي</title><meta name="description" content="أنشئ ملف Excel من استعلام مستقل، وحدّد نطاق التصدير والصلاحيات واختبر محتوى الملف."><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="تنزيل ملف Excel مخصص من Oracle APEX | كريم الجيزاوي"><meta property="og:description" content="أنشئ ملف Excel من استعلام مستقل، وحدّد نطاق التصدير والصلاحيات واختبر محتوى الملف."><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/excel-export-2026-11-06.png"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/download-a-custom-excel-workbook-from-oracle-apex"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/download-a-custom-excel-workbook-from-oracle-apex"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Download a Custom Excel Workbook from Oracle APEX", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/download-a-custom-excel-workbook-from-oracle-apex", "image": "https://k-elgezawy.github.io/assets/covers/excel-export-2026-11-06.png"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="تنزيل ملف Excel مخصص من Oracle APEX" data-en="Download a Custom Excel Workbook from Oracle APEX">تنزيل ملف Excel مخصص من Oracle APEX</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="4 دقائق قراءة" data-en="4 min read">4 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/excel-export-2026-11-06.png" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/download-a-custom-excel-workbook-from-oracle-apex" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>A dashboard and its Excel download often serve different readers. The dashboard might show totals by month, while a reviewer needs one row per order. A dedicated export query gives that workbook its own columns, ordering, and rules without adding a second report region to the page.</p>
+
+<h2>Build the workbook from a query</h2>
+
+<p>In a development APEX application, create a button that submits the page. Add a PL/SQL page process and restrict it to that button. Keep this download request separate from processes that save or change data. The example uses two synthetic orders from <code>DUAL</code>, so it needs no application tables.</p>
+
+<pre><code>declare
+    l_query apex_exec.t_context;
+    l_file  apex_data_export.t_export;
+begin
+    l_query := apex_exec.open_query_context(
+        p_location =&gt; apex_exec.c_location_local_db,
+        p_sql_query =&gt; q'[
+            select 1001 as order_id, date '2026-01-15' as order_date,
+                   125.50 as order_total
+            from dual
+            union all
+            select 1002, date '2026-01-16', 78.00
+            from dual
+            order by order_id
+        ]'
+    );
+    begin
+        l_file := apex_data_export.export(
+            p_context   =&gt; l_query,
+            p_format    =&gt; apex_data_export.c_format_xlsx,
+            p_file_name =&gt; 'sample-orders'
+        );
+    exception
+        when others then
+            apex_exec.close(l_query);
+            raise;
+    end;
+    apex_exec.close(l_query);
+    apex_data_export.download(p_export =&gt; l_file);
+end;
+</code></pre>
+
+<p>The query context supplies typed rows. <code>APEX_DATA_EXPORT.EXPORT</code> builds the XLSX payload, and <code>DOWNLOAD</code> sends it as the response. Close the query context before calling <code>DOWNLOAD</code>; by default, the download stops the APEX engine. The inner exception handler releases the context if building the workbook fails, without intercepting normal download termination. See Oracle's references for <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-EXPORT-Function.html">EXPORT</a>, <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-DOWNLOAD-Procedure.html">DOWNLOAD</a>, and <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.CLOSE-Procedure.html">closing the query context</a>.</p>
+
+<h2>Decide what users can export</h2>
+
+<ul>
+<li><strong>Scope:</strong> A standalone query does not inherit an Interactive Report's runtime filters. If the file follows page filters, pass their validated values as binds. If users expect the current report view, consider its native download instead.</li>
+<li><strong>Access:</strong> Apply authorization to the page process and enforce row access in the query. Select only columns approved for the workbook. A hidden UI column is not an export permission.</li>
+<li><strong>Response:</strong> Use a request that expects a file. A callback whose JavaScript expects JSON needs a different download flow.</li>
+</ul>
+
+<h2>Test what the reviewer receives</h2>
+
+<p>Start with the two sample rows. Check the filename, column order, and that the totals are numeric. With your authorized development data, check an empty result, a restrictive filter, and two users with different scopes. Verify the workbook contents against the intended export rules, including any row limit, before enabling the button for users.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7519513038740262912/">Original LinkedIn post</a></p>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>شاشة الـDashboard وملف Excel ممكن يخدموا ناس مختلفة. الشاشة قد تعرض إجمالي الطلبات بالشهر، بينما المراجع محتاج صفًا لكل طلب. استعلام مخصص للتصدير يخلّيك تحدد أعمدة الملف وترتيبها وقواعدها من غير إضافة Report Region ثانية للصفحة.</p>
+
+<h2>جهّز الملف من استعلام</h2>
+
+<p>داخل تطبيق APEX للتطوير، اعمل زر يرسل الصفحة، وأضف Page Process بلغة PL/SQL يشتغل عند الضغط على الزر ده فقط. افصل طلب التنزيل عن العمليات اللي بتحفظ أو تعدّل البيانات. المثال يستخدم طلبين افتراضيين من <code>DUAL</code>، فمش محتاج جداول تطبيق.</p>
+
+<pre><code>declare
+    l_query apex_exec.t_context;
+    l_file  apex_data_export.t_export;
+begin
+    l_query := apex_exec.open_query_context(
+        p_location =&gt; apex_exec.c_location_local_db,
+        p_sql_query =&gt; q'[
+            select 1001 as order_id, date '2026-01-15' as order_date,
+                   125.50 as order_total
+            from dual
+            union all
+            select 1002, date '2026-01-16', 78.00
+            from dual
+            order by order_id
+        ]'
+    );
+    begin
+        l_file := apex_data_export.export(
+            p_context   =&gt; l_query,
+            p_format    =&gt; apex_data_export.c_format_xlsx,
+            p_file_name =&gt; 'sample-orders'
+        );
+    exception
+        when others then
+            apex_exec.close(l_query);
+            raise;
+    end;
+    apex_exec.close(l_query);
+    apex_data_export.download(p_export =&gt; l_file);
+end;
+</code></pre>
+
+<p>الـQuery Context يوفّر الصفوف بأنواع بياناتها. الدالة <code>APEX_DATA_EXPORT.EXPORT</code> تجهّز محتوى XLSX، والإجراء <code>DOWNLOAD</code> يرسله في الاستجابة. اقفل الـContext قبل استدعاء <code>DOWNLOAD</code>، لأن التنزيل بيوقف محرك APEX بالإعداد الافتراضي. معالجة الخطأ الداخلية تحرّر الـContext لو تجهيز الملف فشل، من غير ما تتدخل في الإنهاء الطبيعي للتنزيل. راجع مراجع Oracle عن <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-EXPORT-Function.html">EXPORT</a> و<a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-DOWNLOAD-Procedure.html">DOWNLOAD</a> و<a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.CLOSE-Procedure.html">إغلاق الـQuery Context</a>.</p>
+
+<h2>حدّد ما يقدر المستخدم يصدّره</h2>
+
+<ul>
+<li><strong>النطاق:</strong> الاستعلام المستقل مش بياخد تلقائيًا فلاتر الـInteractive Report وقت التشغيل. لو الملف يتبع فلاتر الصفحة، مرّر القيم بعد التحقق منها باستخدام Bind Variables. ولو المطلوب نفس عرض التقرير الحالي، فكّر في التنزيل المدمج في التقرير.</li>
+<li><strong>الصلاحيات:</strong> طبّق صلاحية على الـPage Process، وطبّق قواعد الوصول للصفوف داخل الاستعلام. اختار الأعمدة المسموح بإرسالها في الملف فقط؛ إخفاء عمود في الواجهة لا يمنع تصديره.</li>
+<li><strong>الاستجابة:</strong> استخدم طلبًا يتوقّع ملفًا. لو عندك Callback والـJavaScript مستني JSON، هتحتاج مسار تنزيل مختلف.</li>
+</ul>
+
+<h2>اختبر الملف اللي هيوصل للمراجع</h2>
+
+<p>ابدأ بالصفّين الافتراضيين، وراجع اسم الملف وترتيب الأعمدة وإن الإجماليات أرقام. في بيئة تطوير مصرح لك باستخدامها، اختبر نتيجة فارغة، وفلتر يضيّق النتائج، ومستخدمين بصلاحيات مختلفة. قارن محتويات الملف بقواعد التصدير المطلوبة، بما فيها أي حد لعدد الصفوف، قبل إتاحة الزر للمستخدمين.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7519513038740262912/">البوست الأصلي على LinkedIn</a></p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/download-a-custom-excel-workbook-from-oracle-apex" target="_blank" rel="noopener noreferrer">Download a Custom Excel Workbook from Oracle APEX</a><p><a class="" href="https://www.linkedin.com/feed/update/urn:li:activity:7519513038740262912/" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p><p class="" data-ar="صورة الغلاف مولدة بالذكاء الاصطناعي." data-en="Cover illustration generated with AI.">صورة الغلاف مولدة بالذكاء الاصطناعي.</p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>

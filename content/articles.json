@@ -502,5 +502,19 @@
     "excerptEn": "Configure a workspace AI service, distinguish builder integration from app defaults, and test with a reviewable prompt.",
     "minutes": 4,
     "aiCover": true
+  },
+  {
+    "id": 37,
+    "slug": "download-a-custom-excel-workbook-from-oracle-apex",
+    "title": "Download a Custom Excel Workbook from Oracle APEX",
+    "titleAr": "تنزيل ملف Excel مخصص من Oracle APEX",
+    "canonical": "https://karimelgezawy.hashnode.dev/download-a-custom-excel-workbook-from-oracle-apex",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7519513038740262912/",
+    "category": "development",
+    "cover": "assets/covers/excel-export-2026-11-06.png",
+    "excerpt": "أنشئ ملف Excel من استعلام مستقل، وحدّد نطاق التصدير والصلاحيات واختبر محتوى الملف.",
+    "excerptEn": "Build an XLSX workbook from a standalone query and check its filters, authorization, and response.",
+    "minutes": 4,
+    "aiCover": true
   }
 ]
