@@ -516,5 +516,19 @@
     "excerptEn": "Build an XLSX workbook from a standalone query and check its filters, authorization, and response.",
     "minutes": 4,
     "aiCover": true
+  },
+  {
+    "id": 38,
+    "slug": "build-a-word-template-with-sql-data-using-apex-office-print",
+    "title": "Build a Word Template with SQL Data Using APEX Office Print",
+    "titleAr": "إنشاء قالب Word ببيانات SQL باستخدام APEX Office Print",
+    "canonical": "https://karimelgezawy.hashnode.dev/build-a-word-template-with-sql-data-using-apex-office-print",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7490663722621833216/",
+    "category": "development",
+    "cover": "assets/covers/aop-template-2026-11-12.png",
+    "excerpt": "اربط بيانات SQL بقالب Word، وراجع العلامات والحلقات وتنسيق المستند الناتج.",
+    "excerptEn": "Connect SQL data to a Word template, match field names and loops, and review the generated document.",
+    "minutes": 4,
+    "aiCover": true
   }
 ]

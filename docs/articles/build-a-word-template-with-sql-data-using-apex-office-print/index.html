@@ -1,0 +1,103 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="إنشاء قالب Word ببيانات SQL باستخدام APEX Office Print | كريم الجيزاوي" data-title-en="Build a Word Template with SQL Data Using APEX Office Print | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>إنشاء قالب Word ببيانات SQL باستخدام APEX Office Print | كريم الجيزاوي</title><meta name="description" content="اربط بيانات SQL بقالب Word، وراجع العلامات والحلقات وتنسيق المستند الناتج."><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="إنشاء قالب Word ببيانات SQL باستخدام APEX Office Print | كريم الجيزاوي"><meta property="og:description" content="اربط بيانات SQL بقالب Word، وراجع العلامات والحلقات وتنسيق المستند الناتج."><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/aop-template-2026-11-12.png"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/build-a-word-template-with-sql-data-using-apex-office-print"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/build-a-word-template-with-sql-data-using-apex-office-print"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Build a Word Template with SQL Data Using APEX Office Print", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/build-a-word-template-with-sql-data-using-apex-office-print", "image": "https://k-elgezawy.github.io/assets/covers/aop-template-2026-11-12.png"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="إنشاء قالب Word ببيانات SQL باستخدام APEX Office Print" data-en="Build a Word Template with SQL Data Using APEX Office Print">إنشاء قالب Word ببيانات SQL باستخدام APEX Office Print</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="4 دقائق قراءة" data-en="4 min read">4 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/aop-template-2026-11-12.png" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/build-a-word-template-with-sql-data-using-apex-office-print" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>My LinkedIn post highlighted APEX Office Print (AOP) as a way to maintain document layouts with familiar Office templates. A small order document makes the workflow concrete. Its data query defines the values, while a Word template places those values on the page.</p>
+
+<h2>Define a small data contract</h2>
+
+<p>Start in a development application with the AOP plug-in installed and an appropriately licensed AOP service configured. AOP combines structured data and a template on its rendering server. The vendor documents its deployment options and licensing. <a href="https://www.apexofficeprint.com/docs/">AOP overview</a></p>
+
+<p>This illustrative query uses synthetic values from <code>DUAL</code>. It returns a document filename, a <code>data</code> cursor containing the order header, and a nested <code>lines</code> cursor.</p>
+
+<pre><code>select
+    'demo-order' as "filename",
+    cursor(
+        select
+            1001 as "order_no",
+            'Demo Customer' as "customer_name",
+            cursor(
+                select 'Planning session' as "description",
+                       2 as "quantity", 75 as "unit_price"
+                from dual
+                union all
+                select 'Review session', 1, 50 from dual
+            ) as "lines"
+        from dual
+    ) as "data"
+from dual
+</code></pre>
+
+<p>The quoted aliases preserve the lowercase names used by the template. Keep the query and template field names aligned. The <code>data</code> cursor provides the document's root values, and the nested cursor supplies the repeating records. <a href="https://www.apexofficeprint.com/docs/getting-started/sql-structure/">SQL structure</a></p>
+
+<h2>Put the matching tags in Word</h2>
+
+<p>Create a DOCX file and add the following tags as ordinary document text. Apply Word styles to the heading and paragraphs around them.</p>
+
+<pre><code>Order {order_no}
+Customer {customer_name}
+
+{#lines}
+{description} | Quantity {quantity} | Unit price {unit_price}
+{/lines}
+</code></pre>
+
+<p>The loop repeats the enclosed content for each line. Keep tag spelling and case consistent with the SQL aliases. Once this simple paragraph version works, adapt the layout to a table using the vendor's DOCX guidance. <a href="https://www.apexofficeprint.com/docs/templates/templates-docx/">DOCX template tags</a></p>
+
+<h2>Connect and review the output</h2>
+
+<p>Upload the template as an APEX Static Application File. In the AOP Dynamic Action, select that template source, enter its filename, choose SQL as the data type, and supply the query. Choose the required output format, such as PDF, then invoke the action from your print button. Attribute labels can vary with the installed plug-in version. <a href="https://www.apexofficeprint.com/docs/apex-plugins/aop-da/">AOP Dynamic Action settings</a></p>
+
+<p>Check that order 1001 and both lines appear. Test a long description, an empty lines collection, and an Arabic layout before using real data. With application tables, enforce document access and row authorization in the data path. Select the destination service according to the information the document contains.</p>
+
+<p>Keep the template version alongside the data contract. A heading change can stay in the template. Adding a new tag requires a corresponding value in the query and another output review.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7490663722621833216/">Original LinkedIn post</a></p>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>بوستي على LinkedIn كان عن APEX Office Print واستخدام قوالب Office المألوفة لصيانة تصميم المستندات. مثال طلب بسيط يوضّح مسار العمل. الاستعلام يحدّد القيم، وقالب Word يوزّعها على الصفحة.</p>
+
+<h2>حدّد البيانات المطلوبة للمستند</h2>
+
+<p>ابدأ داخل تطبيق تطوير، بعد تثبيت AOP Plug-in وإعداد خدمة AOP بترخيص مناسب. الخدمة تدمج البيانات المنظمة والقالب على خادم إنشاء المستندات. يوضّح توثيق الشركة اختيارات الاستضافة والترخيص. <a href="https://www.apexofficeprint.com/docs/">نظرة عامة على AOP</a></p>
+
+<p>الاستعلام التوضيحي التالي يستخدم قيمًا افتراضية من <code>DUAL</code>. بيرجع اسم الملف، وCursor باسم <code>data</code> لبيانات رأس الطلب، وCursor داخلي باسم <code>lines</code> للبنود.</p>
+
+<pre><code>select
+    'demo-order' as "filename",
+    cursor(
+        select
+            1001 as "order_no",
+            'Demo Customer' as "customer_name",
+            cursor(
+                select 'Planning session' as "description",
+                       2 as "quantity", 75 as "unit_price"
+                from dual
+                union all
+                select 'Review session', 1, 50 from dual
+            ) as "lines"
+        from dual
+    ) as "data"
+from dual
+</code></pre>
+
+<p>علامات التنصيص حول الأسماء المستعارة تحفظ الحروف الصغيرة المستخدمة في القالب. طابق أسماء الحقول بين الاستعلام والقالب. الـCursor المسمى <code>data</code> يوفّر القيم الأساسية للمستند، والـCursor الداخلي يوفّر السجلات المتكررة. <a href="https://www.apexofficeprint.com/docs/getting-started/sql-structure/">هيكل SQL في AOP</a></p>
+
+<h2>أضف العلامات المطابقة داخل Word</h2>
+
+<p>أنشئ ملف DOCX وأضف العلامات التالية كنص عادي داخل المستند. طبّق تنسيقات Word على العنوان والفقرات المحيطة بها.</p>
+
+<pre><code>طلب {order_no}
+العميل {customer_name}
+
+{#lines}
+{description} | الكمية {quantity} | سعر الوحدة {unit_price}
+{/lines}
+</code></pre>
+
+<p>الحلقة تكرّر المحتوى الموجود بداخلها لكل بند. حافظ على كتابة العلامات وحالة الحروف كما هي في أسماء SQL. بعد نجاح نسخة الفقرات البسيطة، طوّر التصميم إلى جدول بالرجوع لتوثيق قوالب DOCX. <a href="https://www.apexofficeprint.com/docs/templates/templates-docx/">علامات قوالب Word</a></p>
+
+<h2>اربط القالب وراجع الناتج</h2>
+
+<p>ارفع القالب في Static Application Files داخل APEX. في AOP Dynamic Action اختار مصدر القالب ده، واكتب اسم الملف، وحدّد SQL كنوع البيانات، وأضف الاستعلام. اختار صيغة الناتج المطلوبة، مثل PDF، ثم استدعِ الإجراء من زر الطباعة. أسماء الخصائص قد تختلف حسب إصدار الـPlug-in المثبّت. <a href="https://www.apexofficeprint.com/docs/apex-plugins/aop-da/">إعدادات AOP Dynamic Action</a></p>
+
+<p>تأكد من ظهور الطلب 1001 والبندين. اختبر وصفًا طويلًا، ومجموعة بنود فارغة، وتصميمًا عربيًا قبل استخدام بيانات فعلية. عند ربط جداول التطبيق، طبّق صلاحية الوصول للمستند والصفوف في مسار تجهيز البيانات. اختار الخدمة المستقبلة حسب نوع المعلومات الموجودة في المستند.</p>
+
+<p>احتفظ بإصدار القالب مع تعريف بياناته. تعديل العنوان يتم داخل القالب. إضافة علامة جديدة تحتاج قيمة مقابلة في الاستعلام ومراجعة جديدة للناتج.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7490663722621833216/">البوست الأصلي على LinkedIn</a></p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/build-a-word-template-with-sql-data-using-apex-office-print" target="_blank" rel="noopener noreferrer">Build a Word Template with SQL Data Using APEX Office Print</a><p><a class="" href="https://www.linkedin.com/feed/update/urn:li:activity:7490663722621833216/" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p><p class="" data-ar="صورة الغلاف مولدة بالذكاء الاصطناعي." data-en="Cover illustration generated with AI.">صورة الغلاف مولدة بالذكاء الاصطناعي.</p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>
