@@ -530,5 +530,19 @@
     "excerptEn": "Connect SQL data to a Word template, match field names and loops, and review the generated document.",
     "minutes": 4,
     "aiCover": true
+  },
+  {
+    "id": 39,
+    "slug": "synchronize-oracle-apex-translations-with-a-reviewed-seed-and-publish-workflow",
+    "title": "Synchronize Oracle APEX Translations with a Reviewed Seed and Publish Workflow",
+    "titleAr": "مزامنة ترجمات Oracle APEX مع مراجعة مراحل Seed وPublish",
+    "canonical": "https://karimelgezawy.hashnode.dev/synchronize-oracle-apex-translations-with-a-reviewed-seed-and-publish-workflow",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7456820271790952448/",
+    "category": "development",
+    "cover": "assets/covers/translations-2026-11-13.png",
+    "excerpt": "نظّم تجميع النصوص ومراجعة ترجمتها ونشر نسخة اللغة، مع أمثلة APEX_LANG.",
+    "excerptEn": "Collect changed strings, review translations, and publish the target language with explicit APEX_LANG calls.",
+    "minutes": 4,
+    "aiCover": true
   }
 ]
