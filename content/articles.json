@@ -544,5 +544,19 @@
     "excerptEn": "Collect changed strings, review translations, and publish the target language with explicit APEX_LANG calls.",
     "minutes": 4,
     "aiCover": true
+  },
+  {
+    "id": 40,
+    "slug": "build-a-refreshable-order-summary-with-oracle-apex-dynamic-content",
+    "title": "Build a Refreshable Order Summary with Oracle APEX Dynamic Content",
+    "titleAr": "إنشاء ملخص طلب قابل للتحديث باستخدام Dynamic Content في Oracle APEX",
+    "canonical": "https://karimelgezawy.hashnode.dev/build-a-refreshable-order-summary-with-oracle-apex-dynamic-content",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7516717117732401154/",
+    "category": "development",
+    "cover": "assets/covers/dynamic-content-2026-11-14.png",
+    "excerpt": "كوّن ملخص طلب باستخدام CLOB وHTML آمن، وحدّثه مع اختيار المستخدم ونسّقه باستخدام CSS.",
+    "excerptEn": "Return escaped HTML from a CLOB region, submit the selected item on refresh, and style a custom order summary.",
+    "minutes": 4,
+    "aiCover": true
   }
 ]

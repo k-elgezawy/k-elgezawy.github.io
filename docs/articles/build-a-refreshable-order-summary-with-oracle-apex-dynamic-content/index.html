@@ -1,0 +1,159 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="إنشاء ملخص طلب قابل للتحديث باستخدام Dynamic Content في Oracle APEX | كريم الجيزاوي" data-title-en="Build a Refreshable Order Summary with Oracle APEX Dynamic Content | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>إنشاء ملخص طلب قابل للتحديث باستخدام Dynamic Content في Oracle APEX | كريم الجيزاوي</title><meta name="description" content="كوّن ملخص طلب باستخدام CLOB وHTML آمن، وحدّثه مع اختيار المستخدم ونسّقه باستخدام CSS."><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="إنشاء ملخص طلب قابل للتحديث باستخدام Dynamic Content في Oracle APEX | كريم الجيزاوي"><meta property="og:description" content="كوّن ملخص طلب باستخدام CLOB وHTML آمن، وحدّثه مع اختيار المستخدم ونسّقه باستخدام CSS."><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/dynamic-content-2026-11-14.png"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/build-a-refreshable-order-summary-with-oracle-apex-dynamic-content"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/build-a-refreshable-order-summary-with-oracle-apex-dynamic-content"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Build a Refreshable Order Summary with Oracle APEX Dynamic Content", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/build-a-refreshable-order-summary-with-oracle-apex-dynamic-content", "image": "https://k-elgezawy.github.io/assets/covers/dynamic-content-2026-11-14.png"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="إنشاء ملخص طلب قابل للتحديث باستخدام Dynamic Content في Oracle APEX" data-en="Build a Refreshable Order Summary with Oracle APEX Dynamic Content">إنشاء ملخص طلب قابل للتحديث باستخدام Dynamic Content في Oracle APEX</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="4 دقائق قراءة" data-en="4 min read">4 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/dynamic-content-2026-11-14.png" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/build-a-refreshable-order-summary-with-oracle-apex-dynamic-content" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>A purchase-order summary can need a layout that follows the business process. My original LinkedIn post used Oracle APEX Dynamic Content to combine a selected order's details with custom HTML. This walkthrough starts with a small summary showing customer, total, and status.</p>
+
+<h2>Return HTML as a CLOB</h2>
+
+<p>On a development page, add a Select List named <code>P10_ORDER_ID</code> with values <code>1001</code> and <code>1002</code>. Create a <strong>Dynamic Content</strong> region, set its Static ID to <code>order_summary</code>, and use a PL/SQL function body returning a CLOB as its source. Match the item name to your actual page if you use another page number.</p>
+
+<p>The region returns its constructed HTML to APEX. Oracle describes the CLOB source and CSS-class approach in its Dynamic Content guide. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/apxdc/dynamically-formatting-data.html">Dynamic Content</a></p>
+
+<p>The example query uses two synthetic rows from <code>DUAL</code>. Paste this function body into the region source.</p>
+
+<pre><code>declare
+    l_customer varchar2(200);
+    l_total    number;
+    l_status   varchar2(30);
+begin
+    select customer_name, order_total, order_status
+      into l_customer, l_total, l_status
+      from (
+          select '1001' as order_id,
+                 'Sample &lt;Customer&gt;' as customer_name,
+                 125.50 as order_total,
+                 'Ready' as order_status
+            from dual
+          union all
+          select '1002', 'Second Customer', 78, 'In review'
+            from dual
+      )
+     where order_id = :P10_ORDER_ID;
+
+    return to_clob(
+        '&lt;article class="order-summary"&gt;&lt;h3&gt;Order summary&lt;/h3&gt;&lt;dl&gt;'
+    )
+        || '&lt;dt&gt;Customer&lt;/dt&gt;&lt;dd&gt;'
+        || apex_escape.html(l_customer) || '&lt;/dd&gt;'
+        || '&lt;dt&gt;Total&lt;/dt&gt;&lt;dd&gt;'
+        || apex_escape.html(to_char(
+               l_total, 'FM999990D00',
+               'NLS_NUMERIC_CHARACTERS=''.,'''
+           )) || '&lt;/dd&gt;'
+        || '&lt;dt&gt;Status&lt;/dt&gt;&lt;dd&gt;'
+        || apex_escape.html(l_status) || '&lt;/dd&gt;'
+        || '&lt;/dl&gt;&lt;/article&gt;';
+exception
+    when no_data_found then
+        return to_clob('&lt;p&gt;Select an available demo order.&lt;/p&gt;');
+end;
+</code></pre>
+
+<p>The customer name deliberately contains angle brackets so you can check that they appear as text. Values inserted into HTML text nodes pass through <code>APEX_ESCAPE.HTML</code>. Keep attribute and URL handling specific to their own output contexts when extending the markup. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HTML-Function.html">HTML escaping</a></p>
+
+<h2>Send the selected value when refreshing</h2>
+
+<p>Add <code>P10_ORDER_ID</code> to the region's <strong>Page Items to Submit</strong> property, without a colon. Create a Dynamic Action on the item's Change event, with a Refresh action targeting the summary region. This sends the current selection to the server during the refresh request. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/apxdc/configure-items-submit-and-return.html">Items to submit</a></p>
+
+<h2>Style and check the summary</h2>
+
+<p>Place these rules in the page's Inline CSS or the application's stylesheet.</p>
+
+<pre><code>#order_summary .order-summary {
+  padding: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.75rem;
+}
+#order_summary .order-summary dl {
+  display: grid;
+  grid-template-columns: minmax(6rem, 1fr) minmax(0, 2fr);
+  gap: 0.5rem 1rem;
+}
+#order_summary .order-summary dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+</code></pre>
+
+<p>Switch between both demo orders and verify that the customer, total, and status change together. Check the empty-selection message, narrow screens, keyboard operation, and an Arabic page direction. Keep the status readable as text.</p>
+
+<p>When replacing the synthetic rows with application data, apply row access rules in the query and authorize access to the region. Use translated text messages for the headings and labels in a multilingual application. Review the rendered HTML after each change to the data or layout.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7516717117732401154/">Original LinkedIn post</a></p>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>ملخص طلب الشراء قد يحتاج تصميمًا يناسب إجراءات العمل. بوستي الأصلي على LinkedIn استخدم Dynamic Content في Oracle APEX لدمج بيانات الطلب المختار مع HTML مخصص. الشرح التالي يبدأ بملخص صغير يعرض العميل والإجمالي والحالة.</p>
+
+<h2>أرجع HTML في قيمة CLOB</h2>
+
+<p>في صفحة تطوير، أضف Select List باسم <code>P10_ORDER_ID</code> بقيمتي <code>1001</code> و<code>1002</code>. أنشئ منطقة <strong>Dynamic Content</strong> وحدّد Static ID بقيمة <code>order_summary</code>، واستخدم PL/SQL Function Body returning a CLOB كمصدر. لو رقم صفحتك مختلف، طابق اسم العنصر مع الصفحة الفعلية.</p>
+
+<p>المنطقة ترجع HTML الذي كوّنته إلى APEX. يوضح توثيق Oracle مصدر CLOB واستخدام CSS Classes مع المنطقة. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/apxdc/dynamically-formatting-data.html">Dynamic Content</a></p>
+
+<p>الاستعلام في المثال يستخدم صفّين افتراضيين من <code>DUAL</code>. ضع جسم الدالة التالي في مصدر المنطقة.</p>
+
+<pre><code>declare
+    l_customer varchar2(200);
+    l_total    number;
+    l_status   varchar2(30);
+begin
+    select customer_name, order_total, order_status
+      into l_customer, l_total, l_status
+      from (
+          select '1001' as order_id,
+                 'Sample &lt;Customer&gt;' as customer_name,
+                 125.50 as order_total,
+                 'Ready' as order_status
+            from dual
+          union all
+          select '1002', 'Second Customer', 78, 'In review'
+            from dual
+      )
+     where order_id = :P10_ORDER_ID;
+
+    return to_clob(
+        '&lt;article class="order-summary"&gt;&lt;h3&gt;Order summary&lt;/h3&gt;&lt;dl&gt;'
+    )
+        || '&lt;dt&gt;Customer&lt;/dt&gt;&lt;dd&gt;'
+        || apex_escape.html(l_customer) || '&lt;/dd&gt;'
+        || '&lt;dt&gt;Total&lt;/dt&gt;&lt;dd&gt;'
+        || apex_escape.html(to_char(
+               l_total, 'FM999990D00',
+               'NLS_NUMERIC_CHARACTERS=''.,'''
+           )) || '&lt;/dd&gt;'
+        || '&lt;dt&gt;Status&lt;/dt&gt;&lt;dd&gt;'
+        || apex_escape.html(l_status) || '&lt;/dd&gt;'
+        || '&lt;/dl&gt;&lt;/article&gt;';
+exception
+    when no_data_found then
+        return to_clob('&lt;p&gt;Select an available demo order.&lt;/p&gt;');
+end;
+</code></pre>
+
+<p>اسم العميل يحتوي عمدًا على علامات زاوية لتتأكد أنها تظهر كنص. القيم التي تدخل في مواضع النص داخل HTML تمر عبر <code>APEX_ESCAPE.HTML</code>. عند توسيع التصميم، عالج خصائص HTML والروابط بما يناسب سياق كل منها. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HTML-Function.html">حماية النصوص داخل HTML</a></p>
+
+<h2>أرسل القيمة المختارة عند التحديث</h2>
+
+<p>أضف <code>P10_ORDER_ID</code> إلى خاصية <strong>Page Items to Submit</strong> في المنطقة، بدون نقطتين قبل الاسم. أنشئ Dynamic Action على حدث Change للعنصر، وأضف إجراء Refresh يستهدف منطقة الملخص. الإعداد ده يرسل الاختيار الحالي إلى السيرفر أثناء طلب التحديث. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/apxdc/configure-items-submit-and-return.html">العناصر المطلوب إرسالها</a></p>
+
+<h2>نسّق الملخص واختبره</h2>
+
+<p>ضع القواعد التالية في Inline CSS للصفحة أو في ملف CSS الخاص بالتطبيق.</p>
+
+<pre><code>#order_summary .order-summary {
+  padding: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.75rem;
+}
+#order_summary .order-summary dl {
+  display: grid;
+  grid-template-columns: minmax(6rem, 1fr) minmax(0, 2fr);
+  gap: 0.5rem 1rem;
+}
+#order_summary .order-summary dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+</code></pre>
+
+<p>بدّل بين الطلبين وتأكد أن العميل والإجمالي والحالة يتغيروا معًا. راجع رسالة الاختيار الفارغ، والشاشات الصغيرة، واستخدام الكيبورد، واتجاه الصفحة العربية. احتفظ بالحالة مكتوبة كنص واضح.</p>
+
+<p>عند استبدال الصفوف الافتراضية ببيانات التطبيق، طبّق قواعد الوصول للصفوف داخل الاستعلام وصلاحية الوصول للمنطقة. استخدم Text Messages مترجمة للعناوين والتسميات في التطبيق متعدد اللغات. راجع HTML الناتج بعد كل تغيير في البيانات أو التصميم.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7516717117732401154/">البوست الأصلي على LinkedIn</a></p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/build-a-refreshable-order-summary-with-oracle-apex-dynamic-content" target="_blank" rel="noopener noreferrer">Build a Refreshable Order Summary with Oracle APEX Dynamic Content</a><p><a class="" href="https://www.linkedin.com/feed/update/urn:li:activity:7516717117732401154/" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p><p class="" data-ar="صورة الغلاف مولدة بالذكاء الاصطناعي." data-en="Cover illustration generated with AI.">صورة الغلاف مولدة بالذكاء الاصطناعي.</p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>
