@@ -558,5 +558,19 @@
     "excerptEn": "Return escaped HTML from a CLOB region, submit the selected item on refresh, and style a custom order summary.",
     "minutes": 4,
     "aiCover": true
+  },
+  {
+    "id": 41,
+    "slug": "model-leave-approvals-with-oracle-apex-human-tasks",
+    "title": "Model Leave Approvals with Oracle APEX Human Tasks",
+    "titleAr": "تنظيم موافقات الإجازات باستخدام Human Tasks في Oracle APEX",
+    "canonical": "https://karimelgezawy.hashnode.dev/model-leave-approvals-with-oracle-apex-human-tasks",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7451510112554295296/",
+    "category": "development",
+    "cover": "assets/covers/human-tasks-2026-11-15.png",
+    "excerpt": "عرّف المشاركين، وأنشئ مهمة مرتبطة بطلب الإجازة، واضبط أثر الموافقة ومنع التكرار.",
+    "excerptEn": "Define participants, create a task linked to a leave request, and keep business outcomes consistent.",
+    "minutes": 4,
+    "aiCover": true
   }
 ]
