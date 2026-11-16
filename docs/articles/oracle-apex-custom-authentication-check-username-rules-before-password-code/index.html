@@ -1,0 +1,129 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="تسجيل الدخول المخصص في Oracle APEX: راجع قواعد اسم المستخدم قبل كود كلمة المرور | كريم الجيزاوي" data-title-en="Oracle APEX Custom Authentication: Check Username Rules Before Password Code | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>تسجيل الدخول المخصص في Oracle APEX: راجع قواعد اسم المستخدم قبل كود كلمة المرور | كريم الجيزاوي</title><meta name="description" content="اكشف تعارض أسماء الحسابات، وحدّد التعامل مع حالة الحروف، وراجع حدود التحقق من كلمات المرور."><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="تسجيل الدخول المخصص في Oracle APEX: راجع قواعد اسم المستخدم قبل كود كلمة المرور | كريم الجيزاوي"><meta property="og:description" content="اكشف تعارض أسماء الحسابات، وحدّد التعامل مع حالة الحروف، وراجع حدود التحقق من كلمات المرور."><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/custom-auth-2026-11-16.png"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/oracle-apex-custom-authentication-check-username-rules-before-password-code"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/oracle-apex-custom-authentication-check-username-rules-before-password-code"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Oracle APEX Custom Authentication: Check Username Rules Before Password Code", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/oracle-apex-custom-authentication-check-username-rules-before-password-code", "image": "https://k-elgezawy.github.io/assets/covers/custom-auth-2026-11-16.png"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="تسجيل الدخول المخصص في Oracle APEX: راجع قواعد اسم المستخدم قبل كود كلمة المرور" data-en="Oracle APEX Custom Authentication: Check Username Rules Before Password Code">تسجيل الدخول المخصص في Oracle APEX: راجع قواعد اسم المستخدم قبل كود كلمة المرور</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="6 دقائق قراءة" data-en="6 min read">6 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/custom-auth-2026-11-16.png" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/oracle-apex-custom-authentication-check-username-rules-before-password-code" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>My earlier LinkedIn post explored a custom authentication function in Oracle APEX. Before implementing the password comparison, there is another design decision worth checking: what exactly identifies an account?</p>
+
+<p>If <code>Alice</code>, <code>ALICE</code>, and <code>Alice</code> can reach the same account in one component but different accounts in another, even a correct password verifier can sit behind an inconsistent identity model. This walkthrough uses synthetic data to expose that problem before changing a login flow.</p>
+
+<h2>Separate the login flow from the credential verifier</h2>
+
+<p>An authentication scheme establishes identity; APEX then exposes the signed-in identity through <code>APP_USER</code>. Prefer an available preconfigured scheme when it fits your identity provider and operational requirements. Custom authentication means owning the integration and its failure paths, not only writing a Boolean function. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/understanding-authentication.html">Oracle: authentication concepts</a></p>
+
+<p>For a username/password scheme, <code>APEX_AUTHENTICATION.LOGIN</code> invokes the scheme's credential check, then handles successful post-authentication processing, logging, and redirection. Its <code>p_uppercase_username</code> parameter defaults to <code>TRUE</code>. That default matters when the account repository distinguishes letter case. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aeapi/LOGIN-Procedure.html">Oracle: LOGIN API</a></p>
+
+<h2>Run a normalization preflight with disposable data</h2>
+
+<p>Suppose a proposed policy treats usernames as case-insensitive and ignores surrounding spaces. This query demonstrates the resulting collisions without creating or changing a table:</p>
+
+<pre><code>with demo_users (user_id, login_name) as (
+    select 101, 'Alice' from dual union all
+    select 102, 'ALICE' from dual union all
+    select 103, ' bob ' from dual union all
+    select 104, 'BOB'   from dual union all
+    select 105, 'Carla' from dual
+)
+select upper(trim(login_name)) as login_key,
+       count(*) as matching_accounts
+from demo_users
+group by upper(trim(login_name))
+having count(*) &gt; 1
+order by login_key;
+</code></pre>
+
+<p>Expected rows for these ASCII examples:</p>
+
+<pre><code>LOGIN_KEY  MATCHING_ACCOUNTS
+ALICE      2
+BOB        2
+</code></pre>
+
+<p>Those are two different account records competing for each proposed key. Resolve the ownership and migration policy before enforcing uniqueness. Do not arbitrarily select the first matching record.</p>
+
+<p>This is a design probe, not a universal username rule. A tenant-specific identity may need a composite key including the tenant. International names require an explicit policy for Unicode, collation, and normalization; this ASCII demonstration does not settle those rules. Apply your chosen policy consistently to registration, lookup, recovery, and account linking.</p>
+
+<h2>Make APEX's case handling explicit</h2>
+
+<p>If your reviewed identity policy deliberately preserves case, an illustrative login-page process with existing username and password items can call:</p>
+
+<pre><code>begin
+    apex_authentication.login(
+        p_username           =&gt; :P9999_USERNAME,
+        p_password           =&gt; :P9999_PASSWORD,
+        p_uppercase_username =&gt; false
+    );
+end;
+</code></pre>
+
+<p>Adapt the item names and review the active authentication scheme before use. Put this call in the login process; the scheme's verifier supplies its credential decision. Changing the parameter alone does not migrate existing account keys or fix a conflicting lookup query. Never uppercase or trim the password to mirror a username rule.</p>
+
+<h2>Give password storage its own contract</h2>
+
+<p>A single SHA-512 hash, even with concatenated account fields, is not a modern adaptive password-storage design. Use a maintained verifier implementing a suitable password-hashing scheme such as Argon2id, with per-password salts and reviewed work factors. Retain the algorithm and parameters needed for verification and upgrades. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html">OWASP: password storage</a></p>
+
+<p>Define a generic user-facing failure response, controlled login throttling, recovery behavior, and appropriate multifactor authentication. Keep detailed diagnostics protected and exclude credentials from logs. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html">OWASP: authentication guidance</a></p>
+
+<p>Before rollout, test valid credentials, wrong passwords, unknown and disabled accounts, case variants, whitespace, duplicate normalized names, and verifier failure. Check the resulting <code>APP_USER</code> and account mapping. The examples above illustrate design and expected results; they do not implement a complete credential service or assert a measured performance improvement.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7401531916522393600/">Original LinkedIn post</a></p>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>تناولت في بوست سابق على LinkedIn دالة تسجيل دخول مخصصة في Oracle APEX. قبل تنفيذ مقارنة كلمة المرور، فيه قرار تصميمي آخر يستحق المراجعة: إيه بالضبط اللي بيحدد هوية الحساب؟</p>
+
+<p>لو <code>Alice</code> و<code>ALICE</code> و<code>Alice</code> بيوصلوا لنفس الحساب في جزء من النظام، ولحسابات مختلفة في جزء آخر، ممكن يبقى عندك تحقق صحيح من كلمة المرور فوق نموذج هوية غير متسق. المثال التالي يستخدم بيانات افتراضية لكشف المشكلة قبل تغيير مسار تسجيل الدخول.</p>
+
+<h2>افصل مسار الدخول عن التحقق من بيانات الاعتماد</h2>
+
+<p>Authentication Scheme بتحدد الهوية، وبعدها APEX تتيح هوية المستخدم المسجّل دخوله من خلال <code>APP_USER</code>. فضّل Scheme جاهزة متاحة عندما تناسب مزوّد الهوية ومتطلبات التشغيل. اختيار Custom Authentication معناه تحمّل مسؤولية التكامل ومسارات الفشل، مش مجرد كتابة دالة ترجع Boolean. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/understanding-authentication.html">Oracle: مفاهيم تسجيل الدخول</a></p>
+
+<p>في Scheme تستخدم اسم المستخدم وكلمة المرور، تستدعي <code>APEX_AUTHENTICATION.LOGIN</code> التحقق من بيانات الاعتماد، ثم تدير معالجة ما بعد نجاح الدخول والتسجيل وإعادة التوجيه. القيمة الافتراضية للمعامل <code>p_uppercase_username</code> هي <code>TRUE</code>. التفصيلة دي مهمة لو مستودع الحسابات بيفرّق بين الحروف الكبيرة والصغيرة. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aeapi/LOGIN-Procedure.html">Oracle: توثيق LOGIN</a></p>
+
+<h2>اختبر قواعد توحيد الأسماء ببيانات مؤقتة</h2>
+
+<p>افترض إن السياسة المقترحة لا تفرّق بين حالة الحروف في اسم المستخدم وتتجاهل المسافات المحيطة. الاستعلام التالي يوضح التعارضات الناتجة، بدون إنشاء جدول أو تعديل بيانات:</p>
+
+<pre><code>with demo_users (user_id, login_name) as (
+    select 101, 'Alice' from dual union all
+    select 102, 'ALICE' from dual union all
+    select 103, ' bob ' from dual union all
+    select 104, 'BOB'   from dual union all
+    select 105, 'Carla' from dual
+)
+select upper(trim(login_name)) as login_key,
+       count(*) as matching_accounts
+from demo_users
+group by upper(trim(login_name))
+having count(*) &gt; 1
+order by login_key;
+</code></pre>
+
+<p>الصفوف المتوقعة لهذه الأمثلة بحروف ASCII:</p>
+
+<pre><code>LOGIN_KEY  MATCHING_ACCOUNTS
+ALICE      2
+BOB        2
+</code></pre>
+
+<p>النتيجة بتقول إن فيه سجلّين مختلفين بيتنافسوا على كل مفتاح مقترح. احسم ملكية الحسابات وسياسة الانتقال قبل فرض عدم التكرار. ما تختارش أول سجل مطابق بشكل عشوائي.</p>
+
+<p>ده اختبار لفكرة تصميم، مش قاعدة عامة لكل أسماء المستخدمين. في نظام متعدد الجهات، ممكن تحتاج مفتاحًا مركبًا يتضمن الجهة. والأسماء الدولية تحتاج سياسة صريحة لـUnicode وقواعد المقارنة وتوحيد النصوص؛ مثال ASCII ده ما بيحسمش القواعد دي. طبّق السياسة المختارة باتساق أثناء إنشاء الحساب والبحث عنه واستعادته وربط الحسابات.</p>
+
+<h2>حدّد التعامل مع حالة الحروف صراحةً</h2>
+
+<p>لو سياسة الهوية التي راجعتها تقصد الحفاظ على حالة الحروف، ممكن لعملية صفحة تسجيل الدخول التي تحتوي بالفعل على عناصر الاسم وكلمة المرور استخدام المثال التالي:</p>
+
+<pre><code>begin
+    apex_authentication.login(
+        p_username           =&gt; :P9999_USERNAME,
+        p_password           =&gt; :P9999_PASSWORD,
+        p_uppercase_username =&gt; false
+    );
+end;
+</code></pre>
+
+<p>عدّل أسماء العناصر وراجع Authentication Scheme الفعّالة قبل الاستخدام. مكان الاستدعاء هو عملية تسجيل الدخول؛ ودالة التحقق في الـScheme تقدم قرار صحة بيانات الاعتماد. تغيير المعامل وحده لا ينقل مفاتيح الحسابات القديمة ولا يصلح استعلام بحث يستخدم قواعد متعارضة. ولا تحوّل كلمة المرور لحروف كبيرة أو تحذف مسافاتها لمجرد تطبيق نفس قاعدة اسم المستخدم.</p>
+
+<h2>ضع عقدًا مستقلًا لتخزين كلمات المرور</h2>
+
+<p>استخدام SHA-512 مرة واحدة، حتى مع دمج بعض بيانات الحساب، لا يساوي تصميمًا حديثًا لتخزين كلمات المرور بخوارزمية قابلة لضبط كلفة الحساب. استخدم مكوّن تحقق مدعومًا يطبق خوارزمية مناسبة مثل Argon2id، مع Salt مستقل لكل كلمة مرور ومعاملات كلفة تمت مراجعتها. احتفظ ببيانات الخوارزمية ومعاملاتها اللازمة للتحقق والترقية. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html">OWASP: تخزين كلمات المرور</a></p>
+
+<p>حدّد رسالة فشل عامة للمستخدم، وضبطًا لمحاولات الدخول، وسلوك استعادة الحساب، والمصادقة متعددة العوامل المناسبة. احمِ تفاصيل التشخيص ولا تسجّل بيانات الاعتماد في الـLogs. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html">OWASP: إرشادات تسجيل الدخول</a></p>
+
+<p>قبل الإطلاق، اختبر البيانات الصحيحة، وكلمة المرور الخاطئة، والحساب غير الموجود أو الموقوف، واختلاف حالة الحروف، والمسافات، وتكرار الأسماء بعد توحيدها، وتعطل مكوّن التحقق. راجع قيمة <code>APP_USER</code> الناتجة وربطها بالحساب. الأمثلة السابقة بتوضح التصميم والنتائج المتوقعة، ولا تنفّذ خدمة تحقق متكاملة أو تدّعي تحسنًا مقاسًا في الأداء.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7401531916522393600/">البوست الأصلي على LinkedIn</a></p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/oracle-apex-custom-authentication-check-username-rules-before-password-code" target="_blank" rel="noopener noreferrer">Oracle APEX Custom Authentication: Check Username Rules Before Password Code</a><p><a class="" href="https://www.linkedin.com/feed/update/urn:li:activity:7401531916522393600/" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>

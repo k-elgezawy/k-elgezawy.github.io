@@ -572,5 +572,20 @@
     "excerptEn": "Define participants, create a task linked to a leave request, and keep business outcomes consistent.",
     "minutes": 4,
     "aiCover": true
+  },
+  {
+    "id": 42,
+    "slug": "oracle-apex-custom-authentication-check-username-rules-before-password-code",
+    "title": "Oracle APEX Custom Authentication: Check Username Rules Before Password Code",
+    "titleAr": "تسجيل الدخول المخصص في Oracle APEX: راجع قواعد اسم المستخدم قبل كود كلمة المرور",
+    "canonical": "https://karimelgezawy.hashnode.dev/oracle-apex-custom-authentication-check-username-rules-before-password-code",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7401531916522393600/",
+    "category": "development",
+    "cover": "assets/covers/custom-auth-2026-11-16.png",
+    "excerpt": "اكشف تعارض أسماء الحسابات، وحدّد التعامل مع حالة الحروف، وراجع حدود التحقق من كلمات المرور.",
+    "excerptEn": "Find username collisions, make APEX case handling explicit, and review the credential-verification boundary.",
+    "minutes": 6,
+    "aiCover": true,
+    "hideGenerationNote": true
   }
 ]
