@@ -1,0 +1,171 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="الحفاظ على مسودات الجلسة باستخدام Oracle APEX Collections | كريم الجيزاوي" data-title-en="Preserve Session Drafts with Oracle APEX Collections | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>الحفاظ على مسودات الجلسة باستخدام Oracle APEX Collections | كريم الجيزاوي</title><meta name="description" content="احتفظ بمسودة الجلسة عند التحديث، واقرأ أعمدتها بأنواع واضحة، وعدّل قيمة واحدة دون فقد بقية الصف."><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="الحفاظ على مسودات الجلسة باستخدام Oracle APEX Collections | كريم الجيزاوي"><meta property="og:description" content="احتفظ بمسودة الجلسة عند التحديث، واقرأ أعمدتها بأنواع واضحة، وعدّل قيمة واحدة دون فقد بقية الصف."><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/collections-2026-11-17.png"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/preserve-session-drafts-with-oracle-apex-collections"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/preserve-session-drafts-with-oracle-apex-collections"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Preserve Session Drafts with Oracle APEX Collections", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/preserve-session-drafts-with-oracle-apex-collections", "image": "https://k-elgezawy.github.io/assets/covers/collections-2026-11-17.png"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="الحفاظ على مسودات الجلسة باستخدام Oracle APEX Collections" data-en="Preserve Session Drafts with Oracle APEX Collections">الحفاظ على مسودات الجلسة باستخدام Oracle APEX Collections</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="6 دقائق قراءة" data-en="6 min read">6 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/collections-2026-11-17.png" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/preserve-session-drafts-with-oracle-apex-collections" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>A multi-step form needs somewhere to hold rows while the user reviews them. My original LinkedIn post introduced APEX Collections for this job. The detail that matters in practice is the draft's lifecycle: creating, revisiting, editing, and finally submitting it.</p>
+
+<p>Treat a collection as temporary APEX-managed session data. Its SQL interface is the database view <code>APEX_COLLECTIONS</code>; do not design around assumptions of purely browser memory or zero database work. Use persistent draft tables when a request must survive beyond its session or be reviewed by another user. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/about-using-collections.html">Oracle: using collections</a></p>
+
+<h2>Initialize without resetting on refresh</h2>
+
+<p>For a development demonstration, add a page process that initializes the following uniquely named collection. The sample uses synthetic products and assumes normal, sequential page requests in an active APEX application session.</p>
+
+<pre><code>begin
+    if not apex_collection.collection_exists('DEMO_CART_20261117') then
+        apex_collection.create_collection(
+            p_collection_name =&gt; 'DEMO_CART_20261117'
+        );
+        apex_collection.add_member(
+            p_collection_name =&gt; 'DEMO_CART_20261117',
+            p_c001 =&gt; 'Notebook',
+            p_n001 =&gt; 2,
+            p_n002 =&gt; 12.50
+        );
+        apex_collection.add_member(
+            p_collection_name =&gt; 'DEMO_CART_20261117',
+            p_c001 =&gt; 'Pen',
+            p_n001 =&gt; 3,
+            p_n002 =&gt; 2
+        );
+    end if;
+end;
+</code></pre>
+
+<p><code>COLLECTION_EXISTS</code> checks the current user, session, and application. <code>CREATE_COLLECTION</code> normally raises an error if that collection already exists. This guard preserves the existing draft when the process is visited again. It is not a concurrency lock: coordinate simultaneous initialization requests in your application. <a href="https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/COLLECTION_EXISTS-Function.html">Existence check</a>, <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION-Procedure.html">creation API</a></p>
+
+<p>Keep an explicit “Start again” action separate from routine rendering. Calling a truncate/reset operation on every render defeats the draft's purpose. Keep initialization separate from an “Add product” action, which needs its own duplicate-submission rules.</p>
+
+<h2>Read typed attributes with meaningful aliases</h2>
+
+<p>In a Classic Report, use:</p>
+
+<pre><code>select seq_id,
+       c001 as product_name,
+       n001 as quantity,
+       n002 as unit_price,
+       n001 * n002 as line_total
+from apex_collections
+where collection_name = 'DEMO_CART_20261117'
+order by seq_id;
+</code></pre>
+
+<p>The mapping is part of your application contract: <code>C001</code> means product name, <code>N001</code> quantity, and <code>N002</code> unit price. Document it in a small package when several pages share it. Keep numbers in numeric attributes and retain normal text escaping in reports. Oracle documents the typed attributes and collection query pattern. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/apxdc/key-collections-concepts.html">Key concepts</a></p>
+
+<p>For a newly initialized collection, the expected rows are:</p>
+
+<pre><code>SEQ_ID  PRODUCT_NAME  QUANTITY  UNIT_PRICE  LINE_TOTAL
+1       Notebook     2         12.50       25.00
+2       Pen          3          2.00        6.00
+</code></pre>
+
+<p>The total is 31.00; actual decimal formatting follows your report settings. Refreshing the page should retain those two rows rather than append another pair.</p>
+
+<h2>Update one attribute without clearing its neighbours</h2>
+
+<p>On an explicit development test action, change the first row's quantity:</p>
+
+<pre><code>begin
+    apex_collection.update_member_attribute(
+        p_collection_name =&gt; 'DEMO_CART_20261117',
+        p_seq             =&gt; 1,
+        p_attr_number     =&gt; 1,
+        p_number_value    =&gt; 4
+    );
+end;
+</code></pre>
+
+<p>The numeric overload changes <code>N001</code>; the product and unit price remain intact. The expected Notebook line total becomes 50.00 and the overall total 56.00. A missing member raises an error. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-5.html">Numeric attribute update</a></p>
+
+<p>This differs from <code>UPDATE_MEMBER</code>, which nullifies attributes you do not supply. That distinction can explain why changing a quantity unexpectedly erases a description or price. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER-Procedure.html">Member replacement semantics</a></p>
+
+<h2>Define the boundary of the draft</h2>
+
+<p>Browser tabs sharing the same application session can reach the same named collection. For independent drafts, use a server-managed draft identifier and consistent ownership checks; a fixed collection name is not a per-tab isolation mechanism.</p>
+
+<p>Do not assume <code>SEQ_ID</code> is a permanent business identifier. Deletion can leave gaps and resequencing can change IDs. For an editable grid, follow Oracle's guidance to store a stable row key in a collection attribute. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESEQUENCE_COLLECTION-Procedure.html">Sequence behaviour</a>, <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/apxdc/key-collections-concepts.html">grid guidance</a></p>
+
+<p>Before final submission, validate quantity ranges, product access, and current prices on the server. Save accepted data through a deliberate business transaction and clear the temporary draft only after the save succeeds. Test refreshes, two tabs, an expired session, missing rows, and a failed final save. These examples explain expected behaviour; they do not claim execution against an application or measured performance results.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7405717744706486272/">Original LinkedIn post</a></p>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>النموذج الذي يتكوّن من عدة خطوات يحتاج مكانًا يحتفظ بالصفوف أثناء مراجعتها. في البوست الأصلي على LinkedIn، عرضت APEX Collections لهذا الاستخدام. التفصيلة المهمة عمليًا هي دورة حياة المسودة: إنشاؤها، والرجوع إليها، وتعديلها، ثم تقديمها نهائيًا.</p>
+
+<p>تعامل مع Collection كبيانات مؤقتة تديرها APEX ضمن الجلسة. واجهة قراءتها بـSQL هي Database View اسمها <code>APEX_COLLECTIONS</code>؛ فلا تبنِ التصميم على افتراض أنها مجرد ذاكرة داخل المتصفح أو أنها لا تستهلك أي عمل في قاعدة البيانات. استخدم جداول مسودات دائمة لو الطلب لازم يستمر بعد الجلسة أو يراجعه مستخدم آخر. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/about-using-collections.html">Oracle: استخدام Collections</a></p>
+
+<h2>ابدأ المسودة بدون تصفيرها عند التحديث</h2>
+
+<p>في مثال للتطوير، أضف Page Process لإنشاء Collection بالاسم المميز التالي. المثال يستخدم منتجات افتراضية، ويفترض طلبات صفحات متتابعة بشكل عادي داخل جلسة تطبيق APEX فعّالة.</p>
+
+<pre><code>begin
+    if not apex_collection.collection_exists('DEMO_CART_20261117') then
+        apex_collection.create_collection(
+            p_collection_name =&gt; 'DEMO_CART_20261117'
+        );
+        apex_collection.add_member(
+            p_collection_name =&gt; 'DEMO_CART_20261117',
+            p_c001 =&gt; 'Notebook',
+            p_n001 =&gt; 2,
+            p_n002 =&gt; 12.50
+        );
+        apex_collection.add_member(
+            p_collection_name =&gt; 'DEMO_CART_20261117',
+            p_c001 =&gt; 'Pen',
+            p_n001 =&gt; 3,
+            p_n002 =&gt; 2
+        );
+    end if;
+end;
+</code></pre>
+
+<p>تفحص <code>COLLECTION_EXISTS</code> المستخدم والجلسة والتطبيق الحاليين. و<code>CREATE_COLLECTION</code> ترفع خطأ عادةً لو نفس الـCollection موجودة بالفعل. الشرط بيحافظ على المسودة الموجودة عند زيارة العملية مرة ثانية. لكنه مش قفل للتزامن: نسّق طلبات الإنشاء المتزامنة داخل التطبيق. <a href="https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/COLLECTION_EXISTS-Function.html">فحص الوجود</a>، <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION-Procedure.html">توثيق الإنشاء</a></p>
+
+<p>افصل إجراء «ابدأ من جديد» عن عرض الصفحة العادي. استدعاء عملية تصفير أو تفريغ عند كل عرض للصفحة بيضيّع الغرض من المسودة. وافصل الإنشاء الأولي عن إجراء «أضف منتجًا»، الذي يحتاج قواعد مستقلة لمنع تكرار التقديم.</p>
+
+<h2>اقرأ الأعمدة بأنواعها وأسماء واضحة</h2>
+
+<p>في Classic Report، استخدم:</p>
+
+<pre><code>select seq_id,
+       c001 as product_name,
+       n001 as quantity,
+       n002 as unit_price,
+       n001 * n002 as line_total
+from apex_collections
+where collection_name = 'DEMO_CART_20261117'
+order by seq_id;
+</code></pre>
+
+<p>معنى الأعمدة جزء من عقد التطبيق: <code>C001</code> اسم المنتج، و<code>N001</code> الكمية، و<code>N002</code> سعر الوحدة. وثّق الربط في Package صغيرة عندما تتشارك فيه عدة صفحات. احتفظ بالأرقام في الأعمدة الرقمية، وبالحماية المعتادة للنصوص عند عرض التقارير. توثّق Oracle أنواع الأعمدة ونمط قراءة Collection. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/apxdc/key-collections-concepts.html">المفاهيم الأساسية</a></p>
+
+<p>عند إنشاء Collection جديدة، الصفوف المتوقعة هي:</p>
+
+<pre><code>SEQ_ID  PRODUCT_NAME  QUANTITY  UNIT_PRICE  LINE_TOTAL
+1       Notebook     2         12.50       25.00
+2       Pen          3          2.00        6.00
+</code></pre>
+
+<p>الإجمالي 31.00؛ والتنسيق الفعلي للفواصل والأرقام يتبع إعدادات التقرير. تحديث الصفحة المفروض يحتفظ بالصفّين بدل إضافة نسخة ثانية منهما.</p>
+
+<h2>عدّل قيمة واحدة بدون مسح القيم المجاورة</h2>
+
+<p>في إجراء اختبار صريح داخل بيئة التطوير، غيّر كمية الصف الأول:</p>
+
+<pre><code>begin
+    apex_collection.update_member_attribute(
+        p_collection_name =&gt; 'DEMO_CART_20261117',
+        p_seq             =&gt; 1,
+        p_attr_number     =&gt; 1,
+        p_number_value    =&gt; 4
+    );
+end;
+</code></pre>
+
+<p>النسخة الرقمية من الدالة الإجرائية بتعدّل <code>N001</code>، بينما اسم المنتج وسعر الوحدة يفضلوا كما هم. إجمالي Notebook المتوقع يصبح 50.00، والإجمالي العام 56.00. ولو العضو المطلوب غير موجود يحصل خطأ. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-5.html">تعديل العمود الرقمي</a></p>
+
+<p>ده مختلف عن <code>UPDATE_MEMBER</code> التي تضع NULL في الأعمدة التي لم ترسل قيمها. الفرق ده ممكن يفسّر ليه تعديل الكمية أحيانًا يمسح الوصف أو السعر بدون قصد. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER-Procedure.html">سلوك استبدال العضو</a></p>
+
+<h2>حدّد حدود المسودة</h2>
+
+<p>تبويبات المتصفح التي تتشارك نفس جلسة التطبيق يمكنها الوصول لنفس Collection المسماة. للمسودات المستقلة، استخدم معرّف مسودة يديره السيرفر مع تحقق ثابت من الملكية؛ اسم Collection ثابت مش وسيلة لعزل كل تبويب لوحده.</p>
+
+<p>ما تعتبرش <code>SEQ_ID</code> معرّف عمل دائمًا. الحذف ممكن يترك فجوات، وإعادة الترقيم ممكن تغيّر الأرقام. وفي Editable Grid، اتبع إرشاد Oracle بتخزين مفتاح صف ثابت في أحد أعمدة Collection. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESEQUENCE_COLLECTION-Procedure.html">سلوك الترقيم</a>، <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/apxdc/key-collections-concepts.html">إرشاد الـGrid</a></p>
+
+<p>قبل التقديم النهائي، تحقّق على السيرفر من نطاق الكمية وصلاحية الوصول للمنتجات والأسعار الحالية. احفظ البيانات المقبولة من خلال معاملة عمل واضحة، ولا تفرّغ المسودة المؤقتة إلا بعد نجاح الحفظ. اختبر تحديث الصفحة، وتبويبين، وانتهاء الجلسة، والصفوف المفقودة، وفشل الحفظ النهائي. الأمثلة بتشرح السلوك المتوقع، ولا تدّعي تنفيذًا على تطبيق أو نتائج أداء مقاسة.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7405717744706486272/">البوست الأصلي على LinkedIn</a></p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/preserve-session-drafts-with-oracle-apex-collections" target="_blank" rel="noopener noreferrer">Preserve Session Drafts with Oracle APEX Collections</a><p><a class="" href="https://www.linkedin.com/feed/update/urn:li:activity:7405717744706486272/" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>

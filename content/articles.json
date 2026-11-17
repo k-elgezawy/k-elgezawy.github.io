@@ -587,5 +587,20 @@
     "minutes": 6,
     "aiCover": true,
     "hideGenerationNote": true
+  },
+  {
+    "id": 43,
+    "slug": "preserve-session-drafts-with-oracle-apex-collections",
+    "title": "Preserve Session Drafts with Oracle APEX Collections",
+    "titleAr": "الحفاظ على مسودات الجلسة باستخدام Oracle APEX Collections",
+    "canonical": "https://karimelgezawy.hashnode.dev/preserve-session-drafts-with-oracle-apex-collections",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7405717744706486272/",
+    "category": "development",
+    "cover": "assets/covers/collections-2026-11-17.png",
+    "excerpt": "احتفظ بمسودة الجلسة عند التحديث، واقرأ أعمدتها بأنواع واضحة، وعدّل قيمة واحدة دون فقد بقية الصف.",
+    "excerptEn": "Initialize a session draft once, query typed attributes, and update a single value without clearing its neighbours.",
+    "minutes": 6,
+    "aiCover": true,
+    "hideGenerationNote": true
   }
 ]
