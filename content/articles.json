@@ -602,5 +602,23 @@
     "minutes": 6,
     "aiCover": true,
     "hideGenerationNote": true
+  },
+  {
+    "id": 44,
+    "slug": "oracle-november-2026-security-update-apex-ords-patching-plan",
+    "title": "Oracle’s November 2026 Security Update: A Practical Plan for APEX and ORDS Teams",
+    "titleAr": "تحديث Oracle الأمني لشهر نوفمبر 2026: خطة عملية لفرق APEX وORDS",
+    "canonical": "https://k-elgezawy.github.io/articles/oracle-november-2026-security-update-apex-ords-patching-plan/",
+    "source": "https://www.oracle.com/security-alerts/cspunov2026.html",
+    "sourcePlatform": "GitHub Pages",
+    "sourceNoteAr": "نُشر هذا المقال على موقع كريم الجيزاوي. تستند المعلومات عن الإصدار إلى مصادر Oracle المرتبطة داخل المقال.",
+    "sourceNoteEn": "Published on Karim El-Gezawy’s website. Release information is supported by the Oracle sources linked in the article.",
+    "category": "security",
+    "cover": "assets/covers/oracle-cspu-nov-2026.jpg",
+    "excerpt": "قراءة عملية لتحديث نوفمبر، وتحديد مسؤولية التصحيح في OCI، وخطوات مراجعة واختبار بيئات APEX وORDS.",
+    "excerptEn": "Understand the November security release, assign patch ownership, and plan a verified update for APEX and ORDS.",
+    "minutes": 6,
+    "hideGenerationNote": true,
+    "coverProvidedByAuthor": true
   }
 ]
