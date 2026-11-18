@@ -619,6 +619,7 @@
     "excerptEn": "Understand the November security release, assign patch ownership, and plan a verified update for APEX and ORDS.",
     "minutes": 6,
     "hideGenerationNote": true,
-    "coverProvidedByAuthor": true
+    "coverProvidedByAuthor": true,
+    "preserveCoverAspect": true
   }
 ]
