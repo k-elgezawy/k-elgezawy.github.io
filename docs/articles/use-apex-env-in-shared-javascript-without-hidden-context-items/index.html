@@ -1,0 +1,185 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="استخدام apex.env في JavaScript المشترك بدون عناصر مخفية لتكرار السياق | كريم الجيزاوي" data-title-en="Use apex.env in Shared JavaScript Without Hidden Context Items | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>استخدام apex.env في JavaScript المشترك بدون عناصر مخفية لتكرار السياق | كريم الجيزاوي</title><meta name="description" content="اقرأ سياق الصفحة بأنواع واضحة، وحمّل Helper مشتركة، وابنِ مسارات ملفات التطبيق دون تكرار السياق."><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="استخدام apex.env في JavaScript المشترك بدون عناصر مخفية لتكرار السياق | كريم الجيزاوي"><meta property="og:description" content="اقرأ سياق الصفحة بأنواع واضحة، وحمّل Helper مشتركة، وابنِ مسارات ملفات التطبيق دون تكرار السياق."><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/apex-env-2026-11-23.png"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/use-apex-env-in-shared-javascript-without-hidden-context-items"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/use-apex-env-in-shared-javascript-without-hidden-context-items"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Use apex.env in Shared JavaScript Without Hidden Context Items", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/use-apex-env-in-shared-javascript-without-hidden-context-items", "image": "https://k-elgezawy.github.io/assets/covers/apex-env-2026-11-23.png"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="استخدام apex.env في JavaScript المشترك بدون عناصر مخفية لتكرار السياق" data-en="Use apex.env in Shared JavaScript Without Hidden Context Items">استخدام apex.env في JavaScript المشترك بدون عناصر مخفية لتكرار السياق</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="6 دقائق قراءة" data-en="6 min read">6 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/apex-env-2026-11-23.png" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/use-apex-env-in-shared-javascript-without-hidden-context-items" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>A shared JavaScript file often needs to know which APEX page is running or where an application image lives. Creating hidden items just to repeat that framework context adds another set of values to maintain.</p>
+
+<p>My original LinkedIn post introduced <code>apex.env</code>. This walkthrough turns that idea into a small shared helper with explicit initialization, predictable types, and a clear boundary between browser behaviour and server decisions.</p>
+
+<h2>Read the context with its documented types</h2>
+
+<p>Oracle documents <code>APP_ID</code>, <code>APP_PAGE_ID</code>, and <code>APP_FILES</code> as strings in <code>apex.env</code>. The object has been available since APEX 21.2; the reference linked here describes 26.2. Check the documentation matching your deployed version. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aexjs/apex.html#env">Oracle JavaScript API</a></p>
+
+<p>For a focused development check on an APEX application page, inspect only the values you need:</p>
+
+<pre><code>console.table({
+    pageId: apex.env.APP_PAGE_ID,
+    pageIdType: typeof apex.env.APP_PAGE_ID,
+    filesBase: apex.env.APP_FILES
+});
+</code></pre>
+
+<p>On page 10, expect <code>pageId</code> to be the string <code>"10"</code> and <code>pageIdType</code> to be <code>"string"</code>. The asset path depends on the application. A strict comparison with the number <code>10</code> therefore fails; compare with <code>"10"</code> deliberately. Avoid copying a full environment dump into support tickets or shared logs, especially session identifiers and user information.</p>
+
+<h2>Build a small shared helper</h2>
+
+<p>In a development application, upload an illustrative <code>company-logo.svg</code> to Static Application Files. Add this markup to a Static Content region on a test page:</p>
+
+<pre><code>
+
+&lt;p id="page-context"&gt;&lt;/p&gt;
+
+
+&lt;img id="company-logo" alt="Company logo" width="120" height="40"&gt;
+
+
+&lt;p id="dashboard-help" hidden&gt;Dashboard-specific help.&lt;/p&gt;
+
+
+</code></pre>
+
+<p>Create <code>page-context-demo.js</code> with the following content:</p>
+
+<pre><code>window.kgPageContextDemo = (function () {
+    "use strict";
+
+    function init() {
+        const env = apex.env;
+        const badge = document.getElementById("page-context");
+        const logo = document.getElementById("company-logo");
+        const help = document.getElementById("dashboard-help");
+
+        if (badge) {
+            badge.textContent =
+                "App " + env.APP_ID + " / Page " + env.APP_PAGE_ID;
+        }
+        if (logo) {
+            logo.src = env.APP_FILES + "company-logo.svg";
+        }
+        if (help) {
+            help.hidden = env.APP_PAGE_ID !== "10";
+        }
+    }
+
+    return { init: init };
+}());
+</code></pre>
+
+<p>The checks for missing elements let another page load the same file without needing the demonstration region. The helper writes plain text through <code>textContent</code>, so it does not interpret the badge value as HTML. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent">MDN: textContent</a></p>
+
+<p>The file reads the current context when <code>init</code> runs. It constructs the image path from APEX's application-file prefix, rather than embedding a workspace-specific path. Keep the file name aligned with the uploaded asset and verify the resulting request in the browser's Network panel.</p>
+
+<h2>Load the file, then initialize the page</h2>
+
+<p>Upload the JavaScript file to Static Application Files and use its displayed Reference URL. In the test page's JavaScript File URLs, that reference can be:</p>
+
+<pre><code>#APP_FILES#page-context-demo.js
+</code></pre>
+
+<p>To share it application-wide, use the JavaScript File URLs setting in User Interface Attributes. Copy the Reference value that APEX supplies, including any relevant minification substitution, and avoid including the same file both globally and again on the page. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/apxdc/including-helper-functions-all-pages.html">Oracle: shared helper files</a></p>
+
+<p>In the test page's Execute When Page Loads attribute, call:</p>
+
+<pre><code>window.kgPageContextDemo.init();
+</code></pre>
+
+<p>Oracle distinguishes loading JavaScript files, declaring functions, and executing page-load code. Calling the helper after the page is initialized keeps DOM access out of the file's top-level loading phase. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/editing-page-attributes-in-page-designer.html">Page JavaScript attributes</a></p>
+
+<h2>Verify the behaviour and its limits</h2>
+
+<p>On page 10, the badge should identify the current application and page, the image should load, and the help text should appear. On another test page, the help should remain hidden. On a page without the region, the element checks should avoid missing-element errors.</p>
+
+<p>If a partial refresh replaces this region's DOM, call the helper again from the relevant refresh handling; the original page-load call does not initialize newly replaced elements. This helper adds no event listeners, so repeating its assignments does not stack handlers.</p>
+
+<p>Use this context for presentation and asset references. Browser values and visibility choices are not permission checks; validate protected operations and data access on the server. Keep genuine business items when they represent input or server-side state. These examples show an expected integration pattern, not a claim that code was executed against your application.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7521843410698399744/">Original LinkedIn post</a></p>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>ملف JavaScript المشترك بين صفحات APEX غالبًا يحتاج يعرف الصفحة الحالية أو مكان صورة خاصة بالتطبيق. إنشاء عناصر مخفية لمجرد تكرار معلومات السياق التي يوفرها الإطار يضيف قيمًا أخرى تحتاج صيانة.</p>
+
+<p>في البوست الأصلي على LinkedIn، عرضت <code>apex.env</code>. الشرح التالي يحوّل الفكرة إلى Helper مشتركة صغيرة، مع تهيئة صريحة وأنواع بيانات واضحة وفصل بين سلوك المتصفح والقرارات التي ينفّذها السيرفر.</p>
+
+<h2>اقرأ السياق بأنواع البيانات الموثّقة</h2>
+
+<p>توثّق Oracle الخصائص <code>APP_ID</code> و<code>APP_PAGE_ID</code> و<code>APP_FILES</code> كنصوص داخل <code>apex.env</code>. الكائن متاح من APEX 21.2؛ والمرجع المرتبط هنا يصف 26.2. راجع التوثيق المناسب للإصدار الذي تشغّله. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aexjs/apex.html#env">Oracle JavaScript API</a></p>
+
+<p>لفحص محدد أثناء التطوير داخل صفحة تطبيق APEX، اعرض القيم التي تحتاجها فقط:</p>
+
+<pre><code>console.table({
+    pageId: apex.env.APP_PAGE_ID,
+    pageIdType: typeof apex.env.APP_PAGE_ID,
+    filesBase: apex.env.APP_FILES
+});
+</code></pre>
+
+<p>في الصفحة 10، القيمة المتوقعة لـ<code>pageId</code> هي النص <code>"10"</code>، ولـ<code>pageIdType</code> هي <code>"string"</code>. ومسار الملفات يتحدد حسب التطبيق. لذلك المقارنة الصارمة مع الرقم <code>10</code> تفشل؛ قارِن مع النص <code>"10"</code> بشكل مقصود. تجنّب نسخ الكائن كاملًا إلى تذاكر الدعم أو السجلات المشتركة، خصوصًا معرّفات الجلسات ومعلومات المستخدمين.</p>
+
+<h2>ابنِ Helper مشتركة صغيرة</h2>
+
+<p>داخل تطبيق تطوير، ارفع صورة توضيحية باسم <code>company-logo.svg</code> إلى Static Application Files. أضف الكود التالي إلى Static Content region في صفحة اختبار:</p>
+
+<pre><code>
+
+&lt;p id="page-context"&gt;&lt;/p&gt;
+
+
+&lt;img id="company-logo" alt="Company logo" width="120" height="40"&gt;
+
+
+&lt;p id="dashboard-help" hidden&gt;Dashboard-specific help.&lt;/p&gt;
+
+
+</code></pre>
+
+<p>أنشئ ملف <code>page-context-demo.js</code> بالمحتوى التالي:</p>
+
+<pre><code>window.kgPageContextDemo = (function () {
+    "use strict";
+
+    function init() {
+        const env = apex.env;
+        const badge = document.getElementById("page-context");
+        const logo = document.getElementById("company-logo");
+        const help = document.getElementById("dashboard-help");
+
+        if (badge) {
+            badge.textContent =
+                "App " + env.APP_ID + " / Page " + env.APP_PAGE_ID;
+        }
+        if (logo) {
+            logo.src = env.APP_FILES + "company-logo.svg";
+        }
+        if (help) {
+            help.hidden = env.APP_PAGE_ID !== "10";
+        }
+    }
+
+    return { init: init };
+}());
+</code></pre>
+
+<p>فحص وجود العناصر يسمح لصفحة أخرى بتحميل نفس الملف بدون احتياجها لمنطقة المثال. وتكتب الـHelper النص باستخدام <code>textContent</code>، وبالتالي لا تفسّر قيمة الشارة باعتبارها HTML. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent">MDN: textContent</a></p>
+
+<p>يقرأ الملف السياق الحالي عند تشغيل <code>init</code>. ويبني مسار الصورة من بادئة ملفات التطبيق التي توفرها APEX، بدل كتابة مسار خاص بمساحة عمل معينة. طابق اسم الملف مع الصورة المرفوعة، وتحقّق من طلب تحميلها في Network panel داخل المتصفح.</p>
+
+<h2>حمّل الملف ثم هيّئ الصفحة</h2>
+
+<p>ارفع ملف JavaScript إلى Static Application Files واستخدم Reference URL الظاهر له. في JavaScript File URLs لصفحة الاختبار، يمكن أن تكون الإشارة:</p>
+
+<pre><code>#APP_FILES#page-context-demo.js
+</code></pre>
+
+<p>ولمشاركته على مستوى التطبيق، استخدم JavaScript File URLs داخل User Interface Attributes. انسخ Reference الذي توفره APEX، بما فيه أي صيغة مناسبة لتحميل النسخة المصغّرة، وتجنّب تحميل نفس الملف مرة على مستوى التطبيق ومرة أخرى في الصفحة. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/apxdc/including-helper-functions-all-pages.html">Oracle: ملفات الـHelpers المشتركة</a></p>
+
+<p>في خاصية Execute When Page Loads بصفحة الاختبار، استدعِ:</p>
+
+<pre><code>window.kgPageContextDemo.init();
+</code></pre>
+
+<p>تفرّق Oracle بين تحميل ملفات JavaScript وتعريف الدوال وتنفيذ كود عند تحميل الصفحة. استدعاء الـHelper بعد تهيئة الصفحة يفصل التعامل مع DOM عن لحظة تحميل الملف نفسه. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/editing-page-attributes-in-page-designer.html">خصائص JavaScript للصفحة</a></p>
+
+<h2>تحقّق من السلوك وحدوده</h2>
+
+<p>في الصفحة 10، المفروض الشارة تعرض التطبيق والصفحة الحاليين، والصورة تتحمّل، ونص المساعدة يظهر. وفي صفحة اختبار أخرى، يفضل نص المساعدة مخفيًا. وفي صفحة بدون منطقة المثال، فحص العناصر المفروض يتجنب أخطاء الوصول لعناصر غير موجودة.</p>
+
+<p>لو تحديث جزئي استبدل DOM الخاص بالمنطقة، استدعِ الـHelper مرة أخرى من معالجة التحديث المناسبة؛ استدعاء تحميل الصفحة الأصلي لا يهيّئ العناصر التي أُنشئت بدل القديمة. الـHelper دي لا تضيف Event Listeners، لذلك تكرار تعيين القيم لا يراكم Handlers.</p>
+
+<p>استخدم السياق للعرض ومسارات الملفات. قيم المتصفح وإخفاء العناصر مش فحص صلاحيات؛ تحقّق من العمليات المحمية والوصول للبيانات على السيرفر. واحتفظ بعناصر العمل الحقيقية عندما تمثّل مدخلات أو حالة على السيرفر. الأمثلة بتوضح نمط تكامل وسلوكًا متوقعًا، ولا تدّعي تنفيذ الكود على تطبيقك.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7521843410698399744/">البوست الأصلي على LinkedIn</a></p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/use-apex-env-in-shared-javascript-without-hidden-context-items" target="_blank" rel="noopener noreferrer">Use apex.env in Shared JavaScript Without Hidden Context Items</a><p><a class="" href="https://www.linkedin.com/feed/update/urn:li:activity:7521843410698399744/" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>

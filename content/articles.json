@@ -621,5 +621,20 @@
     "hideGenerationNote": true,
     "coverProvidedByAuthor": true,
     "preserveCoverAspect": true
+  },
+  {
+    "id": 45,
+    "slug": "use-apex-env-in-shared-javascript-without-hidden-context-items",
+    "title": "Use apex.env in Shared JavaScript Without Hidden Context Items",
+    "titleAr": "استخدام apex.env في JavaScript المشترك بدون عناصر مخفية لتكرار السياق",
+    "canonical": "https://karimelgezawy.hashnode.dev/use-apex-env-in-shared-javascript-without-hidden-context-items",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7521843410698399744/",
+    "category": "development",
+    "cover": "assets/covers/apex-env-2026-11-23.png",
+    "excerpt": "اقرأ سياق الصفحة بأنواع واضحة، وحمّل Helper مشتركة، وابنِ مسارات ملفات التطبيق دون تكرار السياق.",
+    "excerptEn": "Use documented string values, application asset paths, and explicit initialization in a shared helper.",
+    "minutes": 6,
+    "aiCover": true,
+    "hideGenerationNote": true
   }
 ]
