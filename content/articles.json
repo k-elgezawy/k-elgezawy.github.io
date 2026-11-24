@@ -636,5 +636,20 @@
     "minutes": 6,
     "aiCover": true,
     "hideGenerationNote": true
+  },
+  {
+    "id": 46,
+    "slug": "bulk-collect-limit-process-the-final-batch-before-exiting",
+    "title": "BULK COLLECT LIMIT: Process the Final Batch Before Exiting",
+    "titleAr": "BULK COLLECT LIMIT: عالج آخر دفعة قبل الخروج من الحلقة",
+    "canonical": "https://karimelgezawy.hashnode.dev/bulk-collect-limit-process-the-final-batch-before-exiting",
+    "source": "https://www.linkedin.com/posts/karim-el-gezawy-460752219_plsql-oracledatabase-sql-activity-7527866844540649472-Ii0c",
+    "category": "development",
+    "cover": "assets/covers/bulk-collect-2026-11-24.png",
+    "excerpt": "اختبر آخر دفعة وحدود حجم الجلب بأرقام افتراضية وعدّاد ومجموع للتحقق دون تغيير بيانات العمل.",
+    "excerptEn": "Account for the final partial fetch with a complete read-only PL/SQL boundary experiment.",
+    "minutes": 6,
+    "aiCover": true,
+    "hideGenerationNote": true
   }
 ]
