@@ -651,5 +651,20 @@
     "minutes": 6,
     "aiCover": true,
     "hideGenerationNote": true
+  },
+  {
+    "id": 47,
+    "slug": "oracle-apex-search-queues-keep-the-latest-result-on-screen",
+    "title": "Oracle APEX Search Queues: Keep the Latest Result on Screen",
+    "titleAr": "طوابير البحث في Oracle APEX: اعرض نتيجة آخر طلب للمستخدم",
+    "canonical": "https://karimelgezawy.hashnode.dev/oracle-apex-search-queues-keep-the-latest-result-on-screen",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7521498181541580800/",
+    "category": "development",
+    "cover": "assets/covers/search-queue-2026-11-25.png",
+    "excerpt": "اربط طابور الاستبدال بعدّاد أجيال يحمي البحث عند مسح المدخل أو رفضه، مع Callback كاملة.",
+    "excerptEn": "Combine a stable replacement queue with UI generation tokens and a complete synthetic search callback.",
+    "minutes": 6,
+    "aiCover": true,
+    "hideGenerationNote": true
   }
 ]

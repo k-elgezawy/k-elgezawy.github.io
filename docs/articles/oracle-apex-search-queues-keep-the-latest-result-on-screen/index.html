@@ -1,0 +1,239 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="طوابير البحث في Oracle APEX: اعرض نتيجة آخر طلب للمستخدم | كريم الجيزاوي" data-title-en="Oracle APEX Search Queues: Keep the Latest Result on Screen | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>طوابير البحث في Oracle APEX: اعرض نتيجة آخر طلب للمستخدم | كريم الجيزاوي</title><meta name="description" content="اربط طابور الاستبدال بعدّاد أجيال يحمي البحث عند مسح المدخل أو رفضه، مع Callback كاملة."><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="طوابير البحث في Oracle APEX: اعرض نتيجة آخر طلب للمستخدم | كريم الجيزاوي"><meta property="og:description" content="اربط طابور الاستبدال بعدّاد أجيال يحمي البحث عند مسح المدخل أو رفضه، مع Callback كاملة."><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/search-queue-2026-11-25.png"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/oracle-apex-search-queues-keep-the-latest-result-on-screen"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/oracle-apex-search-queues-keep-the-latest-result-on-screen"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Oracle APEX Search Queues: Keep the Latest Result on Screen", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/oracle-apex-search-queues-keep-the-latest-result-on-screen", "image": "https://k-elgezawy.github.io/assets/covers/search-queue-2026-11-25.png"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="طوابير البحث في Oracle APEX: اعرض نتيجة آخر طلب للمستخدم" data-en="Oracle APEX Search Queues: Keep the Latest Result on Screen">طوابير البحث في Oracle APEX: اعرض نتيجة آخر طلب للمستخدم</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="6 دقائق قراءة" data-en="6 min read">6 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/search-queue-2026-11-25.png" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/oracle-apex-search-queues-keep-the-latest-result-on-screen" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>A search field can display the wrong answer even when every server response is valid. The user types a new term, its response arrives first, and an older response overwrites it later. My original LinkedIn post introduced a named replacement queue for this race.</p>
+
+<p>This article adds a complete sample callback and an extra boundary: clearing the field must also invalidate the old result, even when clearing sends no request.</p>
+
+<h2>Give related requests one stable queue</h2>
+
+<p>With <code>apex.server.process</code>, <code>queue.action: "replace"</code> makes older work on the same queue obsolete. Waiting requests can fail as <code>superseded</code>; an interrupted request can fail as <code>abort</code>. Those are expected transitions for this search, not reasons to interrupt the user with alerts. Use one stable name per independent search widget. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aexjs/apex.server.html">Oracle: server API</a></p>
+
+<p>Do not generate a new queue name for every keystroke: those calls would no longer share a replacement boundary. Equally, two unrelated search widgets should not cancel each other's work.</p>
+
+<h2>Create a complete development example</h2>
+
+<p>On a development page numbered 10, create a Text Field named <code>P10_SEARCH</code>. Add this markup to a Static Content region:</p>
+
+<pre><code>
+
+&lt;p id="product-search-result" role="status" aria-live="polite"&gt;&lt;/p&gt;
+
+
+</code></pre>
+
+<p>Create a page Ajax Callback named <code>SEARCH_PRODUCTS</code> using the following PL/SQL. The three product names are synthetic; no application tables are read or changed. The callback checks input length again on the server, counts literal substring matches, and writes a structured response. <code>x01</code> is available as <code>apex_application.g_x01</code>. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aexjs/apex.server.html#process">Request parameters</a></p>
+
+<pre><code>DECLARE
+    l_term  VARCHAR2(32767) := TRIM(apex_application.g_x01);
+    l_count PLS_INTEGER := 0;
+BEGIN
+    IF LENGTH(l_term) &gt; 60 THEN
+        apex_json.open_object;
+        apex_json.write('ok', FALSE);
+        apex_json.write('error', 'Search term is too long');
+        apex_json.close_object;
+        RETURN;
+    END IF;
+    IF l_term IS NOT NULL THEN
+        WITH products(product_name) AS (
+            SELECT 'Notebook' FROM dual UNION ALL
+            SELECT 'Pen' FROM dual UNION ALL
+            SELECT 'Pencil' FROM dual
+        )
+        SELECT COUNT(*) INTO l_count
+        FROM products
+        WHERE INSTR(LOWER(product_name), LOWER(l_term)) &gt; 0;
+    END IF;
+    apex_json.open_object;
+    apex_json.write('ok', TRUE);
+    apex_json.write('count', l_count);
+    apex_json.close_object;
+END;
+</code></pre>
+
+<p>Generate JSON with the package rather than concatenating unescaped text. In this example, a valid response for <code>pen</code> is an object with <code>ok: true</code> and <code>count: 2</code>. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aeapi/APEX_JSON.html">Oracle: APEX_JSON</a></p>
+
+<p>Add this helper to the page's Function and Global Variable Declaration attribute. Keep its generation counter outside <code>run</code>, so every invocation shares it:</p>
+
+<pre><code>window.kgProductSearch = (function () {
+    "use strict";
+    let generation = 0;
+    function run() {
+        const token = ++generation;
+        const output = document.getElementById("product-search-result");
+        const term = String(apex.item("P10_SEARCH").getValue() || "").trim();
+        if (!output) { return; }
+        if (!term) {
+            output.textContent = "Type a search term.";
+            return;
+        }
+        if (term.length &gt; 60) {
+            output.textContent = "Use a shorter search term.";
+            return;
+        }
+        output.textContent = "Searching...";
+        apex.server.process("SEARCH_PRODUCTS", { x01: term }, {
+            dataType: "json",
+            queue: { name: "p10-product-search", action: "replace" }
+        }).done(function (data) {
+            if (token !== generation) { return; }
+            if (!data || data.ok !== true ||
+                    !Number.isInteger(data.count) || data.count &lt; 0) {
+                output.textContent = "Unexpected search response.";
+                return;
+            }
+            output.textContent = term + ": " + data.count + " matches";
+        }).fail(function (xhr, status) {
+            if (token !== generation ||
+                    ["abort", "superseded"].includes(status)) { return; }
+            output.textContent = "Search failed. Please try again.";
+        });
+    }
+    return { run: run };
+}());
+</code></pre>
+
+<p>Create a Key Release Dynamic Action on <code>P10_SEARCH</code>, with an Execute JavaScript Code action containing the following call. Disable Fire on Initialization for this action. This demonstrates keyboard-driven search; extend the chosen event coverage if your interface also changes the value through other controls. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/creating-and-editing-dynamic-actions.html">Oracle: creating Dynamic Actions</a></p>
+
+<pre><code>window.kgProductSearch.run();
+</code></pre>
+
+<p>The example's status strings are deliberately short English placeholders; translate them for your application's audience. Writing through <code>textContent</code> displays the term as text rather than interpreting it as HTML. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent">MDN: textContent</a></p>
+
+<h2>Why a queue and a generation counter?</h2>
+
+<p>The counter describes the latest UI intent, including actions that do not call the server. Suppose a request for <code>pen</code> is still running when the user clears the field. The empty-field branch displays the prompt and returns. No replacement request is queued, so the counter prevents that earlier callback from restoring a stale count.</p>
+
+<p>The same guard protects the local rejection of an overlong term. It also matters for a sequence such as <code>pen</code>, <code>note</code>, then <code>pen</code> again: matching the current text alone cannot distinguish the first <code>pen</code> request from the newest one. A unique invocation token can.</p>
+
+<p>The sample checks the response shape before displaying a count. A transport failure and an application response with an invalid contract are separate paths; neither should silently look like zero matches. The promise failure callback follows the error-callback argument pattern. <a href="https://api.jquery.com/jQuery.ajax/">jQuery Ajax callbacks</a></p>
+
+<h2>Verify the final state, not only the request count</h2>
+
+<p>In a test application, verify <code>pen</code> gives 2, <code>notebook</code> gives 1, and an absent substring gives 0. Under slow-network conditions, type successive terms, clear while a request is in flight, and enter more than 60 characters. The visible result should always belong to the latest invocation. Also check server failures and an unexpected response shape.</p>
+
+<p>Debouncing reduces how frequently calls start; it does not prove that already-started requests cannot overlap. Treat rate control and stale-result handling as separate responsibilities.</p>
+
+<p>Oracle also documents that the returned promise's <code>abort</code> method does not work when queue options are used; do not add manual promise cancellation as an assumed fix. More broadly, client cancellation is not a business transaction protocol. Use this pattern for replaceable lookups and previews. Protected data still needs server authorization, and saving needs its own consistency and retry design. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aexjs/apex.server.html#process">Oracle: promise and queue behavior</a></p>
+
+<p>The references describe APEX 26.2. Validate the integration against your deployed version; this walkthrough does not claim the callback was executed in your application.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7521498181541580800/">Original LinkedIn post</a></p>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>حقل البحث ممكن يعرض إجابة غلط رغم إن كل رد من السيرفر صحيح. المستخدم يكتب كلمة جديدة، فيرجع ردها أولًا، ثم رد أقدم يكتب فوقها. البوست الأصلي على LinkedIn عرض طابورًا مسمّى يستبدل الطلبات القديمة للتعامل مع السباق ده.</p>
+
+<p>المقال هنا يضيف Callback كاملة وحدًا إضافيًا مهمًا: مسح الحقل لازم يبطل صلاحية النتيجة القديمة، حتى لو المسح لا يرسل أي طلب.</p>
+
+<h2>ضع الطلبات المرتبطة في طابور ثابت</h2>
+
+<p>في <code>apex.server.process</code>، الإعداد <code>queue.action: "replace"</code> يجعل العمل الأقدم على نفس الطابور غير مطلوب. الطلب المنتظر ممكن يفشل بحالة <code>superseded</code>، والطلب الذي تمت مقاطعته ممكن يفشل بحالة <code>abort</code>. دي انتقالات متوقعة في البحث، وليست أسبابًا لمقاطعة المستخدم بتنبيهات. استخدم اسمًا ثابتًا لكل حقل بحث مستقل. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aexjs/apex.server.html">Oracle: server API</a></p>
+
+<p>لا تولّد اسم طابور جديدًا لكل ضغطة؛ الطلبات وقتها لا تشترك في نفس حدود الاستبدال. وبالمثل، حقلا بحث غير مرتبطين لا ينبغي أن يلغيا عمل بعضهما.</p>
+
+<h2>أنشئ مثال تطوير كاملًا</h2>
+
+<p>في صفحة تطوير رقمها 10، أنشئ Text Field باسم <code>P10_SEARCH</code>. أضف الكود التالي إلى Static Content region:</p>
+
+<pre><code>
+
+&lt;p id="product-search-result" role="status" aria-live="polite"&gt;&lt;/p&gt;
+
+
+</code></pre>
+
+<p>أنشئ Ajax Callback على الصفحة باسم <code>SEARCH_PRODUCTS</code> بكود PL/SQL التالي. أسماء المنتجات الثلاثة افتراضية؛ لا يقرأ الكود جداول التطبيق ولا يغيّرها. تعيد الـCallback فحص طول المدخل على السيرفر، وتحسب المطابقات الحرفية لجزء من الاسم، وتكتب ردًا منظمًا. قيمة <code>x01</code> متاحة في <code>apex_application.g_x01</code>. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aexjs/apex.server.html#process">معاملات الطلب</a></p>
+
+<pre><code>DECLARE
+    l_term  VARCHAR2(32767) := TRIM(apex_application.g_x01);
+    l_count PLS_INTEGER := 0;
+BEGIN
+    IF LENGTH(l_term) &gt; 60 THEN
+        apex_json.open_object;
+        apex_json.write('ok', FALSE);
+        apex_json.write('error', 'Search term is too long');
+        apex_json.close_object;
+        RETURN;
+    END IF;
+    IF l_term IS NOT NULL THEN
+        WITH products(product_name) AS (
+            SELECT 'Notebook' FROM dual UNION ALL
+            SELECT 'Pen' FROM dual UNION ALL
+            SELECT 'Pencil' FROM dual
+        )
+        SELECT COUNT(*) INTO l_count
+        FROM products
+        WHERE INSTR(LOWER(product_name), LOWER(l_term)) &gt; 0;
+    END IF;
+    apex_json.open_object;
+    apex_json.write('ok', TRUE);
+    apex_json.write('count', l_count);
+    apex_json.close_object;
+END;
+</code></pre>
+
+<p>ولّد JSON باستخدام الحزمة بدل تجميع نص غير محمي بالربط. في المثال ده، الرد الصحيح على <code>pen</code> يكون كائنًا فيه <code>ok: true</code> و<code>count: 2</code>. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aeapi/APEX_JSON.html">Oracle: APEX_JSON</a></p>
+
+<p>أضف الـHelper التالية إلى خاصية Function and Global Variable Declaration للصفحة. احتفظ بعدّاد الأجيال خارج <code>run</code> حتى تشترك فيه كل الاستدعاءات:</p>
+
+<pre><code>window.kgProductSearch = (function () {
+    "use strict";
+    let generation = 0;
+    function run() {
+        const token = ++generation;
+        const output = document.getElementById("product-search-result");
+        const term = String(apex.item("P10_SEARCH").getValue() || "").trim();
+        if (!output) { return; }
+        if (!term) {
+            output.textContent = "Type a search term.";
+            return;
+        }
+        if (term.length &gt; 60) {
+            output.textContent = "Use a shorter search term.";
+            return;
+        }
+        output.textContent = "Searching...";
+        apex.server.process("SEARCH_PRODUCTS", { x01: term }, {
+            dataType: "json",
+            queue: { name: "p10-product-search", action: "replace" }
+        }).done(function (data) {
+            if (token !== generation) { return; }
+            if (!data || data.ok !== true ||
+                    !Number.isInteger(data.count) || data.count &lt; 0) {
+                output.textContent = "Unexpected search response.";
+                return;
+            }
+            output.textContent = term + ": " + data.count + " matches";
+        }).fail(function (xhr, status) {
+            if (token !== generation ||
+                    ["abort", "superseded"].includes(status)) { return; }
+            output.textContent = "Search failed. Please try again.";
+        });
+    }
+    return { run: run };
+}());
+</code></pre>
+
+<p>أنشئ Dynamic Action لحدث Key Release على <code>P10_SEARCH</code>، وبداخلها Execute JavaScript Code بالاستدعاء التالي. عطّل Fire on Initialization لهذا الإجراء. المثال يوضح البحث مع الكتابة بلوحة المفاتيح؛ وسّع تغطية الأحداث لو واجهتك تغيّر القيمة من عناصر أخرى أيضًا. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/creating-and-editing-dynamic-actions.html">Oracle: إنشاء Dynamic Actions</a></p>
+
+<pre><code>window.kgProductSearch.run();
+</code></pre>
+
+<p>رسائل الحالة في المثال نصوص إنجليزية قصيرة للتوضيح؛ ترجمها بما يناسب مستخدمي التطبيق. الكتابة باستخدام <code>textContent</code> تعرض كلمة البحث كنص ولا تفسّرها كـHTML. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent">MDN: textContent</a></p>
+
+<h2>لماذا الطابور ومعه عدّاد أجيال؟</h2>
+
+<p>العدّاد يصف آخر نية للمستخدم في الواجهة، بما فيها الإجراءات التي لا تستدعي السيرفر. افترض إن طلب <code>pen</code> ما زال شغالًا، والمستخدم مسح الحقل. فرع الحقل الفارغ يعرض رسالة الكتابة ثم ينتهي. لا يدخل طلب بديل إلى الطابور، ولذلك العدّاد يمنع الـCallback السابقة من إرجاع عدد قديم إلى الشاشة.</p>
+
+<p>نفس الحماية تنطبق عندما نرفض محليًا كلمة أطول من الحد. وتفيد كمان في تسلسل مثل <code>pen</code> ثم <code>note</code> ثم <code>pen</code> مرة أخرى: مقارنة النص الحالي وحده لا تفرّق بين طلب <code>pen</code> الأول والأحدث. الرمز المختلف لكل استدعاء يقدر يفرّق.</p>
+
+<p>المثال يفحص شكل الرد قبل عرض العدد. فشل النقل ورد التطبيق الذي يخالف العقد مساران مختلفان؛ ولا ينبغي لأي منهما أن يظهر في هدوء كأنه صفر نتائج. معاملات دالة الفشل تتبع نمط معاملات Error Callback. <a href="https://api.jquery.com/jQuery.ajax/">jQuery Ajax callbacks</a></p>
+
+<h2>اختبر حالة الشاشة النهائية وليس عدد الطلبات فقط</h2>
+
+<p>في تطبيق اختبار، تحقّق إن <code>pen</code> ترجع 2 و<code>notebook</code> ترجع 1، وجزء اسم غير موجود يرجع 0. مع اتصال بطيء، اكتب كلمات متتابعة، وامسح الحقل أثناء وجود طلب جارٍ، وأدخل أكثر من 60 حرفًا. النتيجة الظاهرة لازم تخص آخر استدعاء. اختبر أيضًا فشل السيرفر وردًا غير متوقع الشكل.</p>
+
+<p>الـDebouncing يقلل تكرار بدء الطلبات، لكنه لا يثبت أن الطلبات التي بدأت بالفعل لن تتداخل. تعامل مع تقليل معدل الطلبات وحماية النتيجة من القِدم باعتبارهما مسؤوليتين منفصلتين.</p>
+
+<p>توثّق Oracle أيضًا إن دالة <code>abort</code> في الـPromise الراجعة لا تعمل مع استخدام Queue Options؛ فلا تضف الإلغاء اليدوي على افتراض إنه الحل. وبشكل أوسع، الإلغاء من جهة المتصفح ليس بروتوكولًا لمعاملات العمل. استخدم النمط للبحث والمعاينات التي تقبل الاستبدال. البيانات المحمية تحتاج صلاحيات على السيرفر، والحفظ يحتاج تصميمه الخاص للاتساق وإعادة المحاولة. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/aexjs/apex.server.html#process">Oracle: سلوك الـPromise والطابور</a></p>
+
+<p>المراجع تصف APEX 26.2. تحقّق من التكامل مع الإصدار الذي تشغّله؛ الشرح لا يدّعي تنفيذ الـCallback داخل تطبيقك.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7521498181541580800/">البوست الأصلي على LinkedIn</a></p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/oracle-apex-search-queues-keep-the-latest-result-on-screen" target="_blank" rel="noopener noreferrer">Oracle APEX Search Queues: Keep the Latest Result on Screen</a><p><a class="" href="https://www.linkedin.com/feed/update/urn:li:activity:7521498181541580800/" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>
