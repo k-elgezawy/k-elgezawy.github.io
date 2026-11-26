@@ -666,5 +666,20 @@
     "minutes": 6,
     "aiCover": true,
     "hideGenerationNote": true
+  },
+  {
+    "id": 48,
+    "slug": "oracle-apex-interactive-reports-get-the-grain-right-before-you-group",
+    "title": "Oracle APEX Interactive Reports: Get the Grain Right Before You Group",
+    "titleAr": "التقارير التفاعلية في Oracle APEX: اضبط مستوى الصف قبل التجميع",
+    "canonical": "https://karimelgezawy.hashnode.dev/oracle-apex-interactive-reports-get-the-grain-right-before-you-group",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7517515074228383744/",
+    "category": "development",
+    "cover": "assets/covers/interactive-report-2026-11-26.png",
+    "excerpt": "قارن التفاصيل والتجميع والـPivot ببيانات افتراضية، واكشف تضاعف الإجماليات بسبب ربط البنود.",
+    "excerptEn": "Reconcile three report views against invoice-level data and expose duplicate totals from a line join.",
+    "minutes": 6,
+    "aiCover": true,
+    "hideGenerationNote": true
   }
 ]

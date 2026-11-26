@@ -1,0 +1,261 @@
+<!doctype html><html lang="ar" dir="rtl" data-theme="dark" data-title-ar="التقارير التفاعلية في Oracle APEX: اضبط مستوى الصف قبل التجميع | كريم الجيزاوي" data-title-en="Oracle APEX Interactive Reports: Get the Grain Right Before You Group | Karim El-Gezawy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>التقارير التفاعلية في Oracle APEX: اضبط مستوى الصف قبل التجميع | كريم الجيزاوي</title><meta name="description" content="قارن التفاصيل والتجميع والـPivot ببيانات افتراضية، واكشف تضاعف الإجماليات بسبب ربط البنود."><meta name="theme-color" content="#0c1518"><meta property="og:type" content="article"><meta property="og:title" content="التقارير التفاعلية في Oracle APEX: اضبط مستوى الصف قبل التجميع | كريم الجيزاوي"><meta property="og:description" content="قارن التفاصيل والتجميع والـPivot ببيانات افتراضية، واكشف تضاعف الإجماليات بسبب ربط البنود."><meta property="og:image" content="https://k-elgezawy.github.io/assets/covers/interactive-report-2026-11-26.png"><meta property="og:url" content="https://karimelgezawy.hashnode.dev/oracle-apex-interactive-reports-get-the-grain-right-before-you-group"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://karimelgezawy.hashnode.dev/oracle-apex-interactive-reports-get-the-grain-right-before-you-group"><link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/site.css"><script defer src="../../assets/site.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Oracle APEX Interactive Reports: Get the Grain Right Before You Group", "author": {"@type": "Person", "name": "Karim El-Gezawy", "url": "https://k-elgezawy.github.io"}, "inLanguage": ["en", "ar"], "mainEntityOfPage": "https://karimelgezawy.hashnode.dev/oracle-apex-interactive-reports-get-the-grain-right-before-you-group", "image": "https://k-elgezawy.github.io/assets/covers/interactive-report-2026-11-26.png"}</script></head><body><a class="skip" href="#main"><span class="" data-ar="انتقل للمحتوى" data-en="Skip to content">انتقل للمحتوى</span></a><header class="site-header"><div class="container header-inner"><a class="brand" href="../../index.html" aria-label="Karim El-Gezawy"><span class="brand-mark" aria-hidden="true">KE</span><span><span class="" data-ar="كريم الجيزاوي" data-en="Karim El-Gezawy">كريم الجيزاوي</span><small>ORACLE APEX DEVELOPER</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html#projects"><span class="" data-ar="المشروعات" data-en="Projects">المشروعات</span></a><a href="../../index.html#experience"><span class="" data-ar="الخبرة" data-en="Experience">الخبرة</span></a><a href="../../index.html#certification"><span class="" data-ar="الشهادة" data-en="Certification">الشهادة</span></a><a href="../../index.html#articles"><span class="" data-ar="المقالات" data-en="Articles">المقالات</span></a><a href="../../index.html#contact"><span class="" data-ar="تواصل" data-en="Contact">تواصل</span></a></nav><div class="header-actions"><button id="language-toggle" class="lang-btn" type="button" aria-label="Switch to English">English</button><button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر / Toggle theme" aria-pressed="false">☀</button></div></div></header><main id="main" class="container"><div class="article-header"><a class="breadcrumb" href="../"><span class="" data-ar="المكتبة التقنية ←" data-en="← Technical articles">المكتبة التقنية ←</span></a><h1 class="" data-ar="التقارير التفاعلية في Oracle APEX: اضبط مستوى الصف قبل التجميع" data-en="Oracle APEX Interactive Reports: Get the Grain Right Before You Group">التقارير التفاعلية في Oracle APEX: اضبط مستوى الصف قبل التجميع</h1><div class="article-meta"><span><span class="" data-ar="بقلم كريم الجيزاوي" data-en="By Karim El-Gezawy">بقلم كريم الجيزاوي</span></span><span>EN / العربية</span><span><span class="" data-ar="6 دقائق قراءة" data-en="6 min read">6 دقائق قراءة</span></span></div></div><img class="article-cover" src="../../assets/covers/interactive-report-2026-11-26.png" alt="" width="1200" height="630"><div class="article-layout"><nav class="article-toolbar" aria-label="Article versions"><a href="#english" lang="en">English version</a><a href="#arabic" lang="ar">النسخة العربية</a><a class="" href="https://karimelgezawy.hashnode.dev/oracle-apex-interactive-reports-get-the-grain-right-before-you-group" target="_blank" rel="noopener noreferrer"><span class="" data-ar="المصدر على Hashnode ↗" data-en="Original on Hashnode ↗">المصدر على Hashnode ↗</span></a></nav><section id="english" class="article-body" lang="en" dir="ltr"><h2 class="article-language-heading">English version</h2><p>An Interactive Report can answer several business questions without becoming several separate pages. My original LinkedIn post compared Control Break, Group By, and Pivot. The important starting point comes before choosing any of them: <strong>what does one source row represent?</strong></p>
+
+<p>Here is a small, reproducible reporting exercise. It includes expected totals and a join trap that can produce a convincing but incorrect summary. All names and amounts are synthetic; the queries read constants from <code>DUAL</code> and change no business data.</p>
+
+<h2>Start with one row per invoice</h2>
+
+<p>In a development application, create an Interactive Report region with this SQL source:</p>
+
+<pre><code>WITH invoices(invoice_id, branch, invoice_date, sales, cost) AS (
+    SELECT 1001, 'North', DATE '2026-01-05', 120, 80 FROM dual UNION ALL
+    SELECT 1002, 'North', DATE '2026-01-15',  80, 60 FROM dual UNION ALL
+    SELECT 1003, 'South', DATE '2026-01-20', 150,110 FROM dual UNION ALL
+    SELECT 1004, 'North', DATE '2026-02-05', 100, 70 FROM dual UNION ALL
+    SELECT 1005, 'South', DATE '2026-02-12', 130, 90 FROM dual UNION ALL
+    SELECT 1006, 'South', DATE '2026-02-20',  70, 40 FROM dual
+)
+SELECT invoice_id,
+       branch,
+       invoice_date,
+       TO_CHAR(invoice_date, 'YYYY-MM') AS month_label,
+       sales,
+       cost,
+       sales - cost AS margin
+FROM invoices
+</code></pre>
+
+<p>The six source rows represent six complete invoices. <code>MARGIN</code> is an amount, not a percentage. All amounts use one assumed currency and all costs are known. A real report needs explicit rules for currency conversion, returns, and missing costs before its totals are meaningful.</p>
+
+<p>Leave numeric columns numeric and apply display formatting in column attributes. Use <code>MONTH_LABEL</code> for the demonstration's month selection. Including the year avoids combining January from different years. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/managing-interactive-report-column-attributes.html">Oracle: report column attributes</a></p>
+
+<p>In the region's Actions Menu attributes, enable Control Break, Aggregate, Group By, Pivot, Filter, and Save Report as appropriate. Developers control which capabilities are available. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/customizing-the-interactive-report-actions-menu.html">Oracle: Actions menu configuration</a></p>
+
+<h2>Choose the view that matches the question</h2>
+
+<p><strong>Control Break answers: which invoices belong to each branch?</strong> Enable a break on <code>BRANCH</code>, keeping the detailed invoice rows. Add Sum aggregates on <code>SALES</code>, <code>COST</code>, and <code>MARGIN</code>. You should still be able to inspect the six invoices beneath their branch headings. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeeug/creating-control-break.html">Oracle: Control Break</a></p>
+
+<p><strong>Group By answers: how much did each branch contribute?</strong> Select <code>BRANCH</code> as the grouping column, Sum for the three amounts, and Count on the non-null <code>INVOICE_ID</code>. The expected summary is:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Branch</th>
+  <th style="text-align:right;">Invoice count</th>
+  <th style="text-align:right;">Sales</th>
+  <th style="text-align:right;">Cost</th>
+  <th style="text-align:right;">Margin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>North</td>
+  <td style="text-align:right;">3</td>
+  <td style="text-align:right;">300</td>
+  <td style="text-align:right;">210</td>
+  <td style="text-align:right;">90</td>
+</tr>
+<tr>
+  <td>South</td>
+  <td style="text-align:right;">3</td>
+  <td style="text-align:right;">350</td>
+  <td style="text-align:right;">240</td>
+  <td style="text-align:right;">110</td>
+</tr>
+</tbody>
+</table>
+
+<p>Here the count means invoices because the source grain is one invoice. That interpretation would change if the query returned invoice lines. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeeug/grouping-columns.html">Oracle: Group By</a></p>
+
+<p><strong>Pivot answers: how do branch sales compare across months?</strong> Set the row column to <code>BRANCH</code>, the pivot column to <code>MONTH_LABEL</code>, and the function to Sum of <code>SALES</code>. Expected cells are:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Branch</th>
+  <th style="text-align:right;">2026-01</th>
+  <th style="text-align:right;">2026-02</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>North</td>
+  <td style="text-align:right;">200</td>
+  <td style="text-align:right;">100</td>
+</tr>
+<tr>
+  <td>South</td>
+  <td style="text-align:right;">150</td>
+  <td style="text-align:right;">200</td>
+</tr>
+</tbody>
+</table>
+
+<p>Pivot changes the arrangement used for comparison; it cannot repair duplicated source amounts. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeeug/managing-pivot-reports.html">Oracle: Pivot reports</a></p>
+
+<p>These user-guide workflows reference 26.1; the developer settings reference 26.2. The 26.2 report experience was refreshed, so use the named operations and check the layout in your deployed version. <a href="https://blogs.oracle.com/apex/whats-new-in-interactive-reports-and-ai-interactive-reports">Oracle: 26.2 report changes</a></p>
+
+<h2>Reconcile after changing filters</h2>
+
+<p>Without filters, the six invoices total sales 650, cost 450, and margin 200. Filtering <code>MONTH_LABEL</code> to <code>2026-02</code> should leave three invoices, sales 300, cost 200, and margin 100. Switching between details, grouping, and pivot should preserve the intended filtered population.</p>
+
+<p>Save a private view named “February branch review” if that option is available to your authenticated user. Treat it as a saved report definition, not a historical copy of the underlying records. Clear or reset the filter deliberately before checking the all-month totals again. A hidden filter can make two otherwise-correct summaries appear inconsistent.</p>
+
+<h2>A join can break every view at once</h2>
+
+<p>This separate example contains two invoices worth 100 each. The first invoice has two lines. Predict the totals before running the read-only query:</p>
+
+<pre><code>WITH invoices(invoice_id, invoice_total) AS (
+    SELECT 1, 100 FROM dual UNION ALL
+    SELECT 2, 100 FROM dual
+), invoice_lines(invoice_id, line_id) AS (
+    SELECT 1, 11 FROM dual UNION ALL
+    SELECT 1, 12 FROM dual UNION ALL
+    SELECT 2, 21 FROM dual
+)
+SELECT SUM(i.invoice_total) AS repeated_total,
+       SUM(DISTINCT i.invoice_total) AS distinct_amount_total,
+       COUNT(DISTINCT i.invoice_id) AS invoice_count
+FROM invoices i
+JOIN invoice_lines l ON l.invoice_id = i.invoice_id
+</code></pre>
+
+<p>Expected output is <code>REPEATED_TOTAL = 300</code>, <code>DISTINCT_AMOUNT_TOTAL = 100</code>, and <code>INVOICE_COUNT = 2</code>. The correct invoice total is 200.</p>
+
+<p>The join repeats the first header amount. <code>SUM(DISTINCT invoice_total)</code> also fails: it removes equal amounts, not duplicate invoice identities. A distinct invoice count can be correct while the monetary sum is wrong. Oracle documents that aggregate <code>DISTINCT</code> operates on distinct argument values. <a href="https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Aggregate-Functions.html">Oracle: aggregate semantics</a></p>
+
+<p>Keep invoice-level amounts at invoice grain. If lines are needed only to select eligible invoices, consider an <code>EXISTS</code> filter; if line measures are needed, aggregate them to the required grain before joining. Then reconcile keys and amounts against a known population.</p>
+
+<p>Use a new page when the underlying question, authorization, or data contract actually differs. For alternate analytical presentations of the same permitted rows, start by making the source grain reliable, then choose the reporting view. The SQL results above are expected values checked by arithmetic, not a claim of execution in your APEX application.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7517515074228383744/">Original LinkedIn post</a></p>
+</section><section id="arabic" class="article-body" lang="ar" dir="rtl"><h2 class="article-language-heading">النسخة العربية</h2><p>التقرير التفاعلي يقدر يجاوب على أكثر من سؤال عمل بدون ما يتحوّل لصفحات منفصلة. البوست الأصلي على LinkedIn قارن بين Control Break وGroup By وPivot. لكن البداية المهمة تسبق اختيار أي واحدة منها: <strong>الصف الواحد في مصدر البيانات يمثّل إيه؟</strong></p>
+
+<p>دي تجربة تقارير صغيرة قابلة لإعادة البناء، فيها إجماليات متوقعة وفخ في الربط ممكن ينتج ملخصًا مقنعًا لكنه غلط. الأسماء والمبالغ كلها افتراضية؛ الاستعلامات تقرأ ثوابت من <code>DUAL</code> ولا تغيّر بيانات العمل.</p>
+
+<h2>ابدأ بصف واحد لكل فاتورة</h2>
+
+<p>داخل تطبيق تطوير، أنشئ Interactive Report region بالاستعلام التالي كمصدر SQL:</p>
+
+<pre><code>WITH invoices(invoice_id, branch, invoice_date, sales, cost) AS (
+    SELECT 1001, 'North', DATE '2026-01-05', 120, 80 FROM dual UNION ALL
+    SELECT 1002, 'North', DATE '2026-01-15',  80, 60 FROM dual UNION ALL
+    SELECT 1003, 'South', DATE '2026-01-20', 150,110 FROM dual UNION ALL
+    SELECT 1004, 'North', DATE '2026-02-05', 100, 70 FROM dual UNION ALL
+    SELECT 1005, 'South', DATE '2026-02-12', 130, 90 FROM dual UNION ALL
+    SELECT 1006, 'South', DATE '2026-02-20',  70, 40 FROM dual
+)
+SELECT invoice_id,
+       branch,
+       invoice_date,
+       TO_CHAR(invoice_date, 'YYYY-MM') AS month_label,
+       sales,
+       cost,
+       sales - cost AS margin
+FROM invoices
+</code></pre>
+
+<p>صفوف المصدر الستة تمثّل ست فواتير كاملة. <code>MARGIN</code> مبلغ، وليس نسبة مئوية. نفترض عملة واحدة وكل التكاليف معروفة. التقرير الحقيقي يحتاج قواعد صريحة لتحويل العملات والمرتجعات والتكاليف المفقودة قبل أن تكون إجمالياته ذات معنى.</p>
+
+<p>احتفظ بالأعمدة الرقمية كأرقام، وطبّق تنسيق العرض من خصائص الأعمدة. استخدم <code>MONTH_LABEL</code> لاختيار الشهر في التجربة. وجود السنة يمنع جمع يناير من سنوات مختلفة مع بعضه. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/managing-interactive-report-column-attributes.html">Oracle: خصائص أعمدة التقرير</a></p>
+
+<p>في خصائص Actions Menu للمنطقة، فعّل Control Break وAggregate وGroup By وPivot وFilter وSave Report حسب الحاجة. المطور يتحكم في الإمكانيات المتاحة. <a href="https://docs.oracle.com/en/database/oracle/apex/26.2/htmdb/customizing-the-interactive-report-actions-menu.html">Oracle: إعداد قائمة Actions</a></p>
+
+<h2>اختَر العرض المناسب للسؤال</h2>
+
+<p><strong>Control Break تجيب: أي فواتير تخص كل فرع؟</strong> فعّل التجميع البصري على <code>BRANCH</code> مع الاحتفاظ بصفوف الفواتير التفصيلية. أضف Sum في Aggregate لأعمدة <code>SALES</code> و<code>COST</code> و<code>MARGIN</code>. المفروض تظل قادرًا على مراجعة الفواتير الست تحت عناوين الفروع. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeeug/creating-control-break.html">Oracle: Control Break</a></p>
+
+<p><strong>Group By تجيب: كل فرع ساهم بكام؟</strong> اختَر <code>BRANCH</code> كعمود التجميع، وSum للمبالغ الثلاثة، وCount على <code>INVOICE_ID</code> غير الفارغ. الملخص المتوقع:</p>
+
+<table>
+<thead>
+<tr>
+  <th>الفرع</th>
+  <th style="text-align:right;">عدد الفواتير</th>
+  <th style="text-align:right;">المبيعات</th>
+  <th style="text-align:right;">التكلفة</th>
+  <th style="text-align:right;">الهامش</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>North</td>
+  <td style="text-align:right;">3</td>
+  <td style="text-align:right;">300</td>
+  <td style="text-align:right;">210</td>
+  <td style="text-align:right;">90</td>
+</tr>
+<tr>
+  <td>South</td>
+  <td style="text-align:right;">3</td>
+  <td style="text-align:right;">350</td>
+  <td style="text-align:right;">240</td>
+  <td style="text-align:right;">110</td>
+</tr>
+</tbody>
+</table>
+
+<p>العدد هنا يعني فواتير لأن صف المصدر يمثّل فاتورة واحدة. المعنى يتغيّر لو الاستعلام يرجع بنود الفاتورة. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeeug/grouping-columns.html">Oracle: Group By</a></p>
+
+<p><strong>Pivot تجيب: مبيعات الفروع تتقارن إزاي عبر الشهور؟</strong> اختَر <code>BRANCH</code> لصفوف المقارنة، و<code>MONTH_LABEL</code> لعمود الـPivot، والدالة Sum على <code>SALES</code>. الخلايا المتوقعة:</p>
+
+<table>
+<thead>
+<tr>
+  <th>الفرع</th>
+  <th style="text-align:right;">2026-01</th>
+  <th style="text-align:right;">2026-02</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>North</td>
+  <td style="text-align:right;">200</td>
+  <td style="text-align:right;">100</td>
+</tr>
+<tr>
+  <td>South</td>
+  <td style="text-align:right;">150</td>
+  <td style="text-align:right;">200</td>
+</tr>
+</tbody>
+</table>
+
+<p>الـPivot تغيّر ترتيب العرض للمقارنة، لكنها لا تصلح مبالغ مكررة في المصدر. <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aeeug/managing-pivot-reports.html">Oracle: تقارير Pivot</a></p>
+
+<p>خطوات دليل المستخدم المشار إليه تخص 26.1، وإعدادات المطور تخص 26.2. تجربة التقارير اتحدثت في 26.2، فاستخدم أسماء العمليات وراجع ترتيب الواجهة في إصدارك. <a href="https://blogs.oracle.com/apex/whats-new-in-interactive-reports-and-ai-interactive-reports">Oracle: تغييرات تقارير 26.2</a></p>
+
+<h2>طابق الإجماليات بعد تغيير الفلاتر</h2>
+
+<p>بدون فلاتر، الفواتير الست مجموعها مبيعات 650 وتكلفة 450 وهامش 200. فلترة <code>MONTH_LABEL</code> على <code>2026-02</code> المفروض تترك ثلاث فواتير، بمبيعات 300 وتكلفة 200 وهامش 100. التنقل بين التفاصيل والتجميع والـPivot لازم يحافظ على مجموعة البيانات المفلترة المقصودة.</p>
+
+<p>احفظ عرضًا خاصًا باسم «مراجعة الفروع في فبراير» لو الخيار متاح للمستخدم المسجل. اعتبره تعريف تقرير محفوظًا، وليس نسخة تاريخية من السجلات نفسها. امسح أو أعد ضبط الفلتر بشكل مقصود قبل مراجعة إجماليات كل الشهور. فلتر غير ملحوظ ممكن يجعل ملخصين صحيحين يبدوان متعارضين.</p>
+
+<h2>الربط ممكن يفسد كل العروض مرة واحدة</h2>
+
+<p>المثال المنفصل ده فيه فاتورتان، كل واحدة بقيمة 100، والفاتورة الأولى لها بندان. توقّع الإجماليات قبل تشغيل الاستعلام الذي يقرأ فقط:</p>
+
+<pre><code>WITH invoices(invoice_id, invoice_total) AS (
+    SELECT 1, 100 FROM dual UNION ALL
+    SELECT 2, 100 FROM dual
+), invoice_lines(invoice_id, line_id) AS (
+    SELECT 1, 11 FROM dual UNION ALL
+    SELECT 1, 12 FROM dual UNION ALL
+    SELECT 2, 21 FROM dual
+)
+SELECT SUM(i.invoice_total) AS repeated_total,
+       SUM(DISTINCT i.invoice_total) AS distinct_amount_total,
+       COUNT(DISTINCT i.invoice_id) AS invoice_count
+FROM invoices i
+JOIN invoice_lines l ON l.invoice_id = i.invoice_id
+</code></pre>
+
+<p>الناتج المتوقع هو <code>REPEATED_TOTAL = 300</code> و<code>DISTINCT_AMOUNT_TOTAL = 100</code> و<code>INVOICE_COUNT = 2</code>. إجمالي الفواتير الصحيح 200.</p>
+
+<p>الربط يكرّر مبلغ رأس الفاتورة الأولى. واستخدام <code>SUM(DISTINCT invoice_total)</code> يفشل أيضًا: يزيل المبالغ المتساوية، وليس تكرار هوية الفاتورة. ممكن عدد الفواتير المختلفة يكون صحيحًا بينما مجموع الأموال غلط. توثّق Oracle إن <code>DISTINCT</code> داخل التجميع يعمل على القيم المختلفة للمعامل. <a href="https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Aggregate-Functions.html">Oracle: قواعد التجميع</a></p>
+
+<p>احتفظ بمبالغ الفواتير على مستوى الفاتورة. لو البنود مطلوبة فقط لاختيار الفواتير المؤهلة، فكّر في فلتر <code>EXISTS</code>. ولو محتاج مقاييس البنود، جمّعها للمستوى المطلوب قبل الربط. بعد كده طابق المفاتيح والمبالغ مع مجموعة بيانات معروفة.</p>
+
+<p>أنشئ صفحة جديدة عندما يختلف سؤال العمل أو الصلاحيات أو عقد البيانات فعلًا. أما طرق التحليل المختلفة لنفس الصفوف المسموح بها، فابدأ بصحة مستوى المصدر ثم اختَر عرض التقرير. نواتج SQL المذكورة قيم متوقعة راجعنا حساباتها، وليست ادعاء بتنفيذها داخل تطبيق APEX الخاص بك.</p>
+
+<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7517515074228383744/">البوست الأصلي على LinkedIn</a></p>
+</section><aside class="article-source"><p class="" data-ar="نُشر هذا المقال أيضًا على Hashnode." data-en="This article is also published on Hashnode.">نُشر هذا المقال أيضًا على Hashnode.</p><a class="" href="https://karimelgezawy.hashnode.dev/oracle-apex-interactive-reports-get-the-grain-right-before-you-group" target="_blank" rel="noopener noreferrer">Oracle APEX Interactive Reports: Get the Grain Right Before You Group</a><p><a class="" href="https://www.linkedin.com/feed/update/urn:li:activity:7517515074228383744/" target="_blank" rel="noopener noreferrer"><span class="" data-ar="رابط المصدر أو البوست الأصلي" data-en="Source / original post">رابط المصدر أو البوست الأصلي</span></a></p></aside></div></main><footer class="site-footer"><div class="container footer-inner"><p>© 2026 <span class="" data-ar="كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى." data-en="Karim El-Gezawy. Knowledge shared. Solutions built.">كريم الجيزاوي. معرفة تُشارك، وحلول تُبنى.</span></p><p><span class="" data-ar="موقع مستقل مستضاف على GitHub Pages" data-en="Independent portfolio · GitHub Pages">موقع مستقل مستضاف على GitHub Pages</span> · <a class="back-top" href="#main"><span class="" data-ar="للأعلى ↑" data-en="Back to top ↑">للأعلى ↑</span></a></p></div></footer></body></html>
